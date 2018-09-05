@@ -20,8 +20,7 @@ module.exports = (env, argv) => {
             "react": "react",
             "redux": "redux",
             "react-redux": "react-redux",
-            "redux-saga": "redux-saga",
-            "immer": "immer"
+            "redux-saga": "redux-saga"
         },
         plugins: [
             new BundleAnalyzerPlugin({

@@ -5,9 +5,6 @@ interface ITestState {
     age: number
 };
 
-interface IExtendedTestState extends ITestState {
-    city: string;
-}
 
 const reduce = (state: any, action: any) => state;
 
