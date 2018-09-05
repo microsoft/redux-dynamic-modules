@@ -1,11 +1,67 @@
-Many a times in a React app some Components are mounted on user action and then are unmounted later on.
+# React Redux Modules
+`react-redux-modules` is a library that aims to make Redux Reducers and Sagas easy to modularize and add/remove dynamically. 
 
-These Component may contain some redux artifacts e.g. reducers and sagas that are used only for the Component and then are not useful when such Component is unmounted.
+## Motivation
+In large React/Redux applications, oftentimes you will have portions of your state that serve distinct purposes. For example, you might have a reducer and saga that manages `Users` in your application, or another set that manages `Todos`. These can be split up into a `UserModule` and a `TodoModule`. 
 
-react-redux-modules allows "packaging" such artifacts in a module that can be added/removed to the store dynamically.
+Modules provide the following benefits:
+* They can be easily re-used across the application, or between multiple similar applications.
+* They can be added/removed from the store dynamically, ex. when a component mounts or when a user performs and action
 
-These modules are also useful for sharing a reusable set of functionality with other part of the apps.
- 
+# Getting Started
+## Install
+Run 
+```
+npm install react-redux-modules
+```
+
+or 
+```
+yarn add react-redux-modules
+```
+
+## Usage Example
+1. Create a module with the following format
+```typescript
+export function getUsersModule(): IModule<IUserState> {
+  return {
+    id: "users",
+    reducerMap: {
+      users: usersReducer
+    },
+    sagas: [usersSaga],
+
+    // Actions to fire when this module is added/removed
+    // initialActions: [],
+    // finalActions: []
+  }
+}
+
+```
+
+2. Create a `ModuleStore`
+```typescript
+const store: IModuleStore<IState> = configureStore(
+  /* initial state */
+  null,
+
+  /* redux-saga context */ 
+  {},
+
+  getUsersModule(), 
+  /* ...any additional modules */
+);
+```
+
+3. Use like a standard Redux store
+4. Use the `DynamicModuleLoader` React component to add/remove modules when components mount/unmount
+```jsx
+<DynamicModuleLoader modules={modules}>
+   <div>Hello World!!</div>
+</DynamicModuleLoader>
+``` 
+
+# Documentation
 
 **Module**
 
@@ -69,30 +125,6 @@ export interface IDynamicallyAddedModule {
   remove: () => void;
 }
 ```
-
-**Provider**
-
-This package comes with a configureStore that has interface similar to redux's out of the box configureStore but allows module support. This store can be provided to ```<Provider store={moduleStore}/>``` in react-redux.
-
-```
-export function configureStore<SagaContext, State>(
-    initialState: DeepPartial<State>, 
-    context: SagaContext, 
-    ...initialModules: IModule<any>[]): IModuleStore<State> {
-        ...
-        ...
-    }
-```
-
-**Dynamic Module Loader**
-
-This package also comes with a HOC, than can be used to dynamically add a module. The dynamic module loader gets the store from react context.
-```
-<DynamicModuleLoader modules={modules}>
-   <div>Hello World!!</div>
-</DynamicModuleLoader>
-``` 
-
 
 # Contributing
 
