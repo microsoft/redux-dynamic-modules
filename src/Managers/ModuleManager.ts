@@ -54,8 +54,6 @@ export function getModuleManager<SagaContext, State>(sagaMiddleware: SagaMiddlew
                 _reducerManager.add(key, reducerMap[key]);
             }
         }
-
-        _dispatch && _dispatch({ type: "@@Internal/ModuleManager/ReducerAdded" });
     }
 
     const _removeReducers = (reducerMap: ReducersMapObject<Reducer, AnyAction>) => {
@@ -94,6 +92,8 @@ export function getModuleManager<SagaContext, State>(sagaMiddleware: SagaMiddlew
                     justAddedModules.push(module);
                 }
             });
+            
+            _dispatch && _dispatch({ type: "@@Internal/ModuleManager/ReducerAdded" });
 
             // add the sagas and dispatch actions at the end so all the reducers are registered
             justAddedModules.forEach(module => {

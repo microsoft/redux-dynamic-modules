@@ -61,7 +61,7 @@ export function getReducerManager<S extends {}>(
     const reduce = (state: S, action: AnyAction) => {
         if (keysToRemove.length > 0) {
             state = { ...state as any};
-            for (let key in keysToRemove) {
+            for (let key of keysToRemove) {
                 delete state[key];
             }
             keysToRemove = [];
