@@ -4,7 +4,6 @@ import {
     ReducersMapObject,
     AnyAction
 } from "redux";
-import { default as produce } from "immer";
 import { getStringRefCounter } from "../Utils/RefCounter";
 
 export interface IReducerManager<S> {
@@ -61,11 +60,10 @@ export function getReducerManager<S extends {}>(
 
     const reduce = (state: S, action: AnyAction) => {
         if (keysToRemove.length > 0) {
-            state = produce(state, draft => {
-                for (let key in keysToRemove) {
-                    delete draft[key];
-                }
-            });
+            state = { ...state as any};
+            for (let key of keysToRemove) {
+                delete state[key];
+            }
             keysToRemove = [];
         }
         return combinedReducer(state, action);
