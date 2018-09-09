@@ -1,5 +1,5 @@
 # React Redux Modules
-`react-redux-modules` is a library that aims to make Redux Reducers and Sagas easy to modularize and add/remove dynamically. 
+**react-redux-modules** is a library that aims to make Redux Reducers and Sagas easy to modularize and add/remove dynamically. 
 
 ## Motivation
 In large React/Redux applications, oftentimes you will have portions of your state that serve distinct purposes. For example, you might have a reducer and saga that manages `Users` in your application, or another set that manages `Todos`. These can be split up into a `UserModule` and a `TodoModule`. 
