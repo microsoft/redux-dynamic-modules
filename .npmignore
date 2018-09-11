@@ -1,0 +1,11 @@
+dist/react-redux-module.stats.html
+lib/__tests__
+node_modules/
+src/
+.gitignore
+package.json
+package-lock.json
+tsconfig.json
+tslint.json
+webpack.config.js
+yarn.lock

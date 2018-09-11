@@ -12,7 +12,7 @@ module.exports = (env, argv) => {
         },
 
         output: {
-            filename: mode_env === "production" ? "react-redux-module.min.js" : "react-redux-module.js",
+            filename: mode_env === "production" ? "react-redux-modules.min.js" : "react-redux-modules.js",
             path: __dirname + "/dist/"
         },
 
