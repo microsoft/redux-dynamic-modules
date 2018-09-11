@@ -1,10 +1,10 @@
 {
-  "name": "react-redux-modules",
+  "name": "redux-dynamic-modules",
   "version": "0.0.2",
   "description": "Modularize the redux app by dynamically loading reducers, state and sagas",
   "repository": {
     "type": "github",
-    "url": "https://github.com/Microsoft/react-redux-modules"
+    "url": "https://github.com/Microsoft/redux-dynamic-modules"
   },
   "main": "index.js",
   "scripts": {
