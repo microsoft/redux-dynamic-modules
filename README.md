@@ -43,7 +43,7 @@ export function getUsersModule(): IModule<IUserState> {
 ```typescript
 const store: IModuleStore<IState> = configureStore(
   /* initial state */
-  null,
+  {},
 
   /* redux-saga context */ 
   {},
