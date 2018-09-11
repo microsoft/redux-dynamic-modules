@@ -2,6 +2,10 @@
   "name": "react-react-redux-modules",
   "version": "0.0.2",
   "description": "Modularize the redux app by dynamically loading reducers, state and sagas",
+  "repository": {
+    "type": "github",
+    "url": "https://github.com/Microsoft/react-redux-modules"
+  },
   "main": "index.js",
   "scripts": {
     "build:dev": "tsc && webpack --mode development --display-modules --progress --display-error-details",
