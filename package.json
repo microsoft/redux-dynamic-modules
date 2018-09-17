@@ -6,10 +6,12 @@
     "type": "github",
     "url": "https://github.com/Microsoft/redux-dynamic-modules"
   },
-  "main": "index.js",
+  "main": "lib/index.js",
+  "types": "lib/index.d.ts",
   "scripts": {
-    "build:dev": "tsc && webpack --mode development --display-modules --progress --display-error-details",
-    "build:prod": "tsc && webpack --mode production --display-modules --progress --display-error-details",
+    "build:dev": "npm run clean && tsc && webpack --mode development --display-modules --progress --display-error-details",
+    "build:prod": "npm run clean && tsc && webpack --mode production --display-modules --progress --display-error-details",
+    "clean": "rimraf lib/ dist/",
     "test": "jest"
   },
   "keywords": [
@@ -30,6 +32,7 @@
     "react-redux": "^5.0.7",
     "redux": "^4.0.0",
     "redux-saga": "^0.16.0",
+    "rimraf": "^2.6.2",
     "ts-jest": "^23.1.4",
     "tslib": "^1.9.3",
     "tslint": "^5.11.0",
@@ -53,5 +56,9 @@
       "json",
       "node"
     ]
+  },
+  "dependencies": {
+    "@types/redux": "^3.6.0",
+    "@types/redux-saga": "^0.10.5"
   }
 }
