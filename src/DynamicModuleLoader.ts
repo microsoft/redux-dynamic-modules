@@ -1,4 +1,5 @@
 import * as React from "react";
+import * as PropTypes from "prop-types";
 import {
   IModule,
   IModuleStore,
@@ -26,6 +27,11 @@ export class DynamicModuleLoader<
   IDynamicModuleLoaderProps<OriginalState, AdditionalState>
   > {
   private _addedModules?: IDynamicallyAddedModule;
+
+  /* @ts-ignore */
+  private static contextTypes = {
+    store: PropTypes.object
+  };
 
   constructor(
     props: IDynamicModuleLoaderProps<OriginalState, AdditionalState>,
