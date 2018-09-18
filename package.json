@@ -1,28 +1,6 @@
 {
-  "name": "redux-dynamic-modules",
-  "version": "0.0.4",
-  "description": "Modularize the redux app by dynamically loading reducers, state and sagas",
-  "repository": {
-    "type": "github",
-    "url": "https://github.com/Microsoft/redux-dynamic-modules"
-  },
-  "main": "lib/index.js",
-  "types": "lib/index.d.ts",
-  "scripts": {
-    "build:dev": "npm run clean && tsc && webpack --mode development --display-modules --progress --display-error-details",
-    "build:prod": "npm run clean && tsc && webpack --mode production --display-modules --progress --display-error-details",
-    "clean": "rimraf lib/ dist/",
-    "test": "jest"
-  },
-  "keywords": [
-    "react",
-    "redux",
-    "module",
-    "dynamic",
-    "load"
-  ],
-  "author": "Navneet Gupta (Microsoft)",
-  "license": "MIT",
+  "name": "root",
+  "private": true,
   "devDependencies": {
     "lerna": "^3.4.0"
   }
