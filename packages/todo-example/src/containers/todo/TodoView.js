@@ -7,6 +7,7 @@ import { getTodoModule } from '../../modules/todo/todoModule';
 
 const TodoView = () => (
           <DynamicModuleLoader modules={[getTodoModule()]}>
+            <div>Todo View</div>
             <AddTodo />
             <VisibleTodoList />
             <Footer />

@@ -7,6 +7,7 @@ import { getShoppingListModule } from '../../modules/shoppinglist/shoppingListMo
 
 const ShoppingListView = () => (
       <DynamicModuleLoader modules={[getShoppingListModule()]}>
+        <div>Shopping list view</div>
         <AddItem />
         <VisibleItemsList />
         <Footer />
