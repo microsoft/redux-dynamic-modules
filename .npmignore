@@ -1,4 +1,5 @@
 dist/react-redux-module.stats.html
+example/
 lib/__tests__
 node_modules/
 src/
