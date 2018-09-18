@@ -1,5 +1,5 @@
 import React from 'react'
-import FilterLink from '../../containers/root/FilterLink'
+import FilterLink from '../../containers/shoppinglist/FilterItemLink'
 import { VisibilityFilters } from '../../modules/shoppinglist/actions'
 
 class Footer extends React.Component {

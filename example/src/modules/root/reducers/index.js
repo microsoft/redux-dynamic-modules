@@ -1,10 +1,11 @@
 const rootReducer = (state = "", action) => {
   switch (action.type) {
     case 'SHOW_VIEW':
-      return action.payload
+      debugger;
+      return action.text;
     default:
-      return state
+      return state;
   }
 }
 
-export default rootReducer
+export default rootReducer;
