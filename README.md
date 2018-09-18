@@ -2,11 +2,19 @@
 **redux-dynamic-modules** is a library that aims to make Redux Reducers and Sagas easy to modularize and add/remove dynamically. 
 
 ## Motivation
-In large React/Redux applications, oftentimes you will have portions of your state that serve distinct purposes. For example, you might have a reducer and saga that manages `Users` in your application, or another set that manages `Todos`. These can be split up into a `UserModule` and a `TodoModule`. 
+In large React/Redux applications, oftentimes you will have portions of your state that serve distinct purposes. For example, you might have a reducer and saga that manages `Shopping list` in your application, or another set that manages `Todos`. These can be split up into a `ShoppinglistModule` and a `TodoModule`. 
 
 Modules provide the following benefits:
 * They can be easily re-used across the application, or between multiple similar applications.
 * They can be added/removed from the store dynamically, ex. when a component mounts or when a user performs and action
+
+## Frequently asked questions
+1) Do we have to use [redux-saga](https://redux-saga.js.org/)?
+
+    No, you don't have to use it, but currently this is the only middleware supported.
+    
+    In our investigation we found `redux-saga` to be most suitable library for the large applications. We are open for feedback and if it becomes a blocking issues for using redux-dynamic-modules we can make necessary changes to plug any other middleware. Please create an issue and will try to respond quickly.
+
 
 # Getting Started
 ## Install
