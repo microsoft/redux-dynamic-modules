@@ -28,7 +28,7 @@ export class DynamicModuleLoader<
   > {
   private _addedModules?: IDynamicallyAddedModule;
 
-  /* @ts-ignore */
+  // @ts-ignore 
   private static contextTypes = {
     store: PropTypes.object
   };
