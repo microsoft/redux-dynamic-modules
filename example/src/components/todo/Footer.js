@@ -2,9 +2,7 @@ import React from 'react'
 import FilterLink from '../../containers/todo/FilterLink'
 import { VisibilityFilters } from '../../modules/todo/actions'
 
-class Footer extends React.Component {
-  render() {
-  return (
+const Footer = () => (
   <div>
     <span>Show: </span>
     <FilterLink filter={VisibilityFilters.SHOW_ALL}>
@@ -18,6 +16,5 @@ class Footer extends React.Component {
     </FilterLink>
   </div>
 )
-  }
-}
+
 export default Footer

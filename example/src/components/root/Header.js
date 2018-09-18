@@ -2,9 +2,7 @@ import React from 'react'
 import FilterLink from '../../containers/root/FilterLink'
 import { VisibilityFilters } from '../../modules/root/actions'
 
-class Header extends React.Component {
-  render() {
-     return  (
+const Header = () => (
             <div>
               <span>Show: </span>
               <FilterLink filter={VisibilityFilters.SHOW_TOOD}>
@@ -14,7 +12,6 @@ class Header extends React.Component {
                 Shopping List
               </FilterLink>
             </div>
-          )
-     }
-}
+          );
+     
 export default Header

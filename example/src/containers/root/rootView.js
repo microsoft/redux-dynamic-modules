@@ -4,15 +4,11 @@ import { getRootModule } from '../../modules/root/rootModule';
 import Header from '../../components/root/Header';
 import Views from "./Views"
 
-class Rootview extends React.Component {
-   render() {
-      return (
+const Rootview = () => (
           <DynamicModuleLoader modules={[getRootModule()]}>
             <Header />
             <Views />
           </DynamicModuleLoader>
         );
-      }
-}
-
+      
 export default Rootview

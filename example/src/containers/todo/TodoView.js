@@ -5,15 +5,12 @@ import VisibleTodoList from './VisibleTodoList';
 import Footer from '../../components/todo/Footer';
 import { getTodoModule } from '../../modules/todo/todoModule';
 
-class TodoView extends React.Component {
-   render() {
-      return (
+const TodoView = () => (
           <DynamicModuleLoader modules={[getTodoModule()]}>
             <AddTodo />
             <VisibleTodoList />
             <Footer />
           </DynamicModuleLoader>
      )
-  }
-}
+  
 export default TodoView

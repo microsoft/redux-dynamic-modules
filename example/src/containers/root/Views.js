@@ -15,17 +15,15 @@ const mapStateToProps = (state) => {
     }
 }
 
-class Views extends React.Component {
-    render = () => {
-        if (this.props.visibilityFilter === VisibilityFilters.SHOW_TOOD) {
+const Views = ({visibilityFilter}) => {
+        if (visibilityFilter === VisibilityFilters.SHOW_TOOD) {
             return <TodoView / >
         }
-        if (this.props.visibilityFilter === VisibilityFilters.SHOW_SHOPPING_LIST) {
+        if (visibilityFilter === VisibilityFilters.SHOW_SHOPPING_LIST) {
             return <ShoppingListView / >
         }
         return null;
     }
-}
 Views.propTypes = {
     visibilityFilter: PropTypes.string.isRequired
 };

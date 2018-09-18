@@ -5,16 +5,12 @@ import VisibleItemsList from './VisibleItemsList';
 import Footer from '../../components/shoppinglist/Footer';
 import { getShoppingListModule } from '../../modules/shoppinglist/shoppingListModule';
 
-class ShoppingListView extends React.Component {
-  render() {
-      return (
+const ShoppingListView = () => (
       <DynamicModuleLoader modules={[getShoppingListModule()]}>
         <AddItem />
         <VisibleItemsList />
         <Footer />
       </DynamicModuleLoader>
-      )
-  }
-}
+      );
 
 export default ShoppingListView
