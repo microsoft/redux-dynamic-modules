@@ -1,64 +1,7 @@
 {
-  "name": "redux-dynamic-modules",
-  "version": "0.0.6",
-  "description": "Modularize the redux app by dynamically loading reducers, state and sagas",
-  "repository": {
-    "type": "github",
-    "url": "https://github.com/Microsoft/redux-dynamic-modules"
-  },
-  "main": "lib/index.js",
-  "types": "lib/index.d.ts",
-  "scripts": {
-    "build:dev": "npm run clean && tsc && webpack --mode development --display-modules --progress --display-error-details",
-    "build:prod": "npm run clean && tsc && webpack --mode production --display-modules --progress --display-error-details",
-    "clean": "rimraf lib/ dist/",
-    "test": "jest"
-  },
-  "keywords": [
-    "react",
-    "redux",
-    "module",
-    "dynamic",
-    "load"
-  ],
-  "author": "Navneet Gupta (Microsoft)",
-  "license": "MIT",
+  "name": "root",
+  "private": true,
   "devDependencies": {
-    "@types/jest": "^23.3.1",
-    "@types/react": "^16.4.13",
-    "@types/react-redux": "^6.0.6",
-    "jest": "^23.5.0",
-    "react": "^16.4.2",
-    "react-redux": "^5.0.7",
-    "redux": "^4.0.0",
-    "redux-saga": "^0.16.0",
-    "rimraf": "^2.6.2",
-    "ts-jest": "^23.1.4",
-    "tslib": "^1.9.3",
-    "tslint": "^5.11.0",
-    "typescript": "^3.0.3",
-    "uglifyjs-webpack-plugin": "^1.3.0",
-    "webpack": "^4.17.1",
-    "webpack-bundle-analyzer": "^2.13.1",
-    "webpack-cli": "^3.1.0"
-  },
-  "jest": {
-    "transform": {
-      "^.+\\.tsx?$": "ts-jest"
-    },
-    "verbose": false,
-    "testRegex": "(/__tests__/.*|(\\.|/)(test|spec))\\.(jsx?|tsx?)$",
-    "moduleFileExtensions": [
-      "ts",
-      "tsx",
-      "js",
-      "jsx",
-      "json",
-      "node"
-    ]
-  },
-  "dependencies": {
-    "@types/redux": "^3.6.0",
-    "@types/redux-saga": "^0.10.5"
+    "lerna": "^3.4.0"
   }
 }
