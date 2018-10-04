@@ -1,5 +1,5 @@
 import { default as createSagaMiddleware, SagaMiddleware } from "redux-saga";
-import { IModule, IPlugin, IItemManager, getRefCountedManager } from "redux-dynamic-modules";
+import { IPlugin, IItemManager, getRefCountedManager } from "redux-dynamic-modules";
 import { ISagaRegistration, ISagaModule } from "./Contracts";
 import { getSagaManager } from "./SagaManager";
 import { sagaEquals } from "./SagaComparer";
