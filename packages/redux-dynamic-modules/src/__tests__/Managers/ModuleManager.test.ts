@@ -1,18 +1,8 @@
 import { getModuleManager } from "../../Managers/ModuleManager";
-function getSagaMiddleware(callback) {
-    return {
-        run: () => {
-            return {
-                cancel: callback
-            }
-        }
-    };
-}
 
 it("module manager tests", () => {
     let taskCancellationCounter = 0;
-    const taskCancelCallback = () => taskCancellationCounter++;
-    const moduleManager = getModuleManager(getSagaMiddleware(taskCancelCallback) as any);
+    const moduleManager = getModuleManager();
     let actionsDispatched = [];
 
     moduleManager.setDispatch((action) => {

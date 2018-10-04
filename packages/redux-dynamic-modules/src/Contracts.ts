@@ -15,11 +15,6 @@ export interface IModule<State> {
   reducerMap?: ReducersMapObject<State, AnyAction>;
 
   /**
-   * These sagas are executed immediatly after adding the module to the store (before dispatching initial actions)
-   */
-  sagas?: ISagaRegistration<any>[];
-
-  /**
    * These actions are dispatched immediatly after adding the module in the store
    */
   initialActions?: AnyAction[];
@@ -30,12 +25,11 @@ export interface IModule<State> {
   finalActions?: AnyAction[];
 }
 
-export interface ISagaWithArguments<T> {
-  saga: (argument?: T) => Iterator<any>;
-  argument?: T;
+export interface IPlugin {
+  middleware?: any[];
+  onModuleAdded?: (module: IModule<any>) => void;
+  onModuleRemoved?: (module: IModule<any>) => void;
 }
-
-export type ISagaRegistration<T> = (() => Iterator<any>) | ISagaWithArguments<T>;
 
 export interface IDynamicallyAddedModule {
   /**

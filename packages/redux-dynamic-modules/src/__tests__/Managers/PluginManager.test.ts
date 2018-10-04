@@ -50,7 +50,7 @@ it("plugin manager tests", async (done) => {
             pluginEndMessage = true;
         }
     };
-    const moduleStore: IModuleStore<state> = configureStore({ id: 10 }, {}, module);
+    const moduleStore: IModuleStore<state> = configureStore({ id: 10 }, [], module);
     const dispatched = [];
 
     const pluginManager = getPluginManager(moduleStore, pluginRegistry, ["plugin1"], processMessageFromPlugin);
