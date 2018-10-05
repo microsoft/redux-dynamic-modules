@@ -21,7 +21,7 @@ export function configureStore<SagaContext, State>(initialState: DeepPartial<Sta
     extensions = [];
   }
 
-  const pluginMiddleware = extensions.reduce(
+  const extensionMiddleware = extensions.reduce(
     (mw, p) => {
       if (p.middleware) {
         mw.push(...p.middleware)
@@ -34,7 +34,7 @@ export function configureStore<SagaContext, State>(initialState: DeepPartial<Sta
 
   const composeEnhancers = compose;
   const middlewareManager = getRefCountedManager(getMiddlewareManager(), (a, b) => a === b);
-  const enhancer = composeEnhancers(applyMiddleware(...pluginMiddleware, middlewareManager.dynamicMiddleware));
+  const enhancer = composeEnhancers(applyMiddleware(...extensionMiddleware, middlewareManager.dynamicMiddleware));
   const modules = getRefCountedManager(getModuleManager<State>(middlewareManager, extensions), (a: IModule<any>, b: IModule<any>) => a.id === b.id);
 
   // Create store
@@ -71,6 +71,7 @@ export function configureStore<SagaContext, State>(initialState: DeepPartial<Sta
   store.dispose = () => {
     // get all added modules and remove them
     modules.dispose();
+    middlewareManager.dispose();
     extensions.forEach(p => {
       if (p.dispose) {
         p.dispose();
