@@ -70,8 +70,7 @@ export function configureStore<SagaContext, State>(initialState: DeepPartial<Sta
 
   store.dispose = () => {
     // get all added modules and remove them
-    const allModules = modules.getItems();
-    modules.remove(allModules);
+    modules.dispose();
     extensions.forEach(p => {
       if (p.dispose) {
         p.dispose();
