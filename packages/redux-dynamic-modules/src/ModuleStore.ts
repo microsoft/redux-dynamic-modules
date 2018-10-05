@@ -47,22 +47,28 @@ export function configureStore<SagaContext, State>(initialState: DeepPartial<Sta
 
   modules.setDispatch(store.dispatch);
 
-  const addModule = (...moduleToBeAdded: IModule<any>[]) => {
-
-    modules.add(moduleToBeAdded);
+  const addModules = (modulesToBeAdded: IModule<any>[]) => {
+    modules.add(modulesToBeAdded);
     return {
       remove: () => {
-        modules.remove(moduleToBeAdded);
+        modules.remove(modulesToBeAdded);
       }
     };
+  }
+
+  const addModule = (moduleToBeAdded: IModule<any>) => {
+    return addModules([moduleToBeAdded]);
   };
 
-  // // Add the module manager to the context
-  // context["moduleManager"] = {
-  //   addModule
-  // };
+  plugins.forEach(p => {
+    if (p.onModuleManagerCreated) {
+      p.onModuleManagerCreated({
+        addModule,
+        addModules
+      });
+    }
+  });
 
-  store.addModule = addModule;
   store.dispose = () => {
     // get all added modules and remove them
     const allModules = modules.getItems();
@@ -70,7 +76,7 @@ export function configureStore<SagaContext, State>(initialState: DeepPartial<Sta
   };
 
 
-  store.addModule(...initialModules);
+  store.addModules(initialModules);
 
   return store as IModuleStore<State>;
 }
