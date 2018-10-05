@@ -72,6 +72,11 @@ export function configureStore<SagaContext, State>(initialState: DeepPartial<Sta
     // get all added modules and remove them
     const allModules = modules.getItems();
     modules.remove(allModules);
+    plugins.forEach(p => {
+      if (p.dispose) {
+        p.dispose();
+      }
+    });
   };
 
 

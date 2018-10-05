@@ -7,7 +7,7 @@ import { sagaEquals } from "./SagaComparer";
 export function getSagaPlugin<C>(sagaContext?: C): IPlugin {
     // setup the saga middleware
     const sagaMonitor = window["__SAGA_MONITOR_EXTENSION__"] || undefined;
-    const sagaMiddleware: SagaMiddleware<C> = createSagaMiddleware<any>(
+    let sagaMiddleware: SagaMiddleware<C> = createSagaMiddleware<any>(
         {
             context: sagaContext,
             sagaMonitor
@@ -33,6 +33,10 @@ export function getSagaPlugin<C>(sagaContext?: C): IPlugin {
             if (module.sagas) {
                 _sagaManager.remove(module.sagas);
             }
+        },
+
+        dispose: () => {
+            sagaMiddleware = null;
         }
     }
 }

@@ -32,10 +32,11 @@ export interface IModule<State> {
 }
 
 export interface IPlugin {
-  middleware?: any[];
-  onModuleManagerCreated?: (moduleManager: IModuleManager) => void;
-  onModuleAdded?: (module: IModule<any>) => void;
-  onModuleRemoved?: (module: IModule<any>) => void;
+    middleware?: any[];
+    onModuleManagerCreated?: (moduleManager: IModuleManager) => void;
+    onModuleAdded?: (module: IModule<any>) => void;
+    onModuleRemoved?: (module: IModule<any>) => void;
+    dispose?: () => void;
 }
 
 export interface IDynamicallyAddedModule {
@@ -46,11 +47,11 @@ export interface IDynamicallyAddedModule {
 }
 
 export interface IModuleManager {
-  /**
-   * Add the given module to the store
-   */
-  addModule: (module: IModule<any>) => IDynamicallyAddedModule
-  addModules: (modules: IModule<any>[]) => IDynamicallyAddedModule;
+    /**
+     * Add the given module to the store
+     */
+    addModule: (module: IModule<any>) => IDynamicallyAddedModule
+    addModules: (modules: IModule<any>[]) => IDynamicallyAddedModule;
 }
 
 export type IModuleStore<State> = Store<State> & IModuleManager & {
