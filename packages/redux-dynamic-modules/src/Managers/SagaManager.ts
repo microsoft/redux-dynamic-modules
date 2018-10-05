@@ -31,7 +31,8 @@ export function getSagaManager(sagaMiddleware: SagaMiddleware<any>): IItemManage
                     task.cancel();
                 }
             });
-        }
+        },
+        dispose: () => { }
     };
 }
 

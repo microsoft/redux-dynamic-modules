@@ -3,6 +3,7 @@ import { default as createSagaMiddleware, SagaMiddleware } from "redux-saga";
 import { IModule, IModuleStore } from "./Contracts";
 import { getModuleManager } from "./Managers/ModuleManager";
 import { getRefCountedManager } from "./Managers/RefCountedManager";
+import { getMiddlewareManager } from './Managers/MiddlewareManager';
 
 /**
  * Configure the module store
@@ -27,8 +28,9 @@ export function configureStore<SagaContext, State>(initialState: DeepPartial<Sta
   );
 
   const composeEnhancers = compose;
-  const enhancer = composeEnhancers(applyMiddleware(sagaMiddleware));
-  const modules = getRefCountedManager(getModuleManager<SagaContext, State>(sagaMiddleware), (a: IModule<any>, b: IModule<any>) => a.id === b.id);
+  const middlewareManager = getRefCountedManager(getMiddlewareManager(), (a, b) => a === b);
+  const enhancer = composeEnhancers(applyMiddleware(sagaMiddleware, middlewareManager.dynamicMiddleware));
+  const modules = getRefCountedManager(getModuleManager<SagaContext, State>(sagaMiddleware, middlewareManager), (a: IModule<any>, b: IModule<any>) => a.id === b.id);
 
   // Create store
   const store: IModuleStore<State> = createStore<State, any, {}, {}>(
