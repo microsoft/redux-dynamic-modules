@@ -2,7 +2,9 @@ import { getModuleManager } from "../../Managers/ModuleManager";
 
 it("module manager tests", () => {
     let taskCancellationCounter = 0;
-    const moduleManager = getModuleManager([]);
+    const taskCancelCallback = () => taskCancellationCounter++;
+    const middlewareManager = getMiddlewareManager();
+    const moduleManager = getModuleManager([], middlewareManager);
     let actionsDispatched = [];
 
     moduleManager.setDispatch((action) => {

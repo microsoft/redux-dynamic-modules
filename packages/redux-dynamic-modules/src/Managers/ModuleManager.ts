@@ -1,5 +1,5 @@
 import { IModule, IItemManager, IPlugin } from "../Contracts";
-import { AnyAction, ReducersMapObject, Dispatch, Reducer } from "redux";
+import { AnyAction, ReducersMapObject, Dispatch, Middleware, Reducer } from "redux";
 import { getReducerManager, IReducerManager, getRefCountedReducerManager } from "./ReducerManager";
 
 export interface IModuleManager<State> extends IItemManager<IModule<State>> {
@@ -7,10 +7,11 @@ export interface IModuleManager<State> extends IItemManager<IModule<State>> {
     getReducer: (state: State, action: AnyAction) => State;
 }
 
-export function getModuleManager<State>(plugins: IPlugin[]): IModuleManager<State> {
+export function getModuleManager<State>(middlewareManager: IItemManager<Middleware>, plugins: IPlugin[]): IModuleManager<State> {
     let _dispatch = null;
     let _reducerManager: IReducerManager<State>;
-    const _addedModules: Set<any> = new Set();
+    let modules: IModule<any>[] = [];
+    const _moduleIds = new Set();
 
     const _dispatchActions = (moduleId: string, actions: AnyAction[]) => {
         if (!actions) {
@@ -22,6 +23,20 @@ export function getModuleManager<State>(plugins: IPlugin[]): IModuleManager<Stat
         }
 
         actions.forEach(_dispatch);
+    }
+
+    const _addMiddlewares = (middlewares: Middleware[]) => {
+        if (!middlewares) {
+            return;
+        }
+        middlewareManager.add(middlewares);
+    }
+
+    const _removeMiddlewares = (middlewares: Middleware[]) => {
+        if (!middlewares) {
+            return;
+        }
+        middlewareManager.remove(middlewares);
     }
 
     const _addReducers = (reducerMap: ReducersMapObject<Reducer, AnyAction>) => {
@@ -53,7 +68,7 @@ export function getModuleManager<State>(plugins: IPlugin[]): IModuleManager<Stat
         return (s || null);
     };
 
-    return {
+    const moduleManager = {
         getReducer: _reduce,
         setDispatch: (dispatch: Dispatch<AnyAction>) => {
             _dispatch = dispatch;
@@ -67,9 +82,13 @@ export function getModuleManager<State>(plugins: IPlugin[]): IModuleManager<Stat
             const justAddedModules: IModule<any>[] = [];
 
             modulesToAdd.forEach(module => {
-                if (!_addedModules.has(module.id)) {
-                    _addedModules.add(module.id);
+                if (!_moduleIds.has(module.id)) {
+                    _moduleIds.add(module.id);
                     _addReducers(module.reducerMap);
+                    const middlewares = module.middlewares;
+                    if (middlewares) {
+                        _addMiddlewares(middlewares);
+                    }
                     justAddedModules.push(module);
                 }
             });
@@ -97,11 +116,11 @@ export function getModuleManager<State>(plugins: IPlugin[]): IModuleManager<Stat
             modulesToRemove = modulesToRemove.filter(module => module);
             modulesToRemove.forEach(module => {
 
-                if (_addedModules.has(module.id)) {
+                if (_moduleIds.has(module.id)) {
                     _dispatchActions(module.id, module.finalActions);
 
                     _removeReducers(module.reducerMap);
-
+                    _removeMiddlewares(module.middlewares);
                     // Let the plugins know we removed a module
                     plugins.forEach(p => {
                         if (p.onModuleRemoved) {
@@ -109,11 +128,16 @@ export function getModuleManager<State>(plugins: IPlugin[]): IModuleManager<Stat
                         }
                     });
 
-                    _addedModules.delete(module.id);
+                     _moduleIds.delete(module.id);
+                    modules = modules.filter(m => m.id !== module.id);
 
                     _dispatch && _dispatch({ type: "@@Internal/ModuleManager/ModuleRemoved" });
                 }
             });
+        },
+        dispose: () => {
+            moduleManager.remove(modules);
         }
     };
+    return moduleManager;
 }

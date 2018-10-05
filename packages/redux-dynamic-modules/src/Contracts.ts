@@ -1,28 +1,34 @@
-import { AnyAction, ReducersMapObject, Store } from "redux";
+import { AnyAction, ReducersMapObject, Store, Middleware } from "redux";
 
 /**
- * Represents a module which is set of reducers, sagas, inital actions and final actions
+ * Represents a module which is set of reducers, sagas, initial actions and final actions
  */
 export interface IModule<State> {
-  /**
-   * Id of the module
-   */
-  id: string;
+    /**
+     * Id of the module
+     */
+    id: string;
 
-  /**
-   * Reducers for the module
-   */
-  reducerMap?: ReducersMapObject<State, AnyAction>;
+    /**
+     * Reducers for the module
+     */
+    reducerMap?: ReducersMapObject<State, AnyAction>;
 
-  /**
-   * These actions are dispatched immediatly after adding the module in the store
-   */
-  initialActions?: AnyAction[];
+    /**
+     * Middlewares to add to the store
+     */
+    middlewares?: Middleware[];
 
-  /**
-   * These actions are dispatched immediatly before removing the module from the store
-   */
-  finalActions?: AnyAction[];
+
+    /**
+     * These actions are dispatched immediately after adding the module in the store
+     */
+    initialActions?: AnyAction[];
+
+    /**
+     * These actions are dispatched immediatly before removing the module from the store
+     */
+    finalActions?: AnyAction[];
 }
 
 export interface IPlugin {
@@ -33,10 +39,10 @@ export interface IPlugin {
 }
 
 export interface IDynamicallyAddedModule {
-  /**
-   * Call to remove the module from the store
-   */
-  remove: () => void;
+    /**
+     * Call to remove the module from the store
+     */
+    remove: () => void;
 }
 
 export interface IModuleManager {
@@ -48,14 +54,15 @@ export interface IModuleManager {
 }
 
 export type IModuleStore<State> = Store<State> & IModuleManager & {
-  /**
-   * Remove all the modules from the store
-   */
-  dispose: () => void;
+    /**
+     * Remove all the modules from the store
+     */
+    dispose: () => void;
 };
 
 export interface IItemManager<T> {
-  getItems: () => T[];
-  add: (items: T[]) => void;
-  remove: (item: T[]) => void;
+    getItems: () => T[];
+    add: (items: T[]) => void;
+    remove: (item: T[]) => void;
+    dispose: () => void;
 }
