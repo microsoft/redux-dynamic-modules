@@ -1,7 +1,7 @@
 import { AnyAction, ReducersMapObject, Store, Middleware } from "redux";
 
 /**
- * Represents a module which is set of reducers, sagas, inital actions and final actions
+ * Represents a module which is set of reducers, sagas, initial actions and final actions
  */
 export interface IModule<State> {
     /**
