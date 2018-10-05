@@ -19,10 +19,6 @@ export interface IModule<State> {
      */
     middlewares?: Middleware[];
 
-    /**
-     * These sagas are executed immediately after adding the module to the store (before dispatching initial actions)
-     */
-    sagas?: ISagaRegistration<any>[];
 
     /**
      * These actions are dispatched immediately after adding the module in the store
@@ -35,12 +31,13 @@ export interface IModule<State> {
     finalActions?: AnyAction[];
 }
 
-export interface ISagaWithArguments<T> {
-    saga: (argument?: T) => Iterator<any>;
-    argument?: T;
+export interface IExtension {
+    middleware?: any[];
+    onModuleManagerCreated?: (moduleManager: IModuleManager) => void;
+    onModuleAdded?: (module: IModule<any>) => void;
+    onModuleRemoved?: (module: IModule<any>) => void;
+    dispose?: () => void;
 }
-
-export type ISagaRegistration<T> = (() => Iterator<any>) | ISagaWithArguments<T>;
 
 export interface IDynamicallyAddedModule {
     /**
@@ -53,7 +50,8 @@ export interface IModuleManager {
     /**
      * Add the given module to the store
      */
-    addModule: (...modules: IModule<any>[]) => IDynamicallyAddedModule
+    addModule: (module: IModule<any>) => IDynamicallyAddedModule
+    addModules: (modules: IModule<any>[]) => IDynamicallyAddedModule;
 }
 
 export type IModuleStore<State> = Store<State> & IModuleManager & {

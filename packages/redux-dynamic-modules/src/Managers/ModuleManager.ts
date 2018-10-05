@@ -1,23 +1,15 @@
-import { AnyAction, Dispatch, Middleware, Reducer, ReducersMapObject } from "redux";
-import { SagaMiddleware } from "redux-saga";
-import { IItemManager, IModule, ISagaRegistration } from "../Contracts";
-import { equals as sagaEquals } from "../Utils/SagaComparer";
-import { getReducerManager, getRefCountedReducerManager, IReducerManager } from "./ReducerManager";
-import { getRefCountedManager } from "./RefCountedManager";
-import { getSagaManager } from "./SagaManager";
+import { IModule, IItemManager, IExtension } from "../Contracts";
+import { AnyAction, ReducersMapObject, Dispatch, Middleware, Reducer } from "redux";
+import { getReducerManager, IReducerManager, getRefCountedReducerManager } from "./ReducerManager";
 
 export interface IModuleManager<State> extends IItemManager<IModule<State>> {
     setDispatch: (dispatch: Dispatch<AnyAction>) => void;
     getReducer: (state: State, action: AnyAction) => State;
 }
 
-export function getModuleManager<SagaContext, State>(
-    sagaMiddleware: SagaMiddleware<SagaContext>,
-    middlewareManager: IItemManager<Middleware>): IModuleManager<State> {
-
+export function getModuleManager<State>(middlewareManager: IItemManager<Middleware>, extensions: IExtension[]): IModuleManager<State> {
     let _dispatch = null;
     let _reducerManager: IReducerManager<State>;
-    const _sagaManager: IItemManager<ISagaRegistration<any>> = getRefCountedManager(getSagaManager(sagaMiddleware), sagaEquals);
     let modules: IModule<any>[] = [];
     const _moduleIds = new Set();
 
@@ -31,20 +23,6 @@ export function getModuleManager<SagaContext, State>(
         }
 
         actions.forEach(_dispatch);
-    }
-
-    const _addSagas = (sagas: ISagaRegistration<any>[]) => {
-        if (!sagas) {
-            return;
-        }
-        _sagaManager.add(sagas);
-    }
-
-    const _removeSagas = (sagas: ISagaRegistration<any>[]) => {
-        if (!sagas) {
-            return;
-        }
-        _sagaManager.remove(sagas);
     }
 
     const _addMiddlewares = (middlewares: Middleware[]) => {
@@ -121,8 +99,14 @@ export function getModuleManager<SagaContext, State>(
             justAddedModules.forEach(module => {
                 // Running the sagas after registering the reducers as they sagas themselve might dispatch actions
                 // and we want all reducers to be registered before dispatching any actions
-                _addSagas(module.sagas);
                 _dispatchActions(module.id, module.initialActions);
+
+                // Let the extensions know we added a module
+                extensions.forEach(p => {
+                    if (p.onModuleAdded) {
+                        p.onModuleAdded(module);
+                    }
+                });
             });
         },
         remove: (modulesToRemove: IModule<any>[]) => {
@@ -137,9 +121,16 @@ export function getModuleManager<SagaContext, State>(
 
                     _removeReducers(module.reducerMap);
                     _removeMiddlewares(module.middlewares);
-                    _removeSagas(module.sagas);
+                    // Let the extensions know we removed a module
+                    extensions.forEach(p => {
+                        if (p.onModuleRemoved) {
+                            p.onModuleRemoved(module);
+                        }
+                    });
+
                     _moduleIds.delete(module.id);
                     modules = modules.filter(m => m.id !== module.id);
+
                     _dispatch && _dispatch({ type: "@@Internal/ModuleManager/ModuleRemoved" });
                 }
             });

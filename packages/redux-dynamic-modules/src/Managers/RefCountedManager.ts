@@ -5,7 +5,7 @@ import { IItemManager } from "../Contracts";
  * Enhances the given items with ref counting for add remove purposes
  */
 export function getRefCountedManager<IType extends IItemManager<T>, T>(manager: IType, equals: (a: T, b: T) => boolean): IType {
-    const refCounter = getObjectRefCounter<T>(equals);
+    let refCounter = getObjectRefCounter<T>(equals);
     const items = manager.getItems();
     // Set initial ref counting
     items.forEach(item => refCounter.add(item));
@@ -39,5 +39,12 @@ export function getRefCountedManager<IType extends IItemManager<T>, T>(manager: 
             }
         });
     }
+
+    ret.dispose = () => {
+        manager.dispose();
+        refCounter = null;
+        manager = null;
+    }
+
     return ret;
 }

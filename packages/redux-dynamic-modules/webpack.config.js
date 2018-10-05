@@ -2,7 +2,6 @@ let webpack = require("webpack");
 let BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 
 module.exports = (env, argv) => {
-
     let mode_env = argv.mode || 'development';
 
     return {
@@ -27,6 +26,10 @@ module.exports = (env, argv) => {
                 analyzerMode: 'static',
                 reportFilename: `react-redux-module.stats.html`,
                 openAnalyzer: false
+            }),
+            new webpack.DefinePlugin({
+                __DEV__: mode_env === "development",
+                __RELEASE__: mode_env === "production"
             })
         ]
     };

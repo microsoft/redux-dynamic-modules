@@ -1,20 +1,9 @@
 import { getModuleManager } from "../../Managers/ModuleManager";
-import { getMiddlewareManager } from '../../Managers/MiddlewareManager';
-function getSagaMiddleware(callback) {
-    return {
-        run: () => {
-            return {
-                cancel: callback
-            }
-        }
-    };
-}
+import { getMiddlewareManager } from "../../Managers/MiddlewareManager";
 
 it("module manager tests", () => {
-    let taskCancellationCounter = 0;
-    const taskCancelCallback = () => taskCancellationCounter++;
     const middlewareManager = getMiddlewareManager();
-    const moduleManager = getModuleManager(getSagaMiddleware(taskCancelCallback) as any, middlewareManager);
+    const moduleManager = getModuleManager(middlewareManager, []);
     let actionsDispatched = [];
 
     moduleManager.setDispatch((action) => {
@@ -58,16 +47,12 @@ it("module manager tests", () => {
 
     // Test final actions are dispatched for module1
     expect(actionsDispatched).toEqual(["@@Internal/ModuleManager/ReducerAdded", "initial1", "initial11", "@@Internal/ModuleManager/ReducerAdded", "initial2", "initial21", "final1", "final11", "@@Internal/ModuleManager/ModuleRemoved"]);
-    // Ensure that the task is not cancelled as the saga should be referenc counted
-    expect(taskCancellationCounter).toBe(0);
 
     // Remove Module1 again
     moduleManager.remove([module1]);
 
     // Test no additional actions are dispatched
     expect(actionsDispatched).toEqual(["@@Internal/ModuleManager/ReducerAdded", "initial1", "initial11", "@@Internal/ModuleManager/ReducerAdded", "initial2", "initial21", "final1", "final11", "@@Internal/ModuleManager/ModuleRemoved"]);
-    // Ensure that the task is not cancelled as the saga should be referenc counted
-    expect(taskCancellationCounter).toBe(0);
 
     // Remove Module2
     moduleManager.remove([module2]);
@@ -75,8 +60,6 @@ it("module manager tests", () => {
     // Test no additional actions are dispatched
     expect(actionsDispatched).toEqual(["@@Internal/ModuleManager/ReducerAdded", "initial1", "initial11", "@@Internal/ModuleManager/ReducerAdded", "initial2", "initial21", "final1", "final11", "@@Internal/ModuleManager/ModuleRemoved", "final2", "final21", "@@Internal/ModuleManager/ModuleRemoved"]);
 
-    // Ensure that the saga task is cancelled
-    expect(taskCancellationCounter).toBe(1);
 });
 
 export function* saga1() {

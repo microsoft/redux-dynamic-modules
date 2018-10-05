@@ -6,8 +6,8 @@
     "type": "github",
     "url": "https://github.com/Microsoft/redux-dynamic-modules"
   },
-  "main": "lib/index.js",
-  "types": "lib/index.d.ts",
+  "main": "./lib/index.js",
+  "types": "./lib/index.d.ts",
   "scripts": {
     "build:dev": "npm run clean && tsc && webpack --mode development --display-modules --progress --display-error-details",
     "build:prod": "npm run clean && tsc && webpack --mode production --display-modules --progress --display-error-details",
@@ -27,11 +27,11 @@
     "@types/jest": "^23.3.1",
     "@types/react": "^16.4.13",
     "@types/react-redux": "^6.0.6",
+    "@types/redux": "^3.6.0",
     "jest": "^23.5.0",
     "react": "^16.4.2",
     "react-redux": "^5.0.7",
     "redux": "^4.0.0",
-    "redux-saga": "^0.16.0",
     "rimraf": "^2.6.2",
     "ts-jest": "^23.1.4",
     "tslib": "^1.9.3",
@@ -60,8 +60,10 @@
       "node"
     ]
   },
-  "dependencies": {
-    "@types/redux": "^3.6.0",
-    "@types/redux-saga": "^0.10.5"
+  "dependencies": {},
+  "peerDependencies": {
+    "react": ">= 15.0.0",
+    "redux": ">= 3.0.0",
+    "react-redux": ">= 5.0.0"
   }
 }

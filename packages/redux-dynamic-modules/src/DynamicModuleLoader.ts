@@ -43,7 +43,7 @@ export class DynamicModuleLoader<
     if (!store) {
       throw new Error("Could not load store from React context.");
     }
-    this._addedModules = store.addModule(...modules);
+    this._addedModules = store.addModules(modules);
   }
 
   /**
