@@ -48,6 +48,9 @@
     },
     "verbose": false,
     "testRegex": "(/__tests__/.*|(\\.|/)(test|spec))\\.(jsx?|tsx?)$",
+    "testPathIgnorePatterns": [
+      ".*\\.d\\.ts"
+    ],
     "moduleFileExtensions": [
       "ts",
       "tsx",
