@@ -1,4 +1,4 @@
-import { IModule, IItemManager, IPlugin } from "../Contracts";
+import { IModule, IItemManager, IExtension } from "../Contracts";
 import { AnyAction, ReducersMapObject, Dispatch, Middleware, Reducer } from "redux";
 import { getReducerManager, IReducerManager, getRefCountedReducerManager } from "./ReducerManager";
 
@@ -7,7 +7,7 @@ export interface IModuleManager<State> extends IItemManager<IModule<State>> {
     getReducer: (state: State, action: AnyAction) => State;
 }
 
-export function getModuleManager<State>(middlewareManager: IItemManager<Middleware>, plugins: IPlugin[]): IModuleManager<State> {
+export function getModuleManager<State>(middlewareManager: IItemManager<Middleware>, extensions: IExtension[]): IModuleManager<State> {
     let _dispatch = null;
     let _reducerManager: IReducerManager<State>;
     let modules: IModule<any>[] = [];
@@ -101,8 +101,8 @@ export function getModuleManager<State>(middlewareManager: IItemManager<Middlewa
                 // and we want all reducers to be registered before dispatching any actions
                 _dispatchActions(module.id, module.initialActions);
 
-                // Let the plugins know we added a module
-                plugins.forEach(p => {
+                // Let the extensions know we added a module
+                extensions.forEach(p => {
                     if (p.onModuleAdded) {
                         p.onModuleAdded(module);
                     }
@@ -121,14 +121,14 @@ export function getModuleManager<State>(middlewareManager: IItemManager<Middlewa
 
                     _removeReducers(module.reducerMap);
                     _removeMiddlewares(module.middlewares);
-                    // Let the plugins know we removed a module
-                    plugins.forEach(p => {
+                    // Let the extensions know we removed a module
+                    extensions.forEach(p => {
                         if (p.onModuleRemoved) {
                             p.onModuleRemoved(module);
                         }
                     });
 
-                     _moduleIds.delete(module.id);
+                    _moduleIds.delete(module.id);
                     modules = modules.filter(m => m.id !== module.id);
 
                     _dispatch && _dispatch({ type: "@@Internal/ModuleManager/ModuleRemoved" });

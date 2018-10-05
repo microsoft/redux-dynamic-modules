@@ -31,7 +31,7 @@ export interface IModule<State> {
     finalActions?: AnyAction[];
 }
 
-export interface IPlugin {
+export interface IExtension {
     middleware?: any[];
     onModuleManagerCreated?: (moduleManager: IModuleManager) => void;
     onModuleAdded?: (module: IModule<any>) => void;
