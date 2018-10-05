@@ -1,6 +1,6 @@
 {
   "name": "redux-dynamic-modules",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "description": "Modularize the redux app by dynamically loading reducers, state and sagas",
   "repository": {
     "type": "github",
@@ -21,7 +21,7 @@
     "dynamic",
     "load"
   ],
-  "author": "Navneet Gupta (Microsoft)",
+  "author": "Navneet Gupta (Microsoft), Alex Bettadapur (Microsoft)",
   "license": "MIT",
   "devDependencies": {
     "@types/jest": "^23.3.1",

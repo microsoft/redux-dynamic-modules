@@ -1,7 +1,7 @@
 {
     "name": "redux-dynamic-modules-saga",
     "version": "0.0.6",
-    "description": "Modularize the redux app by dynamically loading reducers, state and sagas",
+    "description": "Saga Extension for redux-dynamic-modules",
     "repository": {
         "type": "github",
         "url": "https://github.com/Microsoft/redux-dynamic-modules"
@@ -21,7 +21,7 @@
         "dynamic",
         "load"
     ],
-    "author": "Navneet Gupta (Microsoft)",
+    "author": "Navneet Gupta (Microsoft), Alex Bettadapur (Microsoft)",
     "license": "MIT",
     "devDependencies": {
         "@types/jest": "^23.3.1",
@@ -60,6 +60,6 @@
     },
     "peerDependencies": {
         "redux-saga": ">=0.0.16",
-        "redux-dynamic-modules": ">=0.0.6"
+        "redux-dynamic-modules": ">=0.0.7"
     }
 }
