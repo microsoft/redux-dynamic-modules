@@ -26,7 +26,9 @@ export function getSagaExtension<C>(sagaContext?: C): IExtension {
         middleware: [sagaMiddleware],
 
         onModuleManagerCreated: (moduleManager: IModuleManager) => {
-            sagaContext["moduleManager"] = moduleManager;
+            if (sagaContext) {
+                sagaContext["moduleManager"] = moduleManager;
+            }
         },
 
         onModuleAdded: (module: ISagaModule<any>): void => {

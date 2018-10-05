@@ -6,8 +6,8 @@
         "type": "github",
         "url": "https://github.com/Microsoft/redux-dynamic-modules"
     },
-    "main": "lib/index.js",
-    "types": "lib/index.d.ts",
+    "main": "./lib/index.js",
+    "types": "./lib/index.d.ts",
     "scripts": {
         "build:dev": "npm run clean && tsc && webpack --mode development --display-modules --progress --display-error-details",
         "build:prod": "npm run clean && tsc && webpack --mode development --display-error-details && webpack --mode production --display-modules --progress --display-error-details",
@@ -53,7 +53,10 @@
             "jsx",
             "json",
             "node"
-        ]
+        ],
+        "globals": {
+            "__DEV__": true
+        }
     },
     "peerDependencies": {
         "redux-saga": ">=0.0.16",

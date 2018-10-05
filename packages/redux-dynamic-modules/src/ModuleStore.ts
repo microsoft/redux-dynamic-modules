@@ -68,6 +68,9 @@ export function configureStore<SagaContext, State>(initialState: DeepPartial<Sta
     }
   });
 
+  store.addModule = addModule;
+  store.addModules = addModules;
+
   store.dispose = () => {
     // get all added modules and remove them
     modules.dispose();
