@@ -1,3 +1,9 @@
+<div>
+<img src="docs/redux-dynamic-modules.png" alt="logo" width="100">
+</img>
+<h1>Redux Dynamic Modules</h1<
+</div>
+
 ## What is it?
 **redux-dynamic-modules** is a library that aims to make Redux Reducers easy to modularize and add/remove dynamically. 
 
