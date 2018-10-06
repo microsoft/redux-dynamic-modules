@@ -1,0 +1,2 @@
+# Lifecycle Actions
+In addition to the `initialActions` and `finalActions` properties specified on the module, the `ModuleStore` will also dispatch lifecycle actions that indicate a module has been added or removed. Thes 
