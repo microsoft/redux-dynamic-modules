@@ -1,23 +1,19 @@
-# Redux Dynamic Modules
-**redux-dynamic-modules** is a library that aims to make Redux Reducers and Sagas easy to modularize and add/remove dynamically. 
-NOTE: We are making some major changes to support middlewares other than redux-saga.
+## What is it?
+**redux-dynamic-modules** is a library that aims to make Redux Reducers easy to modularize and add/remove dynamically. 
 
 ## Motivation
-In large React/Redux applications, oftentimes you will have portions of your state that serve distinct purposes. For example, you might have a reducer and saga that manages `Shopping list` in your application, or another set that manages `Todos`. These can be split up into a `ShoppinglistModule` and a `TodoModule`. 
+In large React/Redux applications, oftentimes you will have portions of your state that serve distinct purposes. For example, you might have a reducer and saga that manages `LoginState` in your application, or another set that manages `Todos`. These can be split up into a `LoginModule` and a `TodoModule`. 
 
 Modules provide the following benefits:
 * They can be easily re-used across the application, or between multiple similar applications.
-* They can be added/removed from the store dynamically, ex. when a component mounts or when a user performs and action
+* They can be added/removed from the store dynamically, ex. when a component mounts or when a user performs an action
 
-## Frequently asked questions
-1) Do we have to use [redux-saga](https://redux-saga.js.org/)?
-
-    No, you don't have to use it, but currently this is the only middleware supported.
-    
-    In our investigation we found `redux-saga` to be most suitable library for the large applications. We are open for feedback and if it becomes a blocking issues for using redux-dynamic-modules we can make necessary changes to plug any other middleware. Please create an issue and will try to respond quickly.
-
-
-# Getting Started
+## Features
+* Group together reducers, middlware, and state into a single, re-usable module.
+* Add and remove modules from a Redux store at any time.
+* Use the included `<DynamicModuleLoader />` component to automatically add a module when a component is rendered
+* Extensions provide integration with popular libraries, including `redux-saga` and `redux-observable`
+  
 ## Install
 Run 
 ```
@@ -29,8 +25,9 @@ or
 yarn add redux-dynamic-modules
 ```
 
-## Usage Example
-1. Create a module with the following format
+## Usage
+* Create a module with the following format
+
 ```typescript
 export function getUsersModule(): IModule<IUserState> {
   return {
@@ -48,8 +45,12 @@ export function getUsersModule(): IModule<IUserState> {
 
 ```
 
-2. Create a `ModuleStore`
+* Create a `ModuleStore`
+
 ```typescript
+import {configureStore, IModuleStore} from "redux-dynamic-modules";
+import {getUsersModule} from "./usersModule";
+
 const store: IModuleStore<IState> = configureStore(
   /* initial state */
   {},
@@ -62,80 +63,19 @@ const store: IModuleStore<IState> = configureStore(
 );
 ```
 
-3. Use like a standard Redux store
-4. Use the `DynamicModuleLoader` React component to add/remove modules when components mount/unmount
+*  Use like a standard Redux store
+* Use the `DynamicModuleLoader` React component to add/remove modules when components mount/unmount
+
 ```jsx
-<DynamicModuleLoader modules={modules}>
+<DynamicModuleLoader reduxModules={modules}>
    <div>Hello World!!</div>
 </DynamicModuleLoader>
 ``` 
 
-# Documentation
+## Examples
+See the [Todo App](https://github.com/Microsoft/redux-dynamic-modules/tree/master/packages/todo-example) for a quick of example of the library in practice.
 
-**Module**
-
-A module is a represented by following interface. 
-
-```
-/**
- * Represents a module which is set of reducers, sagas, inital actions and final actions
- */
-export interface IModule<State> {
-  /**
-   * Id of the module
-   */
-  id: string;
-
-  /**
-   * Reducers for the module
-   */
-  reducerMap?: ReducersMapObject<State, AnyAction>;
-
-  /**
-   * These sagas are executed immediatly after adding the module to the store (before dispatching initial actions)
-   */
-  sagas?: ISagaRegistration<any>[];
-
-  /**
-   * These actions are dispatched immediatly after adding the module in the store
-   */
-  initialActions?: AnyAction[];
-
-  /**
-   * These actions are dispatched immediatly before removing the module from the store
-   */
-  finalActions?: AnyAction[];
-}
-```
-
-**Module Store**
-
-Instead of using the redux Store interface you need to use IModuleStore, which extends redux store and provides additional functions to add/remove modules on demand.
-
-```
-export interface IModuleManager {
-  /**
-   * Add the given module to the store
-   */
-  addModule: (...modules: IModule<any>[]) => IDynamicallyAddedModule
-}
-
-export type IModuleStore<State> = Store<State> & IModuleManager & {
-  /**
-   * Remove all the modules from the store
-   */
-  dispose: () => void;
-};
-
-export interface IDynamicallyAddedModule {
-  /**
-   * Call to remove the module from the store
-   */
-  remove: () => void;
-}
-```
-
-# Contributing
+## Contributing
 
 This project welcomes contributions and suggestions.  Most contributions require you to agree to a
 Contributor License Agreement (CLA) declaring that you have the right to, and actually do, grant us

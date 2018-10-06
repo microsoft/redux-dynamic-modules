@@ -3,5 +3,8 @@
   "private": true,
   "devDependencies": {
     "lerna": "^3.4.0"
+  },
+  "dependencies": {
+    "docsify-cli": "^4.2.1"
   }
 }
