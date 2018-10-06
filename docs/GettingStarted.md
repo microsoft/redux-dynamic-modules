@@ -19,8 +19,6 @@ export function getUsersModule(): IModule<IUserState> {
     reducerMap: {
       users: usersReducer
     },
-    sagas: [usersSaga],
-
     // Actions to fire when this module is added/removed
     // initialActions: [],
     // finalActions: []
