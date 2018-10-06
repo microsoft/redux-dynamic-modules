@@ -8,4 +8,4 @@
     * [Usage with Redux Saga](reference/ReduxSaga.md)
     * [Usage with Redux Observable](reference/ReduxObservable.md)
     * [Extensions](reference/Extensions.md)
-    * [Lifecycle Actions](reference/LifecyleActions.md)
+    * [Lifecycle Actions](reference/LifecycleActions.md)
