@@ -1,7 +1,7 @@
 {
-    "name": "redux-dynamic-modules-saga",
+    "name": "redux-dynamic-modules-observable",
     "version": "0.0.7",
-    "description": "Saga Extension for redux-dynamic-modules",
+    "description": "Observable Extension for redux-dynamic-modules",
     "repository": {
         "type": "github",
         "url": "https://github.com/Microsoft/redux-dynamic-modules"
@@ -26,8 +26,6 @@
     "devDependencies": {
         "@types/jest": "^23.3.1",
         "@types/redux": "3.6.0",
-        "@types/redux-saga": "^0.10.5",
-        "redux-saga": "^0.16.0",
         "redux-dynamic-modules": "0.0.7",
         "jest": "^23.5.0",
         "rimraf": "^2.6.2",
@@ -59,7 +57,9 @@
         }
     },
     "peerDependencies": {
-        "redux-saga": ">=0.0.16",
         "redux-dynamic-modules": ">=0.0.7"
+    },
+    "dependencies": {
+        "redux-observable": "^1.0.0"
     }
 }
