@@ -90,10 +90,10 @@ export function getModuleManager<State>(middlewareManager: IItemManager<Middlewa
                         _addMiddlewares(middlewares);
                     }
                     justAddedModules.push(module);
+                    _dispatch && _dispatch({ type: "@@Internal/ModuleManager/ModuleAdded", payload: module.id });
                 }
             });
 
-            _dispatch && _dispatch({ type: "@@Internal/ModuleManager/ReducerAdded" });
 
             // add the sagas and dispatch actions at the end so all the reducers are registered
             justAddedModules.forEach(module => {
@@ -131,7 +131,7 @@ export function getModuleManager<State>(middlewareManager: IItemManager<Middlewa
                     _moduleIds.delete(module.id);
                     modules = modules.filter(m => m.id !== module.id);
 
-                    _dispatch && _dispatch({ type: "@@Internal/ModuleManager/ModuleRemoved" });
+                    _dispatch && _dispatch({ type: "@@Internal/ModuleManager/ModuleRemoved", payload: module.id });
                 }
             });
         },
