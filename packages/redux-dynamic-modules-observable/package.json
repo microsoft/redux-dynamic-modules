@@ -60,6 +60,7 @@
         "redux-dynamic-modules": ">=0.0.7"
     },
     "dependencies": {
-        "redux-observable": "^1.0.0"
+        "redux-observable": "^1.0.0",
+        "rxjs": "^6.3.3"
     }
 }
