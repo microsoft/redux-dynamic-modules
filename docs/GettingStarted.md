@@ -10,7 +10,8 @@ yarn add redux-dynamic-modules
 ```
 
 # Usage
-1. Create a module with the following format
+* Create a module with the following format
+
 ```typescript
 export function getUsersModule(): IModule<IUserState> {
   return {
@@ -28,8 +29,12 @@ export function getUsersModule(): IModule<IUserState> {
 
 ```
 
-2. Create a `ModuleStore`
+* Create a `ModuleStore`
+
 ```typescript
+import {configureStore, IModuleStore} from "redux-dynamic-modules";
+import {getUsersModule} from "./usersModule";
+
 const store: IModuleStore<IState> = configureStore(
   /* initial state */
   {},
@@ -42,10 +47,11 @@ const store: IModuleStore<IState> = configureStore(
 );
 ```
 
-3. Use like a standard Redux store
-4. Use the `DynamicModuleLoader` React component to add/remove modules when components mount/unmount
+*  Use like a standard Redux store
+* Use the `DynamicModuleLoader` React component to add/remove modules when components mount/unmount
+
 ```jsx
-<DynamicModuleLoader modules={modules}>
+<DynamicModuleLoader reduxModules={modules}>
    <div>Hello World!!</div>
 </DynamicModuleLoader>
 ``` 

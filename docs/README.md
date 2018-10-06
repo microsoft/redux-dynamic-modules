@@ -1,5 +1,3 @@
-# Redux Dynamic Modules
-
 ## What is it?
 **redux-dynamic-modules** is a library that aims to make Redux Reducers easy to modularize and add/remove dynamically. 
 
@@ -17,7 +15,7 @@ Modules provide the following benefits:
 * Extensions provide integration with popular libraries, including `redux-saga` and `redux-observable`
 
 ## Examples
-See the Todo app for a quick of example of the library in practice.
+See the [Todo App](https://github.com/Microsoft/redux-dynamic-modules/tree/master/packages/todo-example) for a quick of example of the library in practice.
 
 ## Contributing
 
