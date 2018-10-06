@@ -5,12 +5,15 @@
             "es2015",
             "es2016"
         ],
+        "composite": true,
         "declaration": true,
+        "declarationMap": true,
         "noUnusedLocals": true,
         "noImplicitAny": false,
         "module": "commonjs",
         "moduleResolution": "node",
         "jsx": "react",
+        "rootDir": "src",
         "outDir": "lib"
     },
     "include": [
