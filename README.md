@@ -15,7 +15,7 @@ Modules provide the following benefits:
 * They can be added/removed from the store dynamically, ex. when a component mounts or when a user performs an action
 
 ## Features
-* Group together reducers, middlware, and state into a single, re-usable module.
+* Group together reducers, middleware, and state into a single, re-usable module.
 * Add and remove modules from a Redux store at any time.
 * Use the included `<DynamicModuleLoader />` component to automatically add a module when a component is rendered
 * Extensions provide integration with popular libraries, including `redux-saga` and `redux-observable`
