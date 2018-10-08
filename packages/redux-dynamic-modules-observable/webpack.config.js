@@ -22,7 +22,9 @@ module.exports = (env, argv) => {
             "react-redux": "react-redux",
             "redux-saga": "redux-saga",
             "redux-dynamic-modules": "redux-dynamic-modules",
-            "rxjs": "rxjs"
+            "rxjs": "rxjs",
+            "rxjs/operators": "rxjs/operators",
+            "rxjs/observable": "rxjs/observable",
         },
         plugins: [
             new BundleAnalyzerPlugin({
