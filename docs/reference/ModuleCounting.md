@@ -48,6 +48,7 @@ render() {
 ## For Module Contents
 The library will also reference count the contents of your modules, including reducers and middleware. This means:
 * If two different modules add the same middleware, only one copy of the middleware is added. Only until **both** modules are removed will the middleware be removed
+
 ```jsx
 export function createModuleA() {
     return {
