@@ -1,0 +1,24 @@
+{
+    "compilerOptions": {
+        "lib": [
+            "dom",
+            "es2015",
+            "es2016"
+        ],
+        "declaration": true,
+        "noUnusedLocals": true,
+        "noImplicitAny": false,
+        "module": "commonjs",
+        "moduleResolution": "node",
+        "jsx": "react",
+        "outDir": "lib"
+    },
+    "references": [
+        {
+            "path": "../redux-dynamic-modules"
+        }
+    ],
+    "include": [
+        "src/**/*.ts"
+    ]
+}
