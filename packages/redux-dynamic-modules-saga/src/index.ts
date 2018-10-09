@@ -16,7 +16,7 @@ export function getSagaExtension<C>(sagaContext?: C): IExtension {
         sagaMonitor = window["__SAGA_MONITOR_EXTENSION__"] || undefined;
     }
 
-    // setup the saga middleware
+    // Setup the saga middleware
     let sagaMiddleware: SagaMiddleware<C> = createSagaMiddleware<any>(
         {
             context: sagaContext,
