@@ -1,3 +1,5 @@
+import { connect } from "react-redux";
+
 const Link = ({ title, link }) => {
     <a href={link}>{title}</a>
 };
@@ -17,3 +19,11 @@ const HackerNews = ({ items }) => {
         </div>
     );
 };
+
+const mapStateToProps = (state) =>{
+    return {
+        items: state.hackerNews.items
+    }
+};
+
+export const ConnectedHackerNews = connect(mapStateToProps)(HackerNews);
