@@ -58,7 +58,10 @@
       "jsx",
       "json",
       "node"
-    ]
+    ],
+    "globals": {
+      "__DEV__": true
+    }
   },
   "peerDependencies": {
     "react": ">= 15.0.0",

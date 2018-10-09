@@ -32,7 +32,13 @@ export function configureStore<SagaContext, State>(initialState: DeepPartial<Sta
     []
   );
 
-  const composeEnhancers = compose;
+  let composeEnhancers = compose;
+
+  //@ts-ignore
+  if (__DEV__) {
+    composeEnhancers = window["__REDUX_DEVTOOLS_EXTENSION_COMPOSE__"] || compose;
+  }
+
   const middlewareManager = getRefCountedManager(getMiddlewareManager(), (a, b) => a === b);
   const enhancer = composeEnhancers(applyMiddleware(...extensionMiddleware, middlewareManager.dynamicMiddleware));
   const modules = getRefCountedManager(getModuleManager<State>(middlewareManager, extensions), (a: IModule<any>, b: IModule<any>) => a.id === b.id);
