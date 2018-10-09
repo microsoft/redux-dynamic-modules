@@ -60,10 +60,9 @@
       "node"
     ]
   },
-  "dependencies": {},
   "peerDependencies": {
     "react": ">= 15.0.0",
-    "redux": ">= 3.0.0",
-    "react-redux": ">= 5.0.0"
+    "react-redux": ">= 5.0.0",
+    "redux": ">= 3.0.0"
   }
 }
