@@ -2,6 +2,7 @@
     "name": "redux-dynamic-modules-observable",
     "version": "0.0.8",
     "description": "Observable Extension for redux-dynamic-modules",
+    "private": true,
     "repository": {
         "type": "github",
         "url": "https://github.com/Microsoft/redux-dynamic-modules"
