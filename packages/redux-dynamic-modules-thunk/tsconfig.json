@@ -13,11 +13,6 @@
         "jsx": "react",
         "outDir": "lib"
     },
-    "references": [
-        {
-            "path": "../redux-dynamic-modules"
-        }
-    ],
     "include": [
         "src/**/*.ts"
     ]
