@@ -34,31 +34,31 @@ it("module manager tests", () => {
     moduleManager.add([module1]);
 
     // Test initial actions are dispatched for module1
-    expect(actionsDispatched).toEqual(["@@Internal/ModuleManager/ReducerAdded", "initial1", "initial11"]);
+    expect(actionsDispatched).toEqual(["@@Internal/ModuleManager/ModuleAdded", "initial1", "initial11"]);
 
     // Add second module
     moduleManager.add([module2]);
 
     // Test initial actions are dispatched for module2
-    expect(actionsDispatched).toEqual(["@@Internal/ModuleManager/ReducerAdded", "initial1", "initial11", "@@Internal/ModuleManager/ReducerAdded", "initial2", "initial21"]);
+    expect(actionsDispatched).toEqual(["@@Internal/ModuleManager/ModuleAdded", "initial1", "initial11", "@@Internal/ModuleManager/ModuleAdded", "initial2", "initial21"]);
 
     // Remove Module1
     moduleManager.remove([module1]);
 
     // Test final actions are dispatched for module1
-    expect(actionsDispatched).toEqual(["@@Internal/ModuleManager/ReducerAdded", "initial1", "initial11", "@@Internal/ModuleManager/ReducerAdded", "initial2", "initial21", "final1", "final11", "@@Internal/ModuleManager/ModuleRemoved"]);
+    expect(actionsDispatched).toEqual(["@@Internal/ModuleManager/ModuleAdded", "initial1", "initial11", "@@Internal/ModuleManager/ModuleAdded", "initial2", "initial21", "final1", "final11", "@@Internal/ModuleManager/ModuleRemoved"]);
 
     // Remove Module1 again
     moduleManager.remove([module1]);
 
     // Test no additional actions are dispatched
-    expect(actionsDispatched).toEqual(["@@Internal/ModuleManager/ReducerAdded", "initial1", "initial11", "@@Internal/ModuleManager/ReducerAdded", "initial2", "initial21", "final1", "final11", "@@Internal/ModuleManager/ModuleRemoved"]);
+    expect(actionsDispatched).toEqual(["@@Internal/ModuleManager/ModuleAdded", "initial1", "initial11", "@@Internal/ModuleManager/ModuleAdded", "initial2", "initial21", "final1", "final11", "@@Internal/ModuleManager/ModuleRemoved"]);
 
     // Remove Module2
     moduleManager.remove([module2]);
 
     // Test no additional actions are dispatched
-    expect(actionsDispatched).toEqual(["@@Internal/ModuleManager/ReducerAdded", "initial1", "initial11", "@@Internal/ModuleManager/ReducerAdded", "initial2", "initial21", "final1", "final11", "@@Internal/ModuleManager/ModuleRemoved", "final2", "final21", "@@Internal/ModuleManager/ModuleRemoved"]);
+    expect(actionsDispatched).toEqual(["@@Internal/ModuleManager/ModuleAdded", "initial1", "initial11", "@@Internal/ModuleManager/ModuleAdded", "initial2", "initial21", "final1", "final11", "@@Internal/ModuleManager/ModuleRemoved", "final2", "final21", "@@Internal/ModuleManager/ModuleRemoved"]);
 
 });
 
