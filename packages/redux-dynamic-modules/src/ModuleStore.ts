@@ -40,7 +40,7 @@ export function configureStore<SagaContext, State>(initialState: DeepPartial<Sta
   }
 
   const middlewareManager = getRefCountedManager(getMiddlewareManager(), (a, b) => a === b);
-  const enhancer = composeEnhancers(applyMiddleware(...extensionMiddleware, middlewareManager.dynamicMiddleware));
+  const enhancer = composeEnhancers(applyMiddleware(...extensionMiddleware, middlewareManager.enhancer));
   const modules = getRefCountedManager(getModuleManager<State>(middlewareManager, extensions), (a: IModule<any>, b: IModule<any>) => a.id === b.id);
 
   // Create store
