@@ -10,11 +10,11 @@ const rootEpic = combineEpics(
 export function getObservableCounterModule() {
     return {
         id: "observable-counter",
-        initialActions: [{ type: 'PING' }],
+        initialActions: [{ type: "Counter/Increment" }, { type: 'PING' }],
         reducerMap: {
             counterAwareState: observableCounterReducer
         },
-        epics:[rootEpic]
+        epics: [rootEpic]
     };
 }
 

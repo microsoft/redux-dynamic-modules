@@ -11,9 +11,14 @@
     "react-scripts": "2.0.4",
     "react-tweet": "^1.7.1",
     "redux": "^3.5.2",
-    "redux-dynamic-modules": "0.0.6",
+    "redux-dynamic-modules": "^0.0.11",
+    "redux-dynamic-modules-observable": "^0.0.11",
+    "redux-dynamic-modules-saga": "^0.0.11",
+    "redux-dynamic-modules-thunk": "^0.0.11",
     "redux-observable": "^1.0.0",
-    "redux-thunk": "^2.3.0"
+    "redux-saga": "^0.16.2",
+    "redux-thunk": "^2.3.0",
+    "rxjs": "^6.3.3"
   },
   "scripts": {
     "start": "react-scripts start",

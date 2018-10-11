@@ -1,3 +1,4 @@
+import * as React from "react";
 import { connect } from "react-redux";
 import './observable-counter-component.css';
 
@@ -15,4 +16,4 @@ const mapStateToProps = (state) => {
     }
 };
 
-export const ConnectedHackerNews = connect(mapStateToProps)(HackerNews);
+export const ConnectedCounter = connect(mapStateToProps)(Counter);
