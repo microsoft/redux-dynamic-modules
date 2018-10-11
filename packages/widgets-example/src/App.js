@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { configureStore, DynamicModuleLoader } from "redux-dynamic-modules";
+import { getObservableExtension } from "redux-dynamic-modules-observable";
 import { getSagaExtension } from "redux-dynamic-modules-saga";
 import { Provider } from "react-redux";
 import logo from './logo.svg';
@@ -16,7 +17,7 @@ class App extends Component {
       weather: false
     };
 
-    this.store = configureStore({}, [getSagaExtension()]);
+    this.store = configureStore({}, [getObservableExtension(), getSagaExtension()]);
   }
 
   render() {
