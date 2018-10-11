@@ -5,8 +5,6 @@
             "es2015",
             "es2016"
         ],
-        "declaration": true,
-        "declarationMap": true,
         "noUnusedLocals": true,
         "noImplicitAny": false,
         "module": "commonjs",

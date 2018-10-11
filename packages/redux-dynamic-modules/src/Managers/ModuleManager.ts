@@ -97,16 +97,15 @@ export function getModuleManager<State>(middlewareManager: IItemManager<Middlewa
 
             // add the sagas and dispatch actions at the end so all the reducers are registered
             justAddedModules.forEach(module => {
-                // Running the sagas after registering the reducers as they sagas themselve might dispatch actions
-                // and we want all reducers to be registered before dispatching any actions
-                _dispatchActions(module.id, module.initialActions);
-
                 // Let the extensions know we added a module
                 extensions.forEach(p => {
                     if (p.onModuleAdded) {
                         p.onModuleAdded(module);
                     }
                 });
+
+                // Dispatch the initial actions
+                _dispatchActions(module.id, module.initialActions);
             });
         },
         remove: (modulesToRemove: IModule<any>[]) => {
@@ -121,6 +120,7 @@ export function getModuleManager<State>(middlewareManager: IItemManager<Middlewa
 
                     _removeReducers(module.reducerMap);
                     _removeMiddlewares(module.middlewares);
+
                     // Let the extensions know we removed a module
                     extensions.forEach(p => {
                         if (p.onModuleRemoved) {
