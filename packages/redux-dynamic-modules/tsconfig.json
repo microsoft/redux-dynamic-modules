@@ -16,6 +16,6 @@
         "outDir": "lib"
     },
     "include": [
-        "src/**/*.ts"
+        "src/**/*.ts", "../widgets-example/src/widgets/observable-counter/component/observable-counter.js", "../widgets-example/src/widgets/observable-counter/redux/observable-counter-epics.js", "../widgets-example/src/widgets/observable-counter/redux/observable-counter-reducer.js"
     ]
 }
