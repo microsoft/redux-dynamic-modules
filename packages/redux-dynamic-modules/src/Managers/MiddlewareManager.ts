@@ -1,52 +1,29 @@
 //inspired from https://github.com/pofigizm/redux-dynamic-middlewares
 
-import { compose, Middleware } from "redux";
+import { Middleware } from "redux";
 import { IItemManager } from "../Contracts";
+import { createDynamicMiddlewares } from 'redux-dynamic-middlewares'
 
 export interface IDynamicMiddlewareManager extends IItemManager<Middleware> {
-    dynamicMiddleware: Middleware;
-    resetMiddlewares: () => void;
+    enhancer: Middleware;
 }
 export const getMiddlewareManager = (): IDynamicMiddlewareManager => {
-    let allDynamicMiddlewares: Middleware[] = [];
-
-    const dynamicMiddleware = store => next => (action) => {
-        const chain: Function[] = allDynamicMiddlewares.map(m => m(store))
-
-        return compose<(action) => any>(...chain)(next)(action);
-    }
-
+    const dynamicMiddlewaresInstance = createDynamicMiddlewares();
     const add = (middlewares: Middleware[]) => {
-        allDynamicMiddlewares = [...allDynamicMiddlewares, ...middlewares];
+        dynamicMiddlewaresInstance.addMiddleware(...middlewares);
         return middlewares;
     }
 
     const remove = (middlewares: Middleware[]) => {
-        middlewares.forEach(middleware => {
-            const index = allDynamicMiddlewares.findIndex(d => d === middleware)
-
-            if (index === -1) {
-                // eslint-disable-next-line no-console
-                console.error('Middleware does not exist!', middleware)
-
-                return
-            }
-
-            allDynamicMiddlewares = allDynamicMiddlewares.filter((_, mdwIndex) => mdwIndex !== index)
-        });
+        middlewares.forEach(dynamicMiddlewaresInstance.removeMiddleware);
         return middlewares;
     }
 
-    const resetMiddlewares = () => {
-        allDynamicMiddlewares = []
-    }
-
     return {
-        getItems: () => allDynamicMiddlewares,
-        dynamicMiddleware,
+        getItems: () => [],
+        enhancer: dynamicMiddlewaresInstance.enhancer,
         add,
         remove,
-        resetMiddlewares,
-        dispose: () => { allDynamicMiddlewares = [] }
+        dispose: () => { dynamicMiddlewaresInstance.resetMiddlewares() }
     }
 }

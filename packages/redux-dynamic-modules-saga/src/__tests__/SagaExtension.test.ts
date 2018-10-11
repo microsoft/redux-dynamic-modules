@@ -1,5 +1,5 @@
 import { configureStore } from "redux-dynamic-modules";
-import { getSagaExtension } from "../index";
+import { getSagaExtension } from "../SagaExtension";
 import { ISagaModule } from "../Contracts";
 import { SagaIterator } from "redux-saga";
 describe("Saga extension tests", () => {

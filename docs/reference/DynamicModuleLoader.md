@@ -9,7 +9,7 @@ import { getNewUserDialogModule } from "./newUserDialogModule";
 export class NewUserDialog extends React.Component {
     public render() {
         return (
-            <DynamicModuleLoader reduxModules={[getNewUserDialogModule()]}>
+            <DynamicModuleLoader modules={[getNewUserDialogModule()]}>
                 <ConnectedNewUserDialogContent/>
             </DynamicModuleLoader>
         )

@@ -1,6 +1,6 @@
 {
   "name": "redux-dynamic-modules",
-  "version": "0.0.7",
+  "version": "0.0.11",
   "description": "Modularize the redux app by dynamically loading reducers, state and sagas",
   "repository": {
     "type": "github",
@@ -58,12 +58,17 @@
       "jsx",
       "json",
       "node"
-    ]
+    ],
+    "globals": {
+      "__DEV__": true
+    }
   },
-  "dependencies": {},
   "peerDependencies": {
     "react": ">= 15.0.0",
-    "redux": ">= 3.0.0",
-    "react-redux": ">= 5.0.0"
+    "react-redux": ">= 5.0.0",
+    "redux": ">= 3.0.0"
+  },
+  "dependencies": {
+    "redux-dynamic-middlewares": "^1.0.0"
   }
 }

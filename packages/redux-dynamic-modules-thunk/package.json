@@ -1,7 +1,8 @@
 {
-    "name": "redux-dynamic-modules-saga",
+    "name": "redux-dynamic-modules-thunk",
     "version": "0.0.11",
-    "description": "Saga Extension for redux-dynamic-modules",
+    "description": "Thunk Extension for redux-dynamic-modules",
+    "private": true,
     "repository": {
         "type": "github",
         "url": "https://github.com/Microsoft/redux-dynamic-modules"
@@ -26,10 +27,9 @@
     "devDependencies": {
         "@types/jest": "^23.3.1",
         "@types/redux": "3.6.0",
-        "@types/redux-saga": "^0.10.5",
         "jest": "^23.5.0",
         "redux-dynamic-modules": "^0.0.11",
-        "redux-saga": "^0.16.0",
+        "redux-thunk": "^2.3.0",
         "rimraf": "^2.6.2",
         "ts-jest": "^23.1.4",
         "tslib": "^1.9.3",
@@ -60,6 +60,6 @@
     },
     "peerDependencies": {
         "redux-dynamic-modules": ">=0.0.7",
-        "redux-saga": ">=0.0.16"
+        "redux-thunk": ">= 2.0.0"
     }
 }

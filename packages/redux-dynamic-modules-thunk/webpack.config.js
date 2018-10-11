@@ -12,7 +12,7 @@ module.exports = (env, argv) => {
         },
 
         output: {
-            filename: mode_env === "production" ? "redux-dynamic-modules-observable.min.js" : "redux-dynamic-modules-observable.js",
+            filename: mode_env === "production" ? "redux-dynamic-modules-thunk.min.js" : "redux-dynamic-modules-thunk.js",
             path: __dirname + "/dist/"
         },
 
@@ -20,11 +20,8 @@ module.exports = (env, argv) => {
             "react": "react",
             "redux": "redux",
             "react-redux": "react-redux",
-            "redux-saga": "redux-saga",
-            "redux-dynamic-modules": "redux-dynamic-modules",
-            "rxjs": "rxjs",
-            "rxjs/operators": "rxjs/operators",
-            "rxjs/observable": "rxjs/observable",
+            "redux-thunk": "redux-thunk",
+            "redux-dynamic-modules": "redux-dynamic-modules"
         },
         plugins: [
             new BundleAnalyzerPlugin({

@@ -1,7 +1,8 @@
 {
     "name": "redux-dynamic-modules-observable",
-    "version": "0.0.7",
+    "version": "0.0.11",
     "description": "Observable Extension for redux-dynamic-modules",
+    "private": true,
     "repository": {
         "type": "github",
         "url": "https://github.com/Microsoft/redux-dynamic-modules"
@@ -26,8 +27,8 @@
     "devDependencies": {
         "@types/jest": "^23.3.1",
         "@types/redux": "3.6.0",
-        "redux-dynamic-modules": "0.0.7",
         "jest": "^23.5.0",
+        "redux-dynamic-modules": "^0.0.11",
         "rimraf": "^2.6.2",
         "ts-jest": "^23.1.4",
         "tslib": "^1.9.3",
