@@ -12,8 +12,7 @@
     "scripts": {
         "build:dev": "npm run clean && tsc && webpack --mode development --display-modules --progress --display-error-details",
         "build:prod": "npm run clean && tsc && webpack --mode development --display-error-details && webpack --mode production --display-modules --progress --display-error-details",
-        "clean": "rimraf lib/ dist/",
-        "test": "jest"
+        "clean": "rimraf lib/ dist/"
     },
     "keywords": [
         "react",
@@ -44,7 +43,9 @@
             "^.+\\.tsx?$": "ts-jest"
         },
         "verbose": false,
-        "testRegex": "(/__tests__/.*|(\\.|/)(test|spec))\\.(jsx?|tsx?)$",
+        "testMatch": [
+            "**/__tests__/**/(*.)+(spec|test).js?(x)"
+        ],
         "moduleFileExtensions": [
             "ts",
             "tsx",
