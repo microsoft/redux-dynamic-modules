@@ -12,6 +12,8 @@ module.exports = (env, argv) => {
         },
 
         output: {
+            library: "redux-dynamic-modules-observable",
+            libraryTarget: "umd",
             filename: mode_env === "production" ? "redux-dynamic-modules-observable.min.js" : "redux-dynamic-modules-observable.js",
             path: __dirname + "/dist/"
         },

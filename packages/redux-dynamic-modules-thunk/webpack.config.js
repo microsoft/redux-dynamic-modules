@@ -12,6 +12,8 @@ module.exports = (env, argv) => {
         },
 
         output: {
+            library: "redux-dynamic-modules-thunk",
+            libraryTarget: "umd",
             filename: mode_env === "production" ? "redux-dynamic-modules-thunk.min.js" : "redux-dynamic-modules-thunk.js",
             path: __dirname + "/dist/"
         },
