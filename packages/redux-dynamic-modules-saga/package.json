@@ -9,6 +9,7 @@
     "main": "./lib/index.js",
     "types": "./lib/index.d.ts",
     "scripts": {
+        "prepublish": "npm run build:prod && npm run test",
         "build:dev": "npm run clean && tsc && webpack --mode development --display-modules --progress --display-error-details",
         "build:prod": "npm run clean && tsc && webpack --mode development --display-error-details && webpack --mode production --display-modules --progress --display-error-details",
         "clean": "rimraf lib/ dist/",
