@@ -5,12 +5,13 @@ import { IEpicModule } from "./Contracts";
 
 export function getObservableExtension(): IExtension {
     const epicMiddleware = createEpicMiddleware();
-    const epicManager = getEpicManager(epicMiddleware);
-
-    epicMiddleware.run(epicManager.rootEpic);
+    const epicManager = getEpicManager();
 
     return {
         middleware: [epicMiddleware],
+        onModuleManagerCreated: () => {
+            epicMiddleware.run(epicManager.rootEpic);
+        },
         onModuleAdded: (module: IEpicModule<any>) => {
             if (module.epics) {
                 epicManager.add(module.epics);

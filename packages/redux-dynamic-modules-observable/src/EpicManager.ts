@@ -1,5 +1,5 @@
-import { IItemManager, getStringRefCounter } from "redux-dynamic-modules";
-import { EpicMiddleware, Epic } from "redux-observable";
+import { getStringRefCounter, IItemManager } from "redux-dynamic-modules";
+import { Epic } from "redux-observable";
 import { merge } from "rxjs";
 
 export interface IEpicManager extends IItemManager<Epic> {
@@ -9,7 +9,7 @@ export interface IEpicManager extends IItemManager<Epic> {
 /**
  * Creates an epic manager which manages epics being run in the system
  */
-export function getEpicManager(epicMiddleware: EpicMiddleware<any>): IEpicManager {
+export function getEpicManager(): IEpicManager {
     let runningEpics: Epic[] = [];
     const epicRefCounter = getStringRefCounter();
 
