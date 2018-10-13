@@ -1,6 +1,6 @@
 {
   "name": "redux-dynamic-modules",
-  "version": "0.0.11",
+  "version": "0.0.13",
   "description": "Modularize the redux app by dynamically loading reducers, state and sagas",
   "repository": {
     "type": "github",
@@ -9,6 +9,7 @@
   "main": "./lib/index.js",
   "types": "./lib/index.d.ts",
   "scripts": {
+    "prepublish": "npm run build:prod && npm run test",
     "build": "npm run clean && tsc && webpack --mode development --display-modules --progress --display-error-details",
     "build:prod": "npm run clean && tsc && webpack --mode development --display-error-details && webpack --mode production --display-modules --progress --display-error-details",
     "clean": "rimraf lib/ dist/",
@@ -47,9 +48,8 @@
       "^.+\\.tsx?$": "ts-jest"
     },
     "verbose": false,
-    "testRegex": "(/__tests__/.*|(\\.|/)(test|spec))\\.(jsx?|tsx?)$",
-    "testPathIgnorePatterns": [
-      ".*\\.d\\.ts"
+    "testMatch": [
+      "**/src/__tests__/**/(*.)+(spec|test).ts?(x)"
     ],
     "moduleFileExtensions": [
       "ts",

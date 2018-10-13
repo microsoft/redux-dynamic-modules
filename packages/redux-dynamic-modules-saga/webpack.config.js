@@ -12,6 +12,8 @@ module.exports = (env, argv) => {
         },
 
         output: {
+            library: "redux-dynamic-modules-saga",
+            libraryTarget: "umd",
             filename: mode_env === "production" ? "redux-dynamic-modules-saga.min.js" : "redux-dynamic-modules-saga.js",
             path: __dirname + "/dist/"
         },

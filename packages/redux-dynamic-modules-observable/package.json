@@ -1,6 +1,6 @@
 {
     "name": "redux-dynamic-modules-observable",
-    "version": "0.0.11",
+    "version": "0.0.13",
     "description": "Observable Extension for redux-dynamic-modules",
     "private": true,
     "repository": {
@@ -12,8 +12,7 @@
     "scripts": {
         "build:dev": "npm run clean && tsc && webpack --mode development --display-modules --progress --display-error-details",
         "build:prod": "npm run clean && tsc && webpack --mode development --display-error-details && webpack --mode production --display-modules --progress --display-error-details",
-        "clean": "rimraf lib/ dist/",
-        "test": "jest"
+        "clean": "rimraf lib/ dist/"
     },
     "keywords": [
         "react",
@@ -28,7 +27,7 @@
         "@types/jest": "^23.3.1",
         "@types/redux": "3.6.0",
         "jest": "^23.5.0",
-        "redux-dynamic-modules": "^0.0.11",
+        "redux-dynamic-modules": "^0.0.13",
         "rimraf": "^2.6.2",
         "ts-jest": "^23.1.4",
         "tslib": "^1.9.3",
@@ -44,7 +43,9 @@
             "^.+\\.tsx?$": "ts-jest"
         },
         "verbose": false,
-        "testRegex": "(/__tests__/.*|(\\.|/)(test|spec))\\.(jsx?|tsx?)$",
+        "testMatch": [
+            "**/__tests__/**/(*.)+(spec|test).js?(x)"
+        ],
         "moduleFileExtensions": [
             "ts",
             "tsx",
