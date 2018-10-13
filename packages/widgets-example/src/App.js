@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
+import Loadable from "react-loadable";
 import { Provider } from "react-redux";
 import { configureStore } from "redux-dynamic-modules";
 import { getSagaExtension } from "redux-dynamic-modules-saga";
 import { getThunkExtension } from "redux-dynamic-modules-thunk";
 import './App.css';
-import HackerNews from "./widgets/hacker-news";
 
 class App extends Component {
   constructor(props) {
@@ -15,6 +15,25 @@ class App extends Component {
     };
 
     this.store = configureStore({}, [getThunkExtension(), getSagaExtension()]);
+  }
+
+  _hackerNews = null;
+  getHackerNews() {
+    if (!this.state.hackerNews) {
+      return null;
+    }
+    if (this._hackerNews) {
+      return this._hackerNews;
+    }
+
+    const LoadableHackerNews = Loadable(
+      {
+        loader: () => import("./widgets/hacker-news"),
+        loading: () => <div>Loading...</div>
+      }
+    );
+    this._hackerNews = <LoadableHackerNews />;
+    return this._hackerNews;
   }
 
   render() {
@@ -36,24 +55,15 @@ class App extends Component {
 
   renderContent = () => {
     const {
-      hackerNews,
       weather
     } = this.state;
 
-    // const LoadableHackerNews = Loadable(
-    //   {
-    //     loader: () => import("./widgets/hacker-news"),
-    //     loading: () => <div>Loading...</div>
-    //   }
-    // );
-
-    const HackerNewsComponent = hackerNews && <HackerNews />;
     const WeatherComponent = weather ? <div>Weather</div> : <div />;
 
     return (
       <Provider store={this.store}>
         <>
-          {HackerNewsComponent}
+          {this.getHackerNews()}
           {WeatherComponent}
         </>
       </Provider>
