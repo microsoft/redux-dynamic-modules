@@ -1,11 +1,10 @@
 import React, { Component } from 'react';
+import Loadable from "react-loadable";
+import { Provider } from "react-redux";
 import { configureStore } from "redux-dynamic-modules";
 import { getSagaExtension } from "redux-dynamic-modules-saga";
 import { getThunkExtension } from "redux-dynamic-modules-thunk";
-import { Provider } from "react-redux";
 import './App.css';
-import DynamicHackerNews from "./widgets/hacker-news";
-
 
 class App extends Component {
   constructor(props) {
@@ -20,7 +19,7 @@ class App extends Component {
 
   render() {
     return (
-      
+
       <div className="App">
         <div>
           <input type="checkbox" onChange={this.onHackerNewsToggled} />
@@ -41,9 +40,15 @@ class App extends Component {
       weather
     } = this.state;
 
+    const LoadableHackerNews = Loadable(
+      {
+        loader: () => import("./widgets/hacker-news"),
+        loading: () => <div>Loading...</div>
+      }
+    );
 
-    const HackerNewsComponent = hackerNews && <DynamicHackerNews/>;
-    const WeatherComponent = weather ? <div>Weather</div> : <div/>;
+    const HackerNewsComponent = hackerNews && <LoadableHackerNews />;
+    const WeatherComponent = weather ? <div>Weather</div> : <div />;
 
     return (
       <Provider store={this.store}>
