@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { configureStore } from "redux-dynamic-modules";
 import { getSagaExtension } from "redux-dynamic-modules-saga";
+import { getThunkExtension } from "redux-dynamic-modules-thunk";
 import { Provider } from "react-redux";
 import './App.css';
 import DynamicHackerNews from "./widgets/hacker-news";
@@ -14,7 +15,7 @@ class App extends Component {
       weather: false
     };
 
-    this.store = configureStore({}, [getSagaExtension()]);
+    this.store = configureStore({}, [getThunkExtension(), getSagaExtension()]);
   }
 
   render() {

@@ -1,8 +1,12 @@
 import { connect } from "react-redux";
 import React from 'react';
 
-const Link = ({ title, link }) => {
-    return <a href={link}>{title}</a>;
+const Link = ({ title, url }) => {
+    return (
+        <div>
+            <a href={url}>{title}</a>
+        </div>
+        );
 };
 
 const List = ({ items }) => {
@@ -13,6 +17,10 @@ const List = ({ items }) => {
 };
 
 const HackerNews = ({ items }) => {
+    if(items.length === 0) {
+        return <div>Loading...</div>;
+    }
+    
     return (
         <div>
             <div>Hacker News - Top 5</div>
