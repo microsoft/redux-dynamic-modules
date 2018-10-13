@@ -20,7 +20,6 @@ export const fetchStories = () => {
                 promises.push(fetchJson("https://hacker-news.firebaseio.com/v0/item/" + id + ".json"));
             }
             Promise.all(promises).then((stories) => {
-                console.log(stories);
                 dispatch(storiesAvailable(stories));
             });
         });

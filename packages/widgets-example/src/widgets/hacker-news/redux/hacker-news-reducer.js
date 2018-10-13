@@ -5,8 +5,7 @@ export const hackerNewsReducer = (state, action) => {
     return produce(state || { items: [] }, draft => {
         switch (action.type) {
             case HackerNewsStoriesAvailable: {
-                console.log(action);
-                draft.items = action.payload.items ;
+                draft.items = action.payload.items;
                 break;
             }
             default: {

@@ -1,0 +1,10 @@
+.news-root {
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+    margin-left: 10px;
+}
+
+.news-link{
+    margin-top: 2px;
+}

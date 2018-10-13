@@ -60,7 +60,7 @@ export function getReducerManager<S extends {}>(
 
     const reduce = (state: S, action: AnyAction) => {
         if (keysToRemove.length > 0) {
-            state = { ...state as any};
+            state = { ...state as any };
             for (let key of keysToRemove) {
                 delete state[key];
             }
@@ -82,7 +82,7 @@ export function getReducerManager<S extends {}>(
             rm = {
                 ...reducers
             } as ReducersMapObject<S>;
-            combinedReducer = combineReducers(rm);
+            combinedReducer = getCombinedReducer(rm);
         },
         remove: (key: string) => {
             if (!key || !reducers[key]) {
@@ -94,8 +94,15 @@ export function getReducerManager<S extends {}>(
                 ...reducers
             } as ReducersMapObject<S>;
             keysToRemove.push(key);
-            combinedReducer = combineReducers(rm);
+            combinedReducer = getCombinedReducer(rm);
         }
     };
+}
+
+function getCombinedReducer(reducerMap: ReducersMapObject<any>) {
+    if (!reducerMap || Object.keys(reducerMap).length === 0) {
+        return (state, action) => state || null;
+    }
+    return combineReducers(reducerMap);
 }
 
