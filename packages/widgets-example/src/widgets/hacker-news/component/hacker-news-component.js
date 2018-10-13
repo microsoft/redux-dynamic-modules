@@ -18,7 +18,7 @@ const List = ({ items }) => {
 
 const HackerNews = ({ items }) => {
     if (items.length === 0) {
-        return <div>Loading...</div>;
+        return <div>Loading News...</div>;
     }
 
     return (

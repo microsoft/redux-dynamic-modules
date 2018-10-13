@@ -29,7 +29,7 @@ class App extends Component {
     const LoadableHackerNews = Loadable(
       {
         loader: () => import("./widgets/hacker-news"),
-        loading: () => <div>Loading...</div>
+        loading: () => <div>Loading Scripts...</div>
       }
     );
     this._hackerNews = <LoadableHackerNews />;
