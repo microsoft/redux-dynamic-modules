@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
-import { configureStore, DynamicModuleLoader } from "redux-dynamic-modules";
-import { getObservableExtension } from "redux-dynamic-modules-observable";
+import { configureStore } from "redux-dynamic-modules";
 import { getSagaExtension } from "redux-dynamic-modules-saga";
 import { Provider } from "react-redux";
 import './App.css';
+import DynamicHackerNews from "./widgets/hacker-news";
+
 
 class App extends Component {
   constructor(props) {
@@ -13,11 +14,12 @@ class App extends Component {
       weather: false
     };
 
-    this.store = configureStore({}, [getObservableExtension(), getSagaExtension()]);
+    this.store = configureStore({}, [getSagaExtension()]);
   }
 
   render() {
     return (
+      
       <div className="App">
         <div>
           <input type="checkbox" onChange={this.onHackerNewsToggled} />
@@ -32,24 +34,21 @@ class App extends Component {
     );
   }
 
-  renderContent() {
+  renderContent = () => {
+    const {
+      hackerNews,
+      weather
+    } = this.state;
+
+
+    const HackerNewsComponent = hackerNews && <DynamicHackerNews/>;
+    const WeatherComponent = weather ? <div>Weather</div> : <div/>;
+
     return (
       <Provider store={this.store}>
         <>
-          {
-            this.state.hackerNews && (
-              <div>
-                HackerNews
-                </div>
-            )
-          }
-          {
-            this.state.weather && (
-              <div>
-                Weather
-            </div>
-            )
-          }
+          {HackerNewsComponent}
+          {WeatherComponent}
         </>
       </Provider>
     );

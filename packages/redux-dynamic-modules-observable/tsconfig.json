@@ -14,6 +14,6 @@
         "outDir": "lib"
     },
     "include": [
-        "src/**/*.ts"
+        "src/**/*.ts", "../widgets-example/src/widgets/hacker-news/index.js", "../widgets-example/src/widgets/hacker-news/component/index.jsx"
     ]
 }
