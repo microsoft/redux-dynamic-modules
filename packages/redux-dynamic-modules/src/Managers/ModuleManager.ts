@@ -13,7 +13,7 @@ export function getModuleManager<State>(middlewareManager: IItemManager<Middlewa
     let modules: IModule<any>[] = [];
     const _moduleIds = new Set();
 
-    const _dispatchActions = (moduleId: string, actions: AnyAction[]) => {
+    const _dispatchActions = (actions: AnyAction[]) => {
         if (!actions) {
             return;
         }
@@ -90,13 +90,13 @@ export function getModuleManager<State>(middlewareManager: IItemManager<Middlewa
                         _addMiddlewares(middlewares);
                     }
                     justAddedModules.push(module);
-                    _dispatch && _dispatch({ type: "@@Internal/ModuleManager/ModuleAdded", payload: module.id });
                 }
             });
 
 
             // add the sagas and dispatch actions at the end so all the reducers are registered
             justAddedModules.forEach(module => {
+
                 // Let the extensions know we added a module
                 extensions.forEach(p => {
                     if (p.onModuleAdded) {
@@ -105,7 +105,8 @@ export function getModuleManager<State>(middlewareManager: IItemManager<Middlewa
                 });
 
                 // Dispatch the initial actions
-                _dispatchActions(module.id, module.initialActions);
+                const moduleAddedAction = { type: "@@Internal/ModuleManager/ModuleAdded", payload: module.id };
+                _dispatchActions(module.initialActions ? [moduleAddedAction, ...module.initialActions] : [moduleAddedAction]);
             });
         },
         remove: (modulesToRemove: IModule<any>[]) => {
@@ -116,7 +117,7 @@ export function getModuleManager<State>(middlewareManager: IItemManager<Middlewa
             modulesToRemove.forEach(module => {
 
                 if (_moduleIds.has(module.id)) {
-                    _dispatchActions(module.id, module.finalActions);
+                    _dispatchActions(module.finalActions);
 
                     _removeReducers(module.reducerMap);
                     _removeMiddlewares(module.middlewares);
@@ -131,7 +132,7 @@ export function getModuleManager<State>(middlewareManager: IItemManager<Middlewa
                     _moduleIds.delete(module.id);
                     modules = modules.filter(m => m.id !== module.id);
 
-                    _dispatch && _dispatch({ type: "@@Internal/ModuleManager/ModuleRemoved", payload: module.id });
+                    _dispatchActions([{ type: "@@Internal/ModuleManager/ModuleRemoved", payload: module.id }]);
                 }
             });
         },
