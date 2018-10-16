@@ -8,11 +8,20 @@
 **redux-dynamic-modules** is a library that aims to make Redux Reducers and middleware easy to modularize and add/remove dynamically. 
 
 ## Motivation
-In large React/Redux applications, oftentimes you will have portions of your state that serve distinct purposes. For example, you might have a reducer and saga that manages `LoginState` in your application, or another set that manages `Todos`. These can be split up into a `LoginModule` and a `TodoModule`. 
+In React applications, modules containing components can be loaded dynamically when required, this makes the intial set of scripts to minimum and not include unwanted scripts in primary bundles. We can use [react-loadable](https://github.com/jamiebuilds/react-loadable) to load the scripts when needed.
+
+Redux requires defining the reduer map while defining the store, there is no easy way to load/unload reducers, action creators, selectors and middleware, when the components needed them are mounted and unmounted. 
+
+**redux-dynamic-modules** helps in these scenario, consider it as a redux counterpart of [react-loadable](https://github.com/jamiebuilds/react-loadable). 
+
+You can define a module with a unique id, reducer map and optional middleware and wrap the component in a HOC (`<DynamicModuleLoader />`).
+When the React component is mounted the reducer and middleware will be dynamically added to the store, and on component unmount they will be cleanup. See the widgets-example for reference.
 
 Modules provide the following benefits:
 * They can be easily re-used across the application, or between multiple similar applications.
+* Components declare the modules needed by them and redux-dynamic-modules ensures that the module is loaded for the component. 
 * They can be added/removed from the store dynamically, ex. when a component mounts or when a user performs an action
+
 
 ## Features
 * Group together reducers, middleware, and state into a single, re-usable module.
@@ -79,7 +88,7 @@ const store: IModuleStore<IState> = configureStore(
 ``` 
 
 ## Examples
-See the [Todo App](https://github.com/Microsoft/redux-dynamic-modules/tree/master/packages/todo-example) for a quick of example of the library in practice.
+See the [Widgets](https://github.com/Microsoft/redux-dynamic-modules/tree/master/packages/widgets-example) for a quick of example of the library in practice.
 
 ## Contributing
 
