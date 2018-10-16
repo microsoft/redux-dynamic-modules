@@ -1,6 +1,7 @@
 import { connect } from "react-redux";
 import React from 'react';
 import "./hacker-news-component.css";
+import "../../widgets.css";
 
 const Link = ({ title, url }) => {
     return (
@@ -22,8 +23,8 @@ const HackerNews = ({ items }) => {
     }
 
     return (
-        <div className="news-root">
-            <div>Hacker News - Top 5</div>
+        <div className="news-root widget">
+            <h2>Hacker News - Top 5</h2>
             <List items={items} />
         </div>
     );

@@ -36,17 +36,36 @@ class App extends Component {
     return this._hackerNews;
   }
 
+  getWeather() {
+    if (!this.state.weather) {
+      return null;
+    }
+    if (this._weather) {
+      return this._weather;
+    }
+
+    const LoadableWeather = Loadable(
+      {
+        loader: () => import("./widgets/weather"),
+        loading: () => <div>Loading Scripts...</div>
+      }
+    );
+    this._weather = <LoadableWeather />;
+    return this._weather;
+  }
+
   render() {
     return (
 
       <div className="App">
-        <div>
+        <h1>Widgets</h1>
+        <div className="checkboxes">
           <input type="checkbox" onChange={this.onHackerNewsToggled} />
           <label>Hacker News</label>
           <input type="checkbox" onChange={this.onWeatherToggled} />
           <label>Weather</label>
         </div>
-        <div>
+        <div className="widgets">
           {this.renderContent()}
         </div>
       </div>
@@ -58,13 +77,11 @@ class App extends Component {
       weather
     } = this.state;
 
-    const WeatherComponent = weather ? <div>Weather</div> : <div />;
-
     return (
       <Provider store={this.store}>
         <>
           {this.getHackerNews()}
-          {WeatherComponent}
+          {this.getWeather()}
         </>
       </Provider>
     );

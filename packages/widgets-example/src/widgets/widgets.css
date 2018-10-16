@@ -1,0 +1,17 @@
+.widget {
+    box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+    padding: 15px;
+    margin-top: 20px;
+    max-width: 500px;
+    flex: 1 1 auto;
+    background-color: #eaeaea;
+}
+
+.widget + .widget {
+    margin-left: 20px;
+}
+
+.widget h2 {
+    margin: 0;
+    padding: 0;
+}

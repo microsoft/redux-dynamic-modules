@@ -7,6 +7,6 @@ export function getHackerNewsModule() {
         reducerMap: {
             hackerNews: hackerNewsReducer
         },
-        initialActions:[fetchStories()]
+        initialActions: [fetchStories()]
     };
 }
