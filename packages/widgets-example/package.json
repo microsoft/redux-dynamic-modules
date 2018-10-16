@@ -1,6 +1,6 @@
 {
   "name": "widgets-example",
-  "version": "0.0.14",
+  "version": "0.0.15",
   "private": true,
   "dependencies": {
     "immer": "^1.7.2",
@@ -11,10 +11,10 @@
     "react-scripts": "2.0.4",
     "react-tweet": "^1.7.1",
     "redux": "^3.5.2",
-    "redux-dynamic-modules": "0.0.14",
-    "redux-dynamic-modules-observable": "0.0.14",
-    "redux-dynamic-modules-saga": "0.0.14",
-    "redux-dynamic-modules-thunk": "0.0.14",
+    "redux-dynamic-modules": "^0.0.15",
+    "redux-dynamic-modules-observable": "^0.0.15",
+    "redux-dynamic-modules-saga": "^0.0.15",
+    "redux-dynamic-modules-thunk": "^0.0.15",
     "redux-observable": "^1.0.0",
     "redux-saga": "^0.16.2",
     "redux-thunk": "^2.3.0",
