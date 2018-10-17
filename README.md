@@ -1,8 +1,11 @@
+
 <div>
 <img src="docs/redux-dynamic-modules.png" alt="logo" width="100">
 </img>
 <h1>Redux Dynamic Modules</h1<
 </div>
+
+[![CircleCI](https://circleci.com/gh/Microsoft/redux-dynamic-modules.svg?style=svg)](https://circleci.com/gh/Microsoft/redux-dynamic-modules)
 
 ## What is it?
 **redux-dynamic-modules** is a library that aims to make Redux Reducers and middleware easy to modular-ize and add/remove dynamically. 
