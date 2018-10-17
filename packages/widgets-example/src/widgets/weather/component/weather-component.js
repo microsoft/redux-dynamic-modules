@@ -5,7 +5,7 @@ import "../../widgets.css";
 
 const Weather = ({ loading, name, temperature, description }) => {
     if (loading) {
-        return <div>Loading Weather...</div>;
+        return <div className="weather-root widget">Loading Weather...</div>;
     }
 
     return (

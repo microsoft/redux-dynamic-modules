@@ -73,10 +73,6 @@ class App extends Component {
   }
 
   renderContent = () => {
-    const {
-      weather
-    } = this.state;
-
     return (
       <Provider store={this.store}>
         <>

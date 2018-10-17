@@ -19,7 +19,7 @@ const List = ({ items }) => {
 
 const HackerNews = ({ items }) => {
     if (items.length === 0) {
-        return <div>Loading News...</div>;
+        return <div className="weather-root widget">Loading News...</div>;
     }
 
     return (
