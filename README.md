@@ -79,7 +79,7 @@ const store: IModuleStore<IState> = configureStore(
 * Use the `DynamicModuleLoader` React component to add/remove modules when components mount/unmount
 
 ```jsx
-<DynamicModuleLoader modules={modules}>
+<DynamicModuleLoader modules={[getHelloWorldModule()]}>
    <div>Hello World!!</div>
 </DynamicModuleLoader>
 ``` 
