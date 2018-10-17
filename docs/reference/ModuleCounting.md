@@ -97,5 +97,4 @@ removeB(); // ReducerA is removed, "a" is removed from the state
 
 ```
 
-The `redux-dynamic-modules-observable` and `redux-dynamic-modules-saga` packages also perform this kind of ref counting for their respective module objects (epics and sagas).
-
+The `redux-dynamic-modules-saga` package also performs this kind of ref counting for sagas.

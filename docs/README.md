@@ -15,7 +15,7 @@ Modules provide the following benefits:
 * Group together reducers, middleware, and state into a single, re-usable module.
 * Add and remove modules from a Redux store at any time.
 * Use the included `<DynamicModuleLoader />` component to automatically add a module when a component is rendered
-* Extensions provide integration with popular libraries, including `redux-saga` and `redux-observable`
+* Extensions provide integration with popular libraries, including `redux-saga` and `redux-thunk`
 
 ## Example Scenarios
 * You don't want to load the code for all your reducers up front. Define a module for some reducers and use `DynamicModuleLoader` and a library like [react-loadable](https://github.com/jamiebuilds/react-loadable) to download and add your module at runtime.

@@ -37,8 +37,8 @@ const store: IModuleStore<IState> = configureStore(
   /* initial state */
   {},
 
-  /* redux-saga context */ 
-  {},
+  /* Extensions to load */ 
+  [],
 
   getUsersModule(), 
   /* ...any additional modules */
