@@ -4,7 +4,7 @@
 #
 version: 2
 jobs:
-  build:
+  build-and-test:
     docker:
       # specify the version you desire here
       - image: circleci/node:7.10
