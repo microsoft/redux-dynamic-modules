@@ -5,20 +5,28 @@
 </div>
 
 ## What is it?
-**redux-dynamic-modules** is a library that aims to make Redux Reducers easy to modularize and add/remove dynamically. 
+**redux-dynamic-modules** is a library that aims to make Redux Reducers and middleware easy to modular-ize and add/remove dynamically. 
 
 ## Motivation
-In large React/Redux applications, oftentimes you will have portions of your state that serve distinct purposes. For example, you might have a reducer and saga that manages `LoginState` in your application, or another set that manages `Todos`. These can be split up into a `LoginModule` and a `TodoModule`. 
+In large Javascript applications, it is often desired to perform some kind of code-splitting, so that the initial script size is small. However, in Redux, you are required to define the your reducers and middleware up-front; there is no good way to dynamically add/remove these constructs at runtime.
+
+**redux-dynamic-modules** is designed to make dynamically loading these constructs easier. You can define a **module**, which contains reducers and middleware, and add it to the Redux store at runtime. We also provide a React component `DynamicModuleLoader`, which can load/unload modules on mount/unmount.
 
 Modules provide the following benefits:
-* They can be easily re-used across the application, or between multiple similar applications.
-* They can be added/removed from the store dynamically, ex. when a component mounts or when a user performs an action
+* Modules can be easily re-used across the application, or between multiple similar applications.
+* Components declare the modules needed by them and redux-dynamic-modules ensures that the module is loaded for the component. 
+* Modules can be added/removed from the store dynamically, ex. when a component mounts or when a user performs an action
 
 ## Features
 * Group together reducers, middleware, and state into a single, re-usable module.
 * Add and remove modules from a Redux store at any time.
 * Use the included `<DynamicModuleLoader />` component to automatically add a module when a component is rendered
 * Extensions provide integration with popular libraries, including `redux-saga` and `redux-observable`
+
+## Example Scenarios
+* You don't want to load the code for all your reducers up front. Define a module for some reducers and use `DynamicModuleLoader` and a library like [react-loadable](https://github.com/jamiebuilds/react-loadable) to download and add your module at runtime.
+* You have some common reducers/middleware that need to be re-used in different areas of your application. Define a module and easily include it in those areas.
+* You have a mono-repo that contains multiple applications which share similar state. Create a package containing some modules and re-use them across your applications
   
 ## Install
 Run 
@@ -41,8 +49,6 @@ export function getUsersModule(): IModule<IUserState> {
     reducerMap: {
       users: usersReducer
     },
-    sagas: [usersSaga],
-
     // Actions to fire when this module is added/removed
     // initialActions: [],
     // finalActions: []
@@ -61,25 +67,25 @@ const store: IModuleStore<IState> = configureStore(
   /* initial state */
   {},
 
-  /* redux-saga context */ 
-  {},
+  /* extensions to include */
+  [],
 
   getUsersModule(), 
   /* ...any additional modules */
 );
 ```
 
-*  Use like a standard Redux store
+* Use like a standard Redux store
 * Use the `DynamicModuleLoader` React component to add/remove modules when components mount/unmount
 
 ```jsx
-<DynamicModuleLoader reduxModules={modules}>
+<DynamicModuleLoader modules={modules}>
    <div>Hello World!!</div>
 </DynamicModuleLoader>
 ``` 
 
 ## Examples
-See the [Todo App](https://github.com/Microsoft/redux-dynamic-modules/tree/master/packages/todo-example) for a quick of example of the library in practice.
+See the [Widgets](https://github.com/Microsoft/redux-dynamic-modules/tree/master/packages/widgets-example) for a quick of example of the library in practice.
 
 ## Contributing
 
