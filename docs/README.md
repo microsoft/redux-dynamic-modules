@@ -12,7 +12,7 @@ Modules provide the following benefits:
 * Group together reducers, middlware, and state into a single, re-usable module.
 * Add and remove modules from a Redux store at any time.
 * Use the included `<DynamicModuleLoader />` component to automatically add a module when a component is rendered
-* Extensions provide integration with popular libraries, including `redux-saga` and `redux-observable`
+* Extensions provide integration with popular libraries, including `redux-saga` and `redux-thunk`
 
 ## Examples
 See the [Todo App](https://github.com/Microsoft/redux-dynamic-modules/tree/master/packages/todo-example) for a quick of example of the library in practice.

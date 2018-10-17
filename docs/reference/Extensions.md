@@ -1,6 +1,6 @@
 # Extensions
 `redux-dynamic-modules` supports the concept of extensions, which allow for custom behavior when adding/removing modules. 
-The `redux-dynamic-modules-saga` and `redux-dynamic-modules-observable` packages are built as extensions.
+The `redux-dynamic-modules-saga` and `redux-dynamic-modules-thunk` packages are built as extensions.
 
 ## Building a custom extension
 To build a custom extension, create an object that implements the following interface
