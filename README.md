@@ -5,7 +5,7 @@
 <h1>Redux Dynamic Modules</h1<
 </div>
 
-[![CircleCI](https://circleci.com/gh/Microsoft/redux-dynamic-modules.svg?style=svg)](https://circleci.com/gh/Microsoft/redux-dynamic-modules) ![npm (scoped)](https://img.shields.io/npm/v/redux-dynamic-modules.svg) ![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)
+[![Pipelines](https://dev.azure.com/redux-dynamic-modules/redux-dynamic-modules/_apis/build/status/Microsoft.redux-dynamic-modules?branchName=master)](https://dev.azure.com/redux-dynamic-modules/redux-dynamic-modules/redux-dynamic-modules%20Team/_build?definitionId=1&_a=summary) ![npm (scoped)](https://img.shields.io/npm/v/redux-dynamic-modules.svg) ![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)
 
 
 ## What is it?
