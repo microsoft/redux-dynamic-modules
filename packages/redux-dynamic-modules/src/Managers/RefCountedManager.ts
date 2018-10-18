@@ -42,8 +42,6 @@ export function getRefCountedManager<IType extends IItemManager<T>, T>(manager: 
 
     ret.dispose = () => {
         manager.dispose();
-        refCounter = null;
-        manager = null;
     }
 
     return ret;

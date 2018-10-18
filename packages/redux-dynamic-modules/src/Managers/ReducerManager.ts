@@ -95,7 +95,7 @@ export function getReducerManager<S extends {}>(
             } as ReducersMapObject<S>;
             keysToRemove.push(key);
             combinedReducer = getCombinedReducer(rm);
-        }
+        },
     };
 }
 

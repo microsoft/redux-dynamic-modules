@@ -49,8 +49,6 @@ export function getSagaExtension<C>(sagaContext?: C): IExtension {
 
         dispose: () => {
             _sagaManager.dispose();
-            _sagaManager = null;
-            sagaMiddleware = null;
         }
     }
 }
