@@ -13,7 +13,6 @@
     "redux-dynamic-modules": "^0.0.15",
     "redux-dynamic-modules-saga": "^0.0.15",
     "redux-dynamic-modules-thunk": "^0.0.15",
-    "redux-observable": "^1.0.0",
     "redux-saga": "^0.16.2",
     "redux-thunk": "^2.3.0"
   },
