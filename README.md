@@ -12,7 +12,7 @@
 **redux-dynamic-modules** is a library that aims to make Redux Reducers and middleware easy to modular-ize and add/remove dynamically. 
 
 ## Motivation
-In large Javascript applications, it is often desired to perform some kind of code-splitting, so that the initial script size is small. However, in Redux, you are required to define the your reducers and middleware up-front; there is no good way to dynamically add/remove these constructs at runtime.
+In large Javascript applications, it is often desired to perform some kind of code-splitting, so that the initial script size is small. However, in Redux, you are required to define your reducers and middleware up-front; there is no good way to dynamically add/remove these constructs at runtime.
 
 **redux-dynamic-modules** is designed to make dynamically loading these constructs easier. You can define a **module**, which contains reducers and middleware, and add it to the Redux store at runtime. We also provide a React component `DynamicModuleLoader`, which can load/unload modules on mount/unmount.
 
