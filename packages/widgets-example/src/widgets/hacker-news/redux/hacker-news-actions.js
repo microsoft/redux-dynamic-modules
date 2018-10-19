@@ -1,6 +1,7 @@
 export const HackerNewsStoriesAvailable = "hackernews/storiesavailable";
 export const HackerNewsLoadStories = "hackernews/loadstories";
 
+// action creator : StoriesAvailable
 export const storiesAvailable = (items) => {
     return {
         type: HackerNewsStoriesAvailable,
@@ -26,6 +27,7 @@ export const fetchStories = () => {
     };
 }
 
+// Helper to fetch the json
 const fetchJson = (url) => {
     return fetch(url).then((response) => {
         return response.json();
