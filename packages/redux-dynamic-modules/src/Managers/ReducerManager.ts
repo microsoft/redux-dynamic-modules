@@ -51,11 +51,8 @@ export function getRefCountedReducerManager<S>(manager: IReducerManager<S>): IRe
 export function getReducerManager<S extends {}>(
     initialReducers: ReducersMapObject<S>
 ): IReducerManager<S> {
-    let rm: ReducersMapObject<S> = {
-        ...(initialReducers as object)
-    } as ReducersMapObject<S>;
     let combinedReducer = combineReducers(initialReducers);
-    const reducers: ReducersMapObject<any> = { ...initialReducers as object };
+    const reducers: ReducersMapObject<S> = { ...initialReducers as object } as ReducersMapObject<S>;
     let keysToRemove = [];
 
     const reduce = (state: S, action: AnyAction) => {
@@ -70,7 +67,7 @@ export function getReducerManager<S extends {}>(
     };
 
     return {
-        getReducerMap: () => rm,
+        getReducerMap: () => reducers,
         reduce,
         add: <ReducerState>(key: string, reducer: Reducer<ReducerState>) => {
 
@@ -79,10 +76,7 @@ export function getReducerManager<S extends {}>(
             }
 
             reducers[key] = reducer;
-            rm = {
-                ...reducers
-            } as ReducersMapObject<S>;
-            combinedReducer = getCombinedReducer(rm);
+            combinedReducer = getCombinedReducer(reducers);
         },
         remove: (key: string) => {
             if (!key || !reducers[key]) {
@@ -90,11 +84,8 @@ export function getReducerManager<S extends {}>(
             }
 
             delete reducers[key];
-            rm = {
-                ...reducers
-            } as ReducersMapObject<S>;
             keysToRemove.push(key);
-            combinedReducer = getCombinedReducer(rm);
+            combinedReducer = getCombinedReducer(reducers);
         },
     };
 }
