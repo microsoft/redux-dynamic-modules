@@ -3,7 +3,7 @@
         "title": "Install new dependencies",
         "sourceFile": "package.json",
         "replaceTextOrFile": "demosteps\\package.json",
-        "selectionRange": [13, 15]
+        "selectionRange": [12, 0, 15, 999]
     },
     {
         "title": "Create Weather module",
@@ -22,7 +22,7 @@
         "title": "Add imports Weather Component to module",
         "sourceFile": "src\\widgets\\weather\\index.js",
         "replaceTextOrFile": "demosteps\\weather-index-imports.js",
-        "selectionRange": [2, 0,  4, 999]
+        "selectionRange": [1, 0,  5, 999]
     },
     {
         "title": "Connect Weather Component to module",
