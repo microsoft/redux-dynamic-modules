@@ -2,7 +2,7 @@ import { call, put, takeLatest } from "redux-saga/effects";
 import { weatherLoaded } from "./weather-actions";
 
 export function* weatherSaga() {
-    yield take("LoadWeatherData", loadWeatherData);
+    yield takeLatest("LoadWeatherData", loadWeatherData);
 }
 
 function* loadWeatherData() {
