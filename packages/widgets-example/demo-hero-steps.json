@@ -1,58 +1,58 @@
 [
     {
-        "title": "Install new dependencies",
+        "title": "01 Install new dependencies",
         "sourceFile": "package.json",
         "replaceTextOrFile": "demosteps\\01 package.json",
         "selectionRange": [12, 0, 15, 999]
     },
     {
-        "title": "Define Hacker News module",
+        "title": "02 Define Hacker News module",
         "sourceFile": "src\\widgets\\hacker-news\\redux\\02 hacker-news-module.js",
         "replaceTextOrFile": "demosteps\\hacker-news-module.js"
     },
     {
-        "title": "Open index.js to connect News component to module",
+        "title": "03 Open index.js to connect News component to module",
         "sourceFile": "src\\widgets\\hacker-news\\index.js"
     },
     {
-        "title": "Add imports to connect News component to module",
+        "title": "04 Add imports to connect News component to module",
         "sourceFile": "src\\widgets\\hacker-news\\index.js",
         "replaceTextOrFile": "demosteps\\03 hacker-news-index-imports.js",
         "selectionRange": [2, 0, 4, 999]
     },
     {
-        "title": "Connect Hacker News component to module",
+        "title": "05 Connect Hacker News component to module",
         "sourceFile": "src\\widgets\\hacker-news\\index.js",
         "replaceTextOrFile": "demosteps\\04 hacker-news-index.js",
         "selectionRange": [6, 0, 19, 999]
     },
     {
-        "title": "Create Weather module",
+        "title": "06 Create Weather module",
         "sourceFile": "src\\widgets\\weather\\redux\\weather-module.js"
     },
     {
-        "title": "Define Weather module",
+        "title": "07 Define Weather module",
         "sourceFile": "src\\widgets\\weather\\redux\\weather-module.js",
         "replaceTextOrFile": "demosteps\\05 weather-module.js"
     },
     {
-        "title": "Open Index.js to Connect Weather Component to module",
+        "title": "08 Open Index.js to Connect Weather Component to module",
         "sourceFile": "src\\widgets\\weather\\index.js"
     },
     {
-        "title": "Add imports Weather Component to module",
+        "title": "09 Add imports Weather Component to module",
         "sourceFile": "src\\widgets\\weather\\index.js",
         "replaceTextOrFile": "demosteps\\06 weather-index-imports.js",
         "selectionRange": [1, 0,  5, 999]
     },
     {
-        "title": "Connect Weather Component to module",
+        "title": "10 Connect Weather Component to module",
         "sourceFile": "src\\widgets\\weather\\index.js",
         "replaceTextOrFile": "demosteps\\07 weather-index.js",
         "selectionRange": [6, 12]
     },
     {
-        "title": "Open App.js",
+        "title": "11 Open App.js",
         "sourceFile": "src\\App.js"
     }
 ]
