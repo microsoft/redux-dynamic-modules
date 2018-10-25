@@ -1,0 +1,57 @@
+[{
+        "title": "Install new dependencies",
+        "sourceFile": "package.json",
+        "replaceTextOrFile": "demosteps\\package.json",
+        "selectionRange": [13, 15]
+    },
+    {
+        "title": "Create Weather module",
+        "sourceFile": "src\\widgets\\weather\\redux\\weather-module.js",
+    },
+    {
+        "title": "Define Weather module",
+        "sourceFile": "src\\widgets\\weather\\redux\\weather-module.js",
+        "replaceTextOrFile": "demosteps\\weather-module.js"
+    },
+    {
+        "title": "Open Index.js to Connect Weather Component to module",
+        "sourceFile": "src\\widgets\\weather\\index.js"
+    },
+    {
+        "title": "Add imports Weather Component to module",
+        "sourceFile": "src\\widgets\\weather\\index.js",
+        "replaceTextOrFile": "demosteps\\weather-index-imports.js",
+        "selectionRange": [2, 4]
+    },
+    {
+        "title": "Connect Weather Component to module",
+        "sourceFile": "src\\widgets\\weather\\index.js",
+        "replaceTextOrFile": "demosteps\\weather-index.js",
+        "selectionRange": [6, 12]
+    },
+    {
+        "title": "Define Hacker News module",
+        "sourceFile": "src\\widgets\\hacker-news\\redux\\hacker-news-module.js",
+        "replaceTextOrFile": "demosteps\\hacker-news-module.js"
+    },
+    {
+        "title": "Open index.js to connect News component to module",
+        "sourceFile": "src\\widgets\\hacker-news\\index.js"
+    },
+    {
+        "title": "Add imports to connect News component to module",
+        "sourceFile": "src\\widgets\\hacker-news\\index.js",
+        "replaceTextOrFile": "demosteps\\hacker-news-index-imports.js",
+        "selectionRange": [2, 4]
+    },
+    {
+        "title": "Connect Hacker News component to module",
+        "sourceFile": "src\\widgets\\hacker-news\\index.js",
+        "replaceTextOrFile": "demosteps\\hacker-news-index.js",
+        "selectionRange": [6, 19]
+    },
+    {
+        "title": "Open App.js",
+        "sourceFile": "src\\App.js"
+    }
+]
