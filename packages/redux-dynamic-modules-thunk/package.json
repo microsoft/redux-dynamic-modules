@@ -51,10 +51,7 @@
             "jsx",
             "json",
             "node"
-        ],
-        "globals": {
-            "__DEV__": true
-        }
+        ]
     },
     "peerDependencies": {
         "redux-dynamic-modules": ">=0.0.7",

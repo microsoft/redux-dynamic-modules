@@ -12,7 +12,7 @@ export function getSagaExtension<C>(sagaContext?: C): IExtension {
     let sagaMonitor = undefined;
 
     //@ts-ignore
-    if (__DEV__) {
+    if (process.env.NODE_ENV === "development") {
         sagaMonitor = window["__SAGA_MONITOR_EXTENSION__"] || undefined;
     }
 
