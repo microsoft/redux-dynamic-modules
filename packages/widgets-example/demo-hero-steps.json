@@ -1,4 +1,5 @@
-[{
+[
+    {
         "title": "Install new dependencies",
         "sourceFile": "package.json",
         "replaceTextOrFile": "demosteps\\package.json",
@@ -6,7 +7,7 @@
     },
     {
         "title": "Create Weather module",
-        "sourceFile": "src\\widgets\\weather\\redux\\weather-module.js",
+        "sourceFile": "src\\widgets\\weather\\redux\\weather-module.js"
     },
     {
         "title": "Define Weather module",
