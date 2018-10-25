@@ -22,7 +22,7 @@
         "title": "Add imports Weather Component to module",
         "sourceFile": "src\\widgets\\weather\\index.js",
         "replaceTextOrFile": "demosteps\\weather-index-imports.js",
-        "selectionRange": [2, 4]
+        "selectionRange": [2, 0,  4, 999]
     },
     {
         "title": "Connect Weather Component to module",
@@ -43,13 +43,13 @@
         "title": "Add imports to connect News component to module",
         "sourceFile": "src\\widgets\\hacker-news\\index.js",
         "replaceTextOrFile": "demosteps\\hacker-news-index-imports.js",
-        "selectionRange": [2, 4]
+        "selectionRange": [2, 0, 4, 999]
     },
     {
         "title": "Connect Hacker News component to module",
         "sourceFile": "src\\widgets\\hacker-news\\index.js",
         "replaceTextOrFile": "demosteps\\hacker-news-index.js",
-        "selectionRange": [6, 19]
+        "selectionRange": [6, 0, 19, 999]
     },
     {
         "title": "Open App.js",
