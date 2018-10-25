@@ -2,37 +2,12 @@
     {
         "title": "Install new dependencies",
         "sourceFile": "package.json",
-        "replaceTextOrFile": "demosteps\\package.json",
+        "replaceTextOrFile": "demosteps\\01 package.json",
         "selectionRange": [12, 0, 15, 999]
     },
     {
-        "title": "Create Weather module",
-        "sourceFile": "src\\widgets\\weather\\redux\\weather-module.js"
-    },
-    {
-        "title": "Define Weather module",
-        "sourceFile": "src\\widgets\\weather\\redux\\weather-module.js",
-        "replaceTextOrFile": "demosteps\\weather-module.js"
-    },
-    {
-        "title": "Open Index.js to Connect Weather Component to module",
-        "sourceFile": "src\\widgets\\weather\\index.js"
-    },
-    {
-        "title": "Add imports Weather Component to module",
-        "sourceFile": "src\\widgets\\weather\\index.js",
-        "replaceTextOrFile": "demosteps\\weather-index-imports.js",
-        "selectionRange": [1, 0,  5, 999]
-    },
-    {
-        "title": "Connect Weather Component to module",
-        "sourceFile": "src\\widgets\\weather\\index.js",
-        "replaceTextOrFile": "demosteps\\weather-index.js",
-        "selectionRange": [6, 12]
-    },
-    {
         "title": "Define Hacker News module",
-        "sourceFile": "src\\widgets\\hacker-news\\redux\\hacker-news-module.js",
+        "sourceFile": "src\\widgets\\hacker-news\\redux\\02 hacker-news-module.js",
         "replaceTextOrFile": "demosteps\\hacker-news-module.js"
     },
     {
@@ -42,14 +17,39 @@
     {
         "title": "Add imports to connect News component to module",
         "sourceFile": "src\\widgets\\hacker-news\\index.js",
-        "replaceTextOrFile": "demosteps\\hacker-news-index-imports.js",
+        "replaceTextOrFile": "demosteps\\03 hacker-news-index-imports.js",
         "selectionRange": [2, 0, 4, 999]
     },
     {
         "title": "Connect Hacker News component to module",
         "sourceFile": "src\\widgets\\hacker-news\\index.js",
-        "replaceTextOrFile": "demosteps\\hacker-news-index.js",
+        "replaceTextOrFile": "demosteps\\04 hacker-news-index.js",
         "selectionRange": [6, 0, 19, 999]
+    },
+    {
+        "title": "Create Weather module",
+        "sourceFile": "src\\widgets\\weather\\redux\\weather-module.js"
+    },
+    {
+        "title": "Define Weather module",
+        "sourceFile": "src\\widgets\\weather\\redux\\weather-module.js",
+        "replaceTextOrFile": "demosteps\\05 weather-module.js"
+    },
+    {
+        "title": "Open Index.js to Connect Weather Component to module",
+        "sourceFile": "src\\widgets\\weather\\index.js"
+    },
+    {
+        "title": "Add imports Weather Component to module",
+        "sourceFile": "src\\widgets\\weather\\index.js",
+        "replaceTextOrFile": "demosteps\\06 weather-index-imports.js",
+        "selectionRange": [1, 0,  5, 999]
+    },
+    {
+        "title": "Connect Weather Component to module",
+        "sourceFile": "src\\widgets\\weather\\index.js",
+        "replaceTextOrFile": "demosteps\\07 weather-index.js",
+        "selectionRange": [6, 12]
     },
     {
         "title": "Open App.js",
