@@ -1,14 +1,15 @@
 import React, { Component } from 'react';
-import { Provider } from "react-redux";
 // We will load the widgets async using react-loadable.
 import Loadable from "react-loadable";
-// configureStore allows us to load/unload modules dynamically.
-import { configureStore } from "redux-dynamic-modules";
-// Saga extension allows us to use Saga middleware in the module store.
-import { getSagaExtension } from "redux-dynamic-modules-saga";
-// Thunk extension allows us to use Thunk middleware in the module store.
-import { getThunkExtension } from "redux-dynamic-modules-thunk";
+import { Provider } from "react-redux";
+import { applyMiddleware, combineReducers, compose, createStore } from "redux";
+import createSagaMiddleware from "redux-saga";
+import thunk from "redux-thunk";
 import './App.css';
+import { fetchStories } from './widgets/hacker-news/redux/hacker-news-actions';
+import { hackerNewsReducer } from './widgets/hacker-news/redux/hacker-news-reducer';
+import { weatherReducer } from './widgets/weather/redux/weather-reducer';
+import { weatherSaga } from './widgets/weather/redux/weather-saga';
 
 class App extends Component {
   constructor(props) {
@@ -20,12 +21,22 @@ class App extends Component {
       weather: false
     };
 
-    /**
-     * configure the store and load the thunk and saga extension
-     * The extensions are optional and you can choose extension based on the middleware you use
-     * You can also build your own extensions for any other middleware e.g. redux-observable
-     */
-    this.store = configureStore({}, [getThunkExtension(), getSagaExtension()]);
+    // WHAT IS NOT OPTIMUM HERE?
+    // We need advance knowledge of all state keys and reducer
+    // It is not modular and scalable
+    const reducers = combineReducers({
+      weatherState: weatherReducer,
+      hackerNews: hackerNewsReducer
+    })
+
+    const sagaMiddleware = createSagaMiddleware();
+    const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+    this.store = createStore(reducers, composeEnhancers(applyMiddleware(thunk, sagaMiddleware)));
+
+    // WHAT IS NOT OPTIMUM HERE?
+    // We need to run all Sagas in advance, even though the component
+    // needing them is not Mounted yet  
+    sagaMiddleware.run(weatherSaga);
   }
 
   render() {
@@ -47,10 +58,23 @@ class App extends Component {
   }
 
   onHackerNewsToggled = () => {
-    this.setState({ hackerNews: !this.state.hackerNews });
+    const hackerNews = !this.state.hackerNews;
+    if (hackerNews) {
+      // WHAT IS NOT OPTIMUM HERE?
+      // App knows about the actions needed by the HackerNews component
+      this.store.dispatch(fetchStories())
+    }
+    this.setState({ hackerNews });
   };
   onWeatherToggled = () => {
-    this.setState({ weather: !this.state.weather });
+    const weather = !this.state.weather;
+
+    if (weather) {
+      // WHAT IS NOT OPTIMUM HERE?
+      // App knows about the actions needed by the Weather component
+      this.store.dispatch({ type: "LoadWeatherData" });
+    }
+    this.setState({ weather });
   }
 
   renderContent = () => {
