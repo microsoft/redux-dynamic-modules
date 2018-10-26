@@ -3,7 +3,7 @@ import { getWeatherModule } from "./redux/weather-module";
 import { DynamicModuleLoader } from "redux-dynamic-modules";
 import * as React from "react";
 
-export default function Dynamic() {
+export default function DynamicWeather() {
     return (
         <DynamicModuleLoader modules={[getWeatherModule()]}>
             <ConnectedWeather />
