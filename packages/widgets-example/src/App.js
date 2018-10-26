@@ -21,7 +21,7 @@ class App extends Component {
       weather: false
     };
 
-    // WHAT IS NOT OPTIMUM HERE?
+    // WHAT IS NOT OPTIMAL HERE?
     // We need advance knowledge of all state keys and reducer
     // It is not modular and scalable
     const reducers = combineReducers({
@@ -33,7 +33,7 @@ class App extends Component {
     const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
     this.store = createStore(reducers, composeEnhancers(applyMiddleware(thunk, sagaMiddleware)));
 
-    // WHAT IS NOT OPTIMUM HERE?
+    // WHAT IS NOT OPTIMAL HERE?
     // We need to run all Sagas in advance, even though the component
     // needing them is not Mounted yet  
     sagaMiddleware.run(weatherSaga);
@@ -60,7 +60,7 @@ class App extends Component {
   onHackerNewsToggled = () => {
     const hackerNews = !this.state.hackerNews;
     if (hackerNews) {
-      // WHAT IS NOT OPTIMUM HERE?
+      // WHAT IS NOT OPTIMAL HERE?
       // App knows about the actions needed by the HackerNews component
       this.store.dispatch(fetchStories())
     }
@@ -70,7 +70,7 @@ class App extends Component {
     const weather = !this.state.weather;
 
     if (weather) {
-      // WHAT IS NOT OPTIMUM HERE?
+      // WHAT IS NOT OPTIMAL HERE?
       // App knows about the actions needed by the Weather component
       this.store.dispatch({ type: "LoadWeatherData" });
     }
