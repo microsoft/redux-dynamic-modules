@@ -91,6 +91,8 @@ const store: IModuleStore<IState> = configureStore(
 ## Examples
 See the [Widgets](https://github.com/Microsoft/redux-dynamic-modules/tree/master/packages/widgets-example) for a quick of example of the library in practice.
 
+Step by step walthrough of start consuming ```redux-dynamic-modules``` in the widget app. [Youtube](https://www.youtube.com/watch?v=SktRbSZ-4Tk)
+
 ## Contributing
 
 This project welcomes contributions and suggestions.  Most contributions require you to agree to a
