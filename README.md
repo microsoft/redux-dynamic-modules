@@ -88,6 +88,10 @@ const store: IModuleStore<IState> = configureStore(
 </DynamicModuleLoader>
 ``` 
 
+## Extensions
+* redux-saga - [redux-dynamic-modules-saga](https://www.npmjs.com/package/redux-dynamic-modules-saga)
+* redux-thunk - [redux-dynamic-modules-thunk](https://www.npmjs.com/package/redux-dynamic-modules-thunk)
+
 ## Examples
 See the [Widgets](https://github.com/Microsoft/redux-dynamic-modules/tree/master/packages/widgets-example) for a quick of example of the library in practice.
 
