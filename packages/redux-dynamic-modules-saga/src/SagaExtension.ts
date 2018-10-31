@@ -8,7 +8,7 @@ import { sagaEquals } from "./SagaComparer";
  * Get an extension that integrates saga with the store
  * @param sagaContext The context to provide to the saga
  */
-export function getSagaExtension<C>(sagaContext?: C): IExtension {
+export function getSagaExtension<C>(sagaContext?: C, onError?: (error: Error) => void): IExtension {
     let sagaMonitor = undefined;
 
     //@ts-ignore
@@ -20,7 +20,8 @@ export function getSagaExtension<C>(sagaContext?: C): IExtension {
     let sagaMiddleware: SagaMiddleware<C> = createSagaMiddleware<any>(
         {
             context: sagaContext,
-            sagaMonitor
+            sagaMonitor,
+            onError
         }
     );
 
