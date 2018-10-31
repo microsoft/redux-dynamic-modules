@@ -1,6 +1,6 @@
 {
     "name": "redux-dynamic-modules-saga",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "description": "Saga Extension for redux-dynamic-modules",
     "repository": {
         "type": "github",
