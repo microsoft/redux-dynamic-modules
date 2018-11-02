@@ -108,8 +108,6 @@ export function getModuleManager<State>(middlewareManager: IItemManager<Middlewa
                 const moduleAddedAction = { type: "@@Internal/ModuleManager/ModuleAdded", payload: module.id };
                 _dispatchActions(module.initialActions ? [moduleAddedAction, ...module.initialActions] : [moduleAddedAction]);
             });
-
-            _modules.push(...justAddedModules);
         },
         remove: (modulesToRemove: IModule<any>[]) => {
             if (!modulesToRemove) {
