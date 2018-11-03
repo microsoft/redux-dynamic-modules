@@ -3,14 +3,14 @@ You can use `redux-dynamic-modules` alongside `redux-observable` so that you can
 
 To use
 * `npm install redux-dynamic-modules-observable`
-* Add the observable extension to the `configureStore` call
+* Add the observable extension to the `createStore` call
 
 ```typescript
-import { configureStore, IModuleStore } from "redux-dynamic-modules";
+import { createStore, IModuleStore } from "redux-dynamic-modules";
 import { getObservableExtension } from "redux-dynamic-modules-observable";
 import { getUsersModule } from "./usersModule";
 
-const store: IModuleStore<IState> = configureStore(
+const store: IModuleStore<IState> = createStore(
 /* initial state */
 {},
 

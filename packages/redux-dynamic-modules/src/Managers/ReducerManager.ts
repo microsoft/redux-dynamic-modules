@@ -63,6 +63,11 @@ export function getReducerManager<S extends {}>(
             }
             keysToRemove = [];
         }
+
+        if (state === undefined) {
+            state = {} as S;
+        }
+
         return combinedReducer(state, action);
     };
 
