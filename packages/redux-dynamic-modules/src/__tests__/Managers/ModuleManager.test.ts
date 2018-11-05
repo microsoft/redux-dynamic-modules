@@ -62,6 +62,33 @@ it("module manager tests", () => {
 
 });
 
+it("Dispose disposes all modules", () => {
+    const middlewareManager = getMiddlewareManager();
+    const moduleManager = getModuleManager(middlewareManager, []);
+    let actionsDispatched = [];
+
+    moduleManager.setDispatch((action) => {
+        // Push the action type to array so we can track it
+        actionsDispatched.push(action.type);
+        return action.payload || null;
+    });
+
+    const reducer = (state) => state || null;
+
+    const module1 = {
+        id: "module1",
+        initialActions: [{ type: "initial1" }, { type: "initial11" }],
+        reducerMap: { "duplicateReducer": reducer, "key11": reducer },
+        finalActions: [{ type: "final1" }, { type: "final11" }],
+        sagas: [saga1]
+    };
+
+    // Add first module
+    moduleManager.add([module1]);
+    moduleManager.dispose();
+    expect(actionsDispatched).toEqual(["@@Internal/ModuleManager/ModuleAdded", "initial1", "initial11", "final1", "final11", "@@Internal/ModuleManager/ModuleRemoved"]);
+})
+
 export function* saga1() {
 
 }

@@ -10,7 +10,7 @@ export interface IModuleManager<State> extends IItemManager<IModule<State>> {
 export function getModuleManager<State>(middlewareManager: IItemManager<Middleware>, extensions: IExtension[]): IModuleManager<State> {
     let _dispatch = null;
     let _reducerManager: IReducerManager<State>;
-    let modules: IModule<any>[] = [];
+    let _modules: IModule<any>[] = [];
     const _moduleIds = new Set();
 
     const _dispatchActions = (actions: AnyAction[]) => {
@@ -80,10 +80,10 @@ export function getModuleManager<State>(middlewareManager: IItemManager<Middlewa
             }
             modulesToAdd = modulesToAdd.filter(module => module);
             const justAddedModules: IModule<any>[] = [];
-
             modulesToAdd.forEach(module => {
                 if (!_moduleIds.has(module.id)) {
                     _moduleIds.add(module.id);
+                    _modules.push(module);
                     _addReducers(module.reducerMap);
                     const middlewares = module.middlewares;
                     if (middlewares) {
@@ -130,14 +130,14 @@ export function getModuleManager<State>(middlewareManager: IItemManager<Middlewa
                     });
 
                     _moduleIds.delete(module.id);
-                    modules = modules.filter(m => m.id !== module.id);
+                    _modules = _modules.filter(m => m.id !== module.id);
 
                     _dispatchActions([{ type: "@@Internal/ModuleManager/ModuleRemoved", payload: module.id }]);
                 }
             });
         },
         dispose: () => {
-            moduleManager.remove(modules);
+            moduleManager.remove(_modules);
         }
     };
     return moduleManager;
