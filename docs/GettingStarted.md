@@ -30,10 +30,10 @@ export function getUsersModule(): IModule<IUserState> {
 * Create a `ModuleStore`
 
 ```typescript
-import {configureStore, IModuleStore} from "redux-dynamic-modules";
+import {createStore, IModuleStore} from "redux-dynamic-modules";
 import {getUsersModule} from "./usersModule";
 
-const store: IModuleStore<IState> = configureStore(
+const store: IModuleStore<IState> = createStore(
   /* initial state */
   {},
 
