@@ -3,14 +3,14 @@ You can use `redux-dynamic-modules` alongside `redux-thunk`.
 
 To use
 * `npm install redux-dynamic-modules-thunk`
-* Add the thunk extension to the `configureStore` call
+* Add the thunk extension to the `createStore` call
 
 ```typescript
-import { configureStore, IModuleStore } from "redux-dynamic-modules";
+import { createStore, IModuleStore } from "redux-dynamic-modules";
 import { getThunkExtension } from "redux-dynamic-modules-thunk";
 import { getUsersModule } from "./usersModule";
 
-const store: IModuleStore<IState> = configureStore(
+const store: IModuleStore<IState> = createStore(
 /* initial state */
 {},
 
