@@ -5,7 +5,7 @@ import {
     StoreCreator,
     Reducer,
     Action,
-    compose as composeEnhancers
+    compose
 } from "redux";
 import { IModule, IExtension, IModuleStore } from "./Contracts";
 import { getModuleManager } from "./Managers/ModuleManager";
@@ -49,6 +49,12 @@ export function moduleEnhancer<S1>(
                     middlewareManager,
                     extensions),
                 (a: IModule<any>, b: IModule<any>) => a.id === b.id);
+
+            let composeEnhancers = compose;
+            
+            if (process.env.NODE_ENV === "development") {
+                composeEnhancers = window["__REDUX_DEVTOOLS_EXTENSION_COMPOSE__"] || compose;
+            }
 
             // Create module enhancer to manage extensions and dynamic middlewares
             const moduleEnhancer = composeEnhancers(
