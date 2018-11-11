@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { createStore, compose } from "redux";
 import { Provider } from "react-redux";
 // We will load the widgets async using react-loadable.
 import Loadable from "react-loadable";
@@ -8,6 +9,8 @@ import { createStore } from "redux-dynamic-modules";
 import { getSagaExtension } from "redux-dynamic-modules-saga";
 // Thunk extension allows us to use Thunk middleware in the module store.
 import { getThunkExtension } from "redux-dynamic-modules-thunk";
+import { offline } from '@redux-offline/redux-offline';
+import offlineConfig from '@redux-offline/redux-offline/lib/defaults';
 import './App.css';
 import { offline } from '@redux-offline/redux-offline';
 import offlineConfig from '@redux-offline/redux-offline/lib/defaults';

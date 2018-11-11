@@ -1,8 +1,6 @@
 import { applyMiddleware, compose, createStore as createReduxStore, DeepPartial, StoreEnhancer } from "redux";
 import { IModule, IModuleStore, IExtension } from "./Contracts";
-import { getModuleManager } from "./Managers/ModuleManager";
-import { getRefCountedManager } from "./Managers/RefCountedManager";
-import { getMiddlewareManager } from './Managers/MiddlewareManager';
+import { moduleEnhancer } from './ModuleEnhancer';
 
 /**
  * Configure the module store

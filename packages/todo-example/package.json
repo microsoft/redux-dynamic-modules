@@ -1,6 +1,6 @@
 {
   "name": "redux-dynamic-modules-todos-example",
-  "version": "1.0.2",
+  "version": "2.0.1",
   "private": true,
   "devDependencies": {
     "react-scripts": "^1.1.4"
@@ -11,7 +11,7 @@
     "react-dom": "^16.3.1",
     "react-redux": "^5.0.7",
     "redux": "^3.5.2",
-    "redux-dynamic-modules": "^1.0.2",
+    "redux-dynamic-modules": "^2.0.1",
     "redux-saga": "^0.16.0"
   },
   "scripts": {
