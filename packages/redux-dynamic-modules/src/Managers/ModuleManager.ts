@@ -60,7 +60,7 @@ export function getModuleManager<State>(middlewareManager: IItemManager<Middlewa
             _reducerManager.remove(key);
         }
     }
-    // Create reduce function which redirects to _reduers.reduce
+    // Create reduce function which redirects to _reducers.reduce
     const _reduce = (s: State, a: AnyAction) => {
         if (_reducerManager) {
             return _reducerManager.reduce(s, a);

@@ -51,6 +51,9 @@ export interface IModuleManager {
      * Add the given module to the store
      */
     addModule: (module: IModule<any>) => IDynamicallyAddedModule
+    /**
+     * Adds the given set of modules to the store
+     */
     addModules: (modules: IModule<any>[]) => IDynamicallyAddedModule;
 }
 

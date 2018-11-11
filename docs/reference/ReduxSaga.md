@@ -3,16 +3,19 @@ You can use `redux-dynamic-modules` alongside `redux-saga` so that you can add/r
 
 To use
 * `npm install redux-dynamic-modules-saga`
-* Add the saga extension to the `configureStore` call
+* Add the saga extension to the `createStore` call
    
 ```typescript
-import { configureStore, IModuleStore } from "redux-dynamic-modules";
+import { createStore, IModuleStore } from "redux-dynamic-modules";
 import { getSagaExtension } from "redux-dynamic-modules-saga";
 import { getUsersModule } from "./usersModule";
 
-const store: IModuleStore<IState> = configureStore(
+const store: IModuleStore<IState> = createStore(
 /* initial state */
 {},
+
+/** enhancers **/
+[],
 
 /* Extensions to load */
 [getSagaExtension({} /* saga context */)],

@@ -1,5 +1,5 @@
 import { IExtension, IModuleStore } from "../Contracts";
-import { configureStore } from "../ModuleStore";
+import { createStore } from "../ModuleStore";
 import { Middleware } from "redux";
 
 describe("Store with extensions", () => {
@@ -22,25 +22,25 @@ describe("Store with extensions", () => {
             middlewareFunction();
         };
         testExtension.middleware = [middleware];
-        testStore = configureStore({}, [testExtension]);
+        testStore = createStore({}, [testExtension]);
 
         testStore.dispatch({ type: "ANY" });
         expect(middlewareFunction).toHaveBeenCalled();
     });
 
     it("Manager created called", () => {
-        testStore = configureStore({}, [testExtension]);
+        testStore = createStore({}, [testExtension]);
         expect(testExtension.onModuleManagerCreated).toHaveBeenCalled();
     });
 
     it("OnModule Added called", () => {
-        testStore = configureStore({}, [testExtension]);
+        testStore = createStore({}, [testExtension]);
         testStore.addModule({ id: "new_module" });
         expect(testExtension.onModuleAdded).toHaveBeenCalled();
     });
 
     it("OnModule Removed called", () => {
-        testStore = configureStore({}, [testExtension]);
+        testStore = createStore({}, [testExtension]);
         const module = testStore.addModule({ id: "new_module" });
         module.remove();
 

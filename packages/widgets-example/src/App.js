@@ -2,8 +2,8 @@ import React, { Component } from 'react';
 import { Provider } from "react-redux";
 // We will load the widgets async using react-loadable.
 import Loadable from "react-loadable";
-// configureStore allows us to load/unload modules dynamically.
-import { configureStore } from "redux-dynamic-modules";
+// createStore allows us to load/unload modules dynamically.
+import { createStore } from "redux-dynamic-modules";
 // Saga extension allows us to use Saga middleware in the module store.
 import { getSagaExtension } from "redux-dynamic-modules-saga";
 // Thunk extension allows us to use Thunk middleware in the module store.
@@ -25,7 +25,7 @@ class App extends Component {
      * The extensions are optional and you can choose extension based on the middleware you use
      * You can also build your own extensions for any other middleware e.g. redux-observable
      */
-    this.store = configureStore({}, [getThunkExtension(), getSagaExtension()]);
+    this.store = createStore({}, [], [getThunkExtension(), getSagaExtension()]);
   }
 
   render() {
