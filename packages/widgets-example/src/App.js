@@ -9,6 +9,8 @@ import { getSagaExtension } from "redux-dynamic-modules-saga";
 // Thunk extension allows us to use Thunk middleware in the module store.
 import { getThunkExtension } from "redux-dynamic-modules-thunk";
 import './App.css';
+import { offline } from '@redux-offline/redux-offline';
+import offlineConfig from '@redux-offline/redux-offline/lib/defaults';
 
 class App extends Component {
   constructor(props) {
@@ -25,7 +27,7 @@ class App extends Component {
      * The extensions are optional and you can choose extension based on the middleware you use
      * You can also build your own extensions for any other middleware e.g. redux-observable
      */
-    this.store = createStore({}, [], [getThunkExtension(), getSagaExtension()]);
+    this.store = createStore({}, [offline(offlineConfig)], [getThunkExtension(), getSagaExtension()]);
   }
 
   render() {
