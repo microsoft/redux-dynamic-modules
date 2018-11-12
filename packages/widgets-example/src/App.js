@@ -4,7 +4,7 @@ import { Provider } from "react-redux";
 // We will load the widgets async using react-loadable.
 import Loadable from "react-loadable";
 // createStore allows us to load/unload modules dynamically.
-import { moduleEnhancer } from "redux-dynamic-modules";
+import { createStore } from "redux-dynamic-modules";
 // Saga extension allows us to use Saga middleware in the module store.
 import { getSagaExtension } from "redux-dynamic-modules-saga";
 // Thunk extension allows us to use Thunk middleware in the module store.
@@ -12,6 +12,8 @@ import { getThunkExtension } from "redux-dynamic-modules-thunk";
 import { offline } from '@redux-offline/redux-offline';
 import offlineConfig from '@redux-offline/redux-offline/lib/defaults';
 import './App.css';
+import { offline } from '@redux-offline/redux-offline';
+import offlineConfig from '@redux-offline/redux-offline/lib/defaults';
 
 class App extends Component {
   constructor(props) {
@@ -28,18 +30,7 @@ class App extends Component {
      * The extensions are optional and you can choose extension based on the middleware you use
      * You can also build your own extensions for any other middleware e.g. redux-observable
      */
-    this.store = createStore(
-      (state, action) => state || {}, 
-      {}, 
-      compose(        
-             // if there are other enhancers that add state keys/reducers then moduleEnhancer should be the last one to be composed.
-             // similar to how the applyMiddleware should be the first one to be composed.
-             // Note that the composition happens from right to left, so the moduleEnhancer should be the left most in the compose calls.             
-              moduleEnhancer([getThunkExtension(), getSagaExtension()]), 
-              offline(offlineConfig) 
-                            
-      )
-      );
+    this.store = createStore({}, [offline(offlineConfig)], [getThunkExtension(), getSagaExtension()]);
   }
 
   render() {
