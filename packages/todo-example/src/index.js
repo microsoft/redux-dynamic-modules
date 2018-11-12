@@ -4,7 +4,7 @@ import { createStore } from 'redux-dynamic-modules'
 import { Provider } from 'react-redux'
 import App from './components/App'
 
-const store = createStore({}, []);
+const store = createStore({}, [], []);
 
 render(
   <Provider store={store}>

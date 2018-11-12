@@ -70,6 +70,9 @@ import {getUsersModule} from "./usersModule";
 const store: IModuleStore<IState> = createStore(
   /* initial state */
   {},
+  
+  /** enhancers **/
+  [],
 
   /* extensions to include */
   [],
