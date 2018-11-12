@@ -6,7 +6,6 @@ import {
   IDynamicallyAddedModule
 } from "./Contracts";
 
-// @ts-ignore
 // Import ReactReduxContext from react-redux. If react-redux is less than version 6, ReactReduxContext will be null.
 import { ReactReduxContext } from "react-redux";
 
@@ -32,7 +31,6 @@ export class DynamicModuleLoader<
   IDynamicModuleLoaderProps<OriginalState, AdditionalState>
   >
 {
-  // @ts-ignore 
   // Version 5 and below
   private static contextTypes = {
     store: PropTypes.object
@@ -57,18 +55,24 @@ export class DynamicModuleLoader<
     if (ReactReduxContext) {
       return (
         <ReactReduxContext.Consumer>
-          {(context) => (
-            <DynamicModuleLoaderImpl
-              store={context.store}
-              modules={this.props.modules}
-            />
-          )
-          }
+          {(context) => {
+            if (!context.store) {
+              throw new Error("Could not load store from React context.");
+            }
+
+            return (
+              <DynamicModuleLoaderImpl
+                store={context.store}
+                modules={this.props.modules}
+              />
+            );
+          }}
         </ReactReduxContext.Consumer>
       );
     } else {
       return (
         <DynamicModuleLoaderImpl
+          // @ts-ignore
           store={this.context.store}
           modules={this.props.modules}
         />

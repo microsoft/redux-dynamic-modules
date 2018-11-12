@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { createStore, compose } from "redux";
 import { Provider } from "react-redux";
 // We will load the widgets async using react-loadable.
 import Loadable from "react-loadable";
@@ -12,8 +11,6 @@ import { getThunkExtension } from "redux-dynamic-modules-thunk";
 import { offline } from '@redux-offline/redux-offline';
 import offlineConfig from '@redux-offline/redux-offline/lib/defaults';
 import './App.css';
-import { offline } from '@redux-offline/redux-offline';
-import offlineConfig from '@redux-offline/redux-offline/lib/defaults';
 
 class App extends Component {
   constructor(props) {
