@@ -1,7 +1,9 @@
+import { offline } from '@redux-offline/redux-offline';
+import offlineConfig from '@redux-offline/redux-offline/lib/defaults';
 import React, { Component } from 'react';
-import { Provider } from "react-redux";
 // We will load the widgets async using react-loadable.
 import Loadable from "react-loadable";
+import { Provider } from "react-redux";
 // createStore allows us to load/unload modules dynamically.
 import { createStore } from "redux-dynamic-modules";
 // Saga extension allows us to use Saga middleware in the module store.
@@ -25,7 +27,7 @@ class App extends Component {
      * The extensions are optional and you can choose extension based on the middleware you use
      * You can also build your own extensions for any other middleware e.g. redux-observable
      */
-    this.store = createStore({}, [getThunkExtension(), getSagaExtension()]);
+    this.store = createStore({}, [offline(offlineConfig)], [getThunkExtension(), getSagaExtension()]);
   }
 
   render() {

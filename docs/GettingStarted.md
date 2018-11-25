@@ -37,6 +37,9 @@ const store: IModuleStore<IState> = createStore(
   /* initial state */
   {},
 
+  /** enhancers **/
+  [],
+
   /* Extensions to load */ 
   [],
 

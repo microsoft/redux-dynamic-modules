@@ -23,7 +23,7 @@ export interface IExtension {
 ## Adding extensions to the store
 To add an extension to the `ModuleStore`, pass it as the second argument to `createStore`
 ```typescript
-const store: IModuleStore<IState> = createStore({}, [getMyExtension()])
+const store: IModuleStore<IState> = createStore({}, [], [getMyExtension()])
 ```
 
 
