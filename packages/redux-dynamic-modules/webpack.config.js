@@ -18,6 +18,7 @@ module.exports = (env, argv) => {
         },
 
         externals: {
+            "prop-types": "prop-types",
             "react": "react",
             "redux": "redux",
             "react-redux": "react-redux",
