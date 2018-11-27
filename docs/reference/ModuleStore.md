@@ -5,16 +5,19 @@ The **Module Store** is a Redux store with the added capability of managing **Re
 * `addModules(modules: IModule<any>[])`: Same as `addModule`, but for multiple modules. The return function will remove all the added modules.
 * `dispose()`: Remove all of the modules added to the store and dispose of the object
 
-To create a `ModuleStore`, use the `configureStore` function from our package
+To create a `ModuleStore`, use the `createStore` function from our package
 
 ## Example {docsify-ignore}
 ```typescript
-import { configureStore, IModuleStore } from "redux-dynamic-modules";
+import { createStore, IModuleStore } from "redux-dynamic-modules";
 import {getUsersModule} from "./usersModule";
 
-const store: IModuleStore<IState> = configureStore(
+const store: IModuleStore<IState> = createStore(
   /* initial state */
   {},
+
+  /** enhancers **/
+  [],
 
   /* Extensions to load */
   [],

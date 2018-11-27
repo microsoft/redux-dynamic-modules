@@ -1,6 +1,6 @@
 {
     "name": "redux-dynamic-modules-observable",
-    "version": "0.0.16",
+    "version": "3.0.0",
     "description": "Observable Extension for redux-dynamic-modules",
     "private": true,
     "repository": {
@@ -27,7 +27,7 @@
         "@types/jest": "^23.3.1",
         "@types/redux": "3.6.0",
         "jest": "^23.5.0",
-        "redux-dynamic-modules": "^0.0.16",
+        "redux-dynamic-modules": "^3.0.0",
         "rimraf": "^2.6.2",
         "ts-jest": "^23.1.4",
         "tslib": "^1.9.3",
@@ -53,10 +53,7 @@
             "jsx",
             "json",
             "node"
-        ],
-        "globals": {
-            "__DEV__": true
-        }
+        ]
     },
     "peerDependencies": {
         "redux-dynamic-modules": ">=0.0.7"

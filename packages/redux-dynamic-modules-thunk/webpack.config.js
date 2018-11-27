@@ -30,10 +30,6 @@ module.exports = (env, argv) => {
                 analyzerMode: 'static',
                 reportFilename: `react-redux-module.stats.html`,
                 openAnalyzer: false
-            }),
-            new webpack.DefinePlugin({
-                __DEV__: mode_env === "development",
-                __RELEASE__: mode_env === "production"
             })
         ]
     };

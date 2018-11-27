@@ -64,12 +64,15 @@ export function getUsersModule(): IModule<IUserState> {
 * Create a `ModuleStore`
 
 ```typescript
-import {configureStore, IModuleStore} from "redux-dynamic-modules";
+import {createStore, IModuleStore} from "redux-dynamic-modules";
 import {getUsersModule} from "./usersModule";
 
-const store: IModuleStore<IState> = configureStore(
+const store: IModuleStore<IState> = createStore(
   /* initial state */
   {},
+  
+  /** enhancers **/
+  [],
 
   /* extensions to include */
   [],
@@ -88,8 +91,14 @@ const store: IModuleStore<IState> = configureStore(
 </DynamicModuleLoader>
 ``` 
 
+## Extensions
+* redux-saga - [redux-dynamic-modules-saga](https://www.npmjs.com/package/redux-dynamic-modules-saga)
+* redux-thunk - [redux-dynamic-modules-thunk](https://www.npmjs.com/package/redux-dynamic-modules-thunk)
+
 ## Examples
 See the [Widgets](https://github.com/Microsoft/redux-dynamic-modules/tree/master/packages/widgets-example) for a quick of example of the library in practice.
+
+Step by step walthrough of start consuming ```redux-dynamic-modules``` in the widget app. [Youtube](https://www.youtube.com/watch?v=SktRbSZ-4Tk)
 
 ## Contributing
 

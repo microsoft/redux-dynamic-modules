@@ -1,4 +1,4 @@
-import { configureStore } from "redux-dynamic-modules";
+import { createStore } from "redux-dynamic-modules";
 import { getSagaExtension } from "../SagaExtension";
 import { ISagaModule } from "../Contracts";
 import { SagaIterator } from "redux-saga";
@@ -6,7 +6,7 @@ describe("Saga extension tests", () => {
     it("Saga extension registers module and starts saga", () => {
         const testContext = {};
         called = false;
-        configureStore({}, [getSagaExtension(testContext)], getTestModule());
+        createStore({}, [], [getSagaExtension(testContext)], getTestModule());
         expect(called);
 
         expect(testContext["moduleManager"]).toBeTruthy();
