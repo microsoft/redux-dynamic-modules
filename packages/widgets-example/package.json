@@ -1,6 +1,6 @@
 {
   "name": "widgets-example",
-  "version": "3.0.1",
+  "version": "3.0.2",
   "private": true,
   "dependencies": {
     "@redux-offline/redux-offline": "^2.5.0",
@@ -11,9 +11,9 @@
     "react-redux": "^5.0.7",
     "react-scripts": "2.0.4",
     "redux": "^3.5.2",
-    "redux-dynamic-modules": "^3.0.1",
-    "redux-dynamic-modules-saga": "^3.0.1",
-    "redux-dynamic-modules-thunk": "^3.0.1",
+    "redux-dynamic-modules": "^3.0.2",
+    "redux-dynamic-modules-saga": "^3.0.2",
+    "redux-dynamic-modules-thunk": "^3.0.2",
     "redux-saga": "^0.16.2",
     "redux-thunk": "^2.3.0"
   },
