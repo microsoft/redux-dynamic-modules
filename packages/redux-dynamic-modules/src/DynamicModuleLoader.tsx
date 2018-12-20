@@ -7,6 +7,7 @@ import {
 } from "./Contracts";
 
 // Import ReactReduxContext from react-redux. If react-redux is less than version 6, ReactReduxContext will be null.
+//@ts-ignore
 import { ReactReduxContext } from "react-redux";
 
 export interface IDynamicModuleLoaderProps<OriginalState, AdditionalState> {
@@ -32,6 +33,7 @@ export class DynamicModuleLoader<
   >
 {
   // Version 5 and below
+  //@ts-ignore
   private static contextTypes = {
     store: PropTypes.object
   };
