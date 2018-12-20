@@ -66,7 +66,9 @@ export class DynamicModuleLoader<
               <DynamicModuleLoaderImpl
                 store={context.store}
                 modules={this.props.modules}
-              />
+              >
+                {this.props.children}
+              </DynamicModuleLoaderImpl>
             );
           }}
         </ReactReduxContext.Consumer>
@@ -77,7 +79,9 @@ export class DynamicModuleLoader<
           // @ts-ignore
           store={this.context.store}
           modules={this.props.modules}
-        />
+        >
+          {this.props.children}
+        </DynamicModuleLoaderImpl>
       )
     }
   }
