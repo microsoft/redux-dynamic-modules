@@ -1,6 +1,6 @@
 {
     "name": "redux-dynamic-modules-observable",
-    "version": "3.0.0",
+    "version": "3.0.3",
     "description": "Observable Extension for redux-dynamic-modules",
     "private": true,
     "repository": {
@@ -27,7 +27,7 @@
         "@types/jest": "^23.3.1",
         "@types/redux": "3.6.0",
         "jest": "^23.5.0",
-        "redux-dynamic-modules": "^3.0.0",
+        "redux-dynamic-modules": "^3.0.3",
         "rimraf": "^2.6.2",
         "ts-jest": "^23.1.4",
         "tslib": "^1.9.3",

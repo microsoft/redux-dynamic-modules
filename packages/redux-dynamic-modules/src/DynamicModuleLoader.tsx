@@ -1,21 +1,16 @@
 import * as React from "react";
 import * as PropTypes from "prop-types";
-import {
-  IModule,
-  IModuleStore,
-  IDynamicallyAddedModule
-} from "./Contracts";
-
-// Import ReactReduxContext from react-redux. If react-redux is less than version 6, ReactReduxContext will be null.
-//@ts-ignore
-import { ReactReduxContext } from "react-redux";
+import { IModule, IModuleStore, IDynamicallyAddedModule } from "./Contracts";
+import { Provider } from "react-redux";
 
 export interface IDynamicModuleLoaderProps<OriginalState, AdditionalState> {
   /** Modules that need to be dynamically registerd */
   modules: IModule<AdditionalState>[];
+
+  /** Optional callback which returns a store instance. This would be called if no store could be loaded from the context. */
+  createStore?: () => IModuleStore<any>;
 }
 
-// Use for version 5 and below
 export interface IDynamicModuleLoaderContext {
   store: IModuleStore<any>;
 }
@@ -28,12 +23,14 @@ export interface IDynamicModuleLoaderContext {
 export class DynamicModuleLoader<
   OriginalState,
   AdditionalState
-  > extends React.Component<
+> extends React.Component<
   IDynamicModuleLoaderProps<OriginalState, AdditionalState>
-  >
-{
-  // Version 5 and below
-  //@ts-ignore
+> {
+  private _addedModules?: IDynamicallyAddedModule;
+  private _store: IModuleStore<any>;
+  private _providerInitializationNeeded: boolean;
+
+  // @ts-ignore
   private static contextTypes = {
     store: PropTypes.object
   };
@@ -43,69 +40,20 @@ export class DynamicModuleLoader<
     context: IDynamicModuleLoaderContext
   ) {
     super(props, context);
-    if (!ReactReduxContext) {
-      if (!context.store) {
+    const { modules, createStore } = props;
+    this._store = context.store;
+    this._providerInitializationNeeded = false;
+
+    if (!this._store) {
+      if (createStore) {
+        this._store = createStore();
+        this._providerInitializationNeeded = true;
+      } else {
         throw new Error("Could not load store from React context.");
       }
     }
-  }
 
-  /**
-   * Render a Redux provider
-   */
-  public render(): React.ReactNode {
-    if (ReactReduxContext) {
-      return (
-        <ReactReduxContext.Consumer>
-          {(context) => {
-            if (!context.store) {
-              throw new Error("Could not load store from React context.");
-            }
-
-            return (
-              <DynamicModuleLoaderImpl
-                store={context.store}
-                modules={this.props.modules}
-              >
-                {this.props.children}
-              </DynamicModuleLoaderImpl>
-            );
-          }}
-        </ReactReduxContext.Consumer>
-      );
-    } else {
-      return (
-        <DynamicModuleLoaderImpl
-          // @ts-ignore
-          store={this.context.store}
-          modules={this.props.modules}
-        >
-          {this.props.children}
-        </DynamicModuleLoaderImpl>
-      )
-    }
-  }
-}
-
-
-interface IDynamicModuleLoaderImplProps {
-  /** Modules that need to be dynamically registerd */
-  modules: IModule<any>[];
-
-  store: IModuleStore<any>;
-}
-
-class DynamicModuleLoaderImpl extends React.Component<IDynamicModuleLoaderImplProps> {
-  private _addedModules?: IDynamicallyAddedModule;
-
-  constructor(props: IDynamicModuleLoaderImplProps) {
-    super(props);
-    const { modules, store } = props;
-    this._addedModules = store.addModules(modules);
-  }
-
-  public render(): React.ReactNode {
-    return this.props.children;
+    this._addedModules = this._store.addModules(modules);
   }
 
   /**
@@ -115,6 +63,17 @@ class DynamicModuleLoaderImpl extends React.Component<IDynamicModuleLoaderImplPr
     if (this._addedModules) {
       this._addedModules.remove();
       this._addedModules = undefined;
+    }
+  }
+
+  /**
+   * Render a Redux provider
+   */
+  public render(): React.ReactNode {
+    if (this._providerInitializationNeeded) {
+      return <Provider store={this._store}>{this.props.children}</Provider>;
+    } else {
+      return this.props.children;
     }
   }
 }

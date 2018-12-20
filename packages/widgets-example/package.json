@@ -1,6 +1,6 @@
 {
   "name": "widgets-example",
-  "version": "3.0.0",
+  "version": "3.0.3",
   "private": true,
   "dependencies": {
     "@redux-offline/redux-offline": "^2.5.0",
