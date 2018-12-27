@@ -1,8 +1,8 @@
 import { ISettingsState } from "./SettingsContracts";
 import produce from "immer";
-import { SettingActions, SettingsActionTypes } from "./SettingsActions";
+import { SettingsActionTypes, SettingActionsUnion } from "./SettingsActions";
 
-export function settingsReducer(state: ISettingsState, action: SettingActions): ISettingsState {
+export function settingsReducer(state: ISettingsState, action: SettingActionsUnion): ISettingsState {
     return produce(state || { userPreferences: {} }, (draft:ISettingsState) => {
         switch (action.type) {
             case SettingsActionTypes.SET_PREFERENCES: {

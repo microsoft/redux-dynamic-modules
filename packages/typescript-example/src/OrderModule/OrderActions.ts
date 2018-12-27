@@ -10,4 +10,4 @@ export const OrderActions = {
 }
 
 // we leverage TypeScript token merging, so our consumer can use `Actions` for both runtime and compile time types 💪
-export type OrderActions = ActionsUnion<typeof OrderActions>
+export type OrderActionsUnion = ActionsUnion<typeof OrderActions>

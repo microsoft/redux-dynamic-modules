@@ -24,6 +24,6 @@ function* loadPreferences() {
 }
 
 function* storePreferencs() {
-    const settingsState: ISettingsState = yield effects.select((state: ISettingsAwareState) => state.settings);
+    const settingsState: ISettingsState = yield effects.select((state: ISettingsAwareState) => state.settingsState);
     yield effects.call([localStorage, localStorage.setItem], "userPreferences", JSON.stringify(settingsState.userPreferences));
 }

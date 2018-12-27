@@ -1,7 +1,7 @@
 import { StringMap } from "../ActionHelper";
 
 export interface ISettingsAwareState {
-    settings: ISettingsState;
+    settingsState: ISettingsState;
 }
 
 export interface ISettingsState {

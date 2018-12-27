@@ -11,5 +11,5 @@ export function getOrderModules() {
                 orderState: orderReducer
             }
         }
-    ]
+    ] as any
 }

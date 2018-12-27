@@ -1,8 +1,6 @@
-
+import { Action as ReduxAction } from "redux";
 // tslint:disable-next-line:interface-name
-export interface Action<T> {
-    type: string;
-    payload: any;
+export interface Action<T> extends ReduxAction<T> {
     /**
      * The meta property for the action (see Flux Standard Actions)
      */
