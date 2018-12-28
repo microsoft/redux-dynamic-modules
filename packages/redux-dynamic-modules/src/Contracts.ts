@@ -19,7 +19,6 @@ export interface IModule<State> {
      */
     middlewares?: Middleware[];
 
-
     /**
      * These actions are dispatched immediately after adding the module in the store
      */
@@ -50,19 +49,20 @@ export interface IModuleManager {
     /**
      * Add the given module to the store
      */
-    addModule: (module: IModule<any>) => IDynamicallyAddedModule
+    addModule: (module: IModule<any>) => IDynamicallyAddedModule;
     /**
      * Adds the given set of modules to the store
      */
     addModules: (modules: IModule<any>[]) => IDynamicallyAddedModule;
 }
 
-export type IModuleStore<State> = Store<State> & IModuleManager & {
-    /**
-     * Remove all the modules from the store
-     */
-    dispose: () => void;
-};
+export type IModuleStore<State> = Store<State> &
+    IModuleManager & {
+        /**
+         * Remove all the modules from the store
+         */
+        dispose: () => void;
+    };
 
 export interface IItemManager<T> {
     getItems: () => T[];

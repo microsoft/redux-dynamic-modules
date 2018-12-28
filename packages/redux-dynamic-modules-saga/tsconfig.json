@@ -1,10 +1,6 @@
 {
     "compilerOptions": {
-        "lib": [
-            "dom",
-            "es2015",
-            "es2016"
-        ],
+        "lib": ["dom", "es2015", "es2016"],
         "declaration": true,
         "noUnusedLocals": true,
         "noImplicitAny": false,
@@ -13,10 +9,6 @@
         "jsx": "react",
         "outDir": "lib"
     },
-    "include": [
-        "src/**/*.ts"
-    ],
-    "exclude": [
-        "src/__tests__/**/**.ts"
-    ]
+    "include": ["src/**/*.ts"],
+    "exclude": ["src/__tests__/**/**.ts"]
 }

@@ -1,4 +1,7 @@
-import { getStringRefCounter, getObjectRefCounter } from "../../Utils/RefCounter";
+import {
+    getStringRefCounter,
+    getObjectRefCounter,
+} from "../../Utils/RefCounter";
 it("tests string ref counter", () => {
     const refCounter = getStringRefCounter();
     expect(refCounter.getCount("foobar")).toBe(0);
@@ -25,7 +28,6 @@ it("tests string ref counter", () => {
     expect(refCounter.getCount("a")).toBe(0);
 });
 
-
 it("tests object ref counter", () => {
     const refCounter = getObjectRefCounter<Function>((a, b) => a === b);
     expect(refCounter.getCount(foobar)).toBe(0);
@@ -46,11 +48,6 @@ it("tests object ref counter", () => {
     expect(refCounter.getCount(a)).toBe(0);
 });
 
-function foobar() {
+function foobar() {}
 
-}
-
-function a() {
-
-}
-
+function a() {}

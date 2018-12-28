@@ -8,9 +8,9 @@ export function getSettingsModule(): ISagaModule<ISettingsAwareState> {
     return {
         id: "settings",
         reducerMap: {
-            settingsState: settingsReducer
+            settingsState: settingsReducer,
         } as any,
-        initialActions:[SettingActions.loadPreferences()],
-        sagas: [settingsRootSaga]
-    }
+        initialActions: [SettingActions.loadPreferences()],
+        sagas: [settingsRootSaga],
+    };
 }

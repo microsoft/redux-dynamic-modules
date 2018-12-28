@@ -18,11 +18,17 @@ const Order = (props: IOrderProps) => {
         <>
             <div>Order</div>
             <ul>
-                {toppings.map((t => <ToppingCheckbox key={"check-"+t} name={t} orderProps={props} />))}
+                {toppings.map(t => (
+                    <ToppingCheckbox
+                        key={"check-" + t}
+                        name={t}
+                        orderProps={props}
+                    />
+                ))}
             </ul>
         </>
-    )
-}
+    );
+};
 
 interface IToppingCheckboxProps {
     name: string;
@@ -30,29 +36,40 @@ interface IToppingCheckboxProps {
 }
 
 const ToppingCheckbox = (props: IToppingCheckboxProps) => {
-    const {
-        orderProps,
-        name
-    } = props;
+    const { orderProps, name } = props;
     const checked = !!orderProps.userPreferences[name];
     const onChange = () => {
         orderProps.setPreferences({
-            [name]: !checked
-        })
-    }
+            [name]: !checked,
+        });
+    };
     return (
         <div>
-            <input type="checkbox" id={name} checked={checked} onChange={onChange} name={name} /> {name}
+            <input
+                type="checkbox"
+                id={name}
+                checked={checked}
+                onChange={onChange}
+                name={name}
+            />{" "}
+            {name}
         </div>
-    )
-}
+    );
+};
 
 const mapStateToProps = (state: IOrderAwareState) => {
     return {
-        userPreferences: getUserPreferences(state)
-    }
-}
+        userPreferences: getUserPreferences(state),
+    };
+};
 
-const ConnectedOrder = connect(mapStateToProps, SettingActions)(Order);
+const ConnectedOrder = connect(
+    mapStateToProps,
+    SettingActions
+)(Order);
 
-export const DynamicOrder = () => <DynamicModuleLoader modules={getOrderModules()}><ConnectedOrder /> </DynamicModuleLoader>
+export const DynamicOrder = () => (
+    <DynamicModuleLoader modules={getOrderModules()}>
+        <ConnectedOrder />{" "}
+    </DynamicModuleLoader>
+);

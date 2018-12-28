@@ -1,5 +1,5 @@
 import { connect } from "react-redux";
-import React from 'react';
+import React from "react";
 import "./hacker-news-component.css";
 import "../../widgets.css";
 
@@ -12,9 +12,7 @@ const Link = ({ title, url }) => {
 };
 
 const List = ({ items }) => {
-    return (
-        items.map((item, index) => <Link key={index} {...item} />)
-    );
+    return items.map((item, index) => <Link key={index} {...item} />);
 };
 
 const HackerNews = ({ items }) => {
@@ -30,11 +28,10 @@ const HackerNews = ({ items }) => {
     );
 };
 
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
     return {
-        items: state.hackerNews.items
-    }
+        items: state.hackerNews.items,
+    };
 };
 
 export const ConnectedHackerNews = connect(mapStateToProps)(HackerNews);
-

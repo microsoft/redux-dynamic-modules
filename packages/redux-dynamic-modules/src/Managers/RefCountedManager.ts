@@ -4,13 +4,16 @@ import { IItemManager } from "../Contracts";
 /**
  * Enhances the given items with ref counting for add remove purposes
  */
-export function getRefCountedManager<IType extends IItemManager<T>, T>(manager: IType, equals: (a: T, b: T) => boolean): IType {
+export function getRefCountedManager<IType extends IItemManager<T>, T>(
+    manager: IType,
+    equals: (a: T, b: T) => boolean
+): IType {
     let refCounter = getObjectRefCounter<T>(equals);
     const items = manager.getItems();
     // Set initial ref counting
     items.forEach(item => refCounter.add(item));
 
-    const ret: IType = { ...manager as object } as IType;
+    const ret: IType = { ...(manager as object) } as IType;
 
     // Wrap add method
     ret.add = (items: T[]) => {
@@ -19,14 +22,15 @@ export function getRefCountedManager<IType extends IItemManager<T>, T>(manager: 
         }
 
         const nonNullItems = items.filter(i => i);
-        const notAddedItems = nonNullItems.filter(i => refCounter.getCount(i) === 0);
+        const notAddedItems = nonNullItems.filter(
+            i => refCounter.getCount(i) === 0
+        );
         manager.add(notAddedItems);
         nonNullItems.forEach(refCounter.add);
     };
 
     // Wrap remove
     ret.remove = (items: T[]) => {
-
         if (!items) {
             return;
         }
@@ -38,11 +42,11 @@ export function getRefCountedManager<IType extends IItemManager<T>, T>(manager: 
                 }
             }
         });
-    }
+    };
 
     ret.dispose = () => {
         manager.dispose();
-    }
+    };
 
     return ret;
 }
