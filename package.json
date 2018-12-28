@@ -5,9 +5,10 @@
         "bootstrap": "lerna bootstrap",
         "build:prod": "lerna run build:prod",
         "test": "npm run build:prod && lerna run test",
-        "prettier": "prettier \"**/*.{ts,tsx,json,js,scss,yaml,yml}\" --write --config prettier.config.js"
+        "prettier": "prettier \"**/*.{ts,tsx,json,js,scss,yaml,yml,css,md}\" --write --config prettier.config.js"
     },
     "devDependencies": {
-        "lerna": "^3.4.0"
+        "lerna": "^3.4.0",
+        "prettier": "1.15.3"
     }
 }

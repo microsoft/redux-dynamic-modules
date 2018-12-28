@@ -1,10 +1,13 @@
 # Module Reference Counting
+
 **redux-dynamic-modules** will automatically peform "reference counting" of your modules and their contents.
 
 ## For Modules
+
 The library will reference count entire modules. This means:
-* If you add a module, adding it again is a NO-OP
-* If you add a module twice, it must be removed twice.
+
+-   If you add a module, adding it again is a NO-OP
+-   If you add a module twice, it must be removed twice.
 
 Consider the following example:
 
@@ -46,8 +49,10 @@ render() {
 ```
 
 ## For Module Contents
+
 The library will also reference count the contents of your modules, including reducers and middleware. This means:
-* If two different modules add the same middleware, only one copy of the middleware is added. Only until **both** modules are removed will the middleware be removed
+
+-   If two different modules add the same middleware, only one copy of the middleware is added. Only until **both** modules are removed will the middleware be removed
 
 ```jsx
 export function createModuleA() {
@@ -72,8 +77,8 @@ removeB(); // LoggingMiddleware is removed
 
 ```
 
-* If two different modules add a reducer with the same key, only the first added reducer will be used.
-For this reason, **it is recommended to keep state keys unique where possible.**
+-   If two different modules add a reducer with the same key, only the first added reducer will be used.
+    For this reason, **it is recommended to keep state keys unique where possible.**
 
 ```jsx
 export function createModuleA() {

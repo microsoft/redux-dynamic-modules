@@ -26,8 +26,7 @@ export function sagaEquals(
         const sagaB = b as ISagaWithArguments<any>;
 
         return (
-            sagaA.saga === sagaB.saga &&
-            sagaA.argument === sagaB.argument // TODO: This needs to be a deep equals
+            sagaA.saga === sagaB.saga && sagaA.argument === sagaB.argument // TODO: This needs to be a deep equals
         );
     }
 }
