@@ -7,4 +7,3 @@ export interface ISettingsAwareState {
 export interface ISettingsState {
     userPreferences: StringMap<string | boolean>;
 }
-

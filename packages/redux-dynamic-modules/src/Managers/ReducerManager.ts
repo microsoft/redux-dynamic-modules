@@ -1,9 +1,4 @@
-import {
-    combineReducers,
-    Reducer,
-    ReducersMapObject,
-    AnyAction
-} from "redux";
+import { combineReducers, Reducer, ReducersMapObject, AnyAction } from "redux";
 import { getStringRefCounter } from "../Utils/RefCounter";
 
 export interface IReducerManager<S> {
@@ -16,7 +11,9 @@ export interface IReducerManager<S> {
 /**
  * Adds reference counting to reducer manager and adds/remove keys only when ref count is zero
  */
-export function getRefCountedReducerManager<S>(manager: IReducerManager<S>): IReducerManager<S> {
+export function getRefCountedReducerManager<S>(
+    manager: IReducerManager<S>
+): IReducerManager<S> {
     const reducerKeyRefCounter = getStringRefCounter();
     for (const key in manager.getReducerMap()) {
         reducerKeyRefCounter.add(key);
@@ -38,7 +35,7 @@ export function getRefCountedReducerManager<S>(manager: IReducerManager<S>): IRe
             if (reducerKeyRefCounter.getCount(key) === 0) {
                 manager.remove(key);
             }
-        }
+        },
     };
 }
 
@@ -52,12 +49,14 @@ export function getReducerManager<S extends {}>(
     initialReducers: ReducersMapObject<S>
 ): IReducerManager<S> {
     let combinedReducer = combineReducers(initialReducers);
-    const reducers: ReducersMapObject<S> = { ...initialReducers as object } as ReducersMapObject<S>;
+    const reducers: ReducersMapObject<S> = {
+        ...(initialReducers as object),
+    } as ReducersMapObject<S>;
     let keysToRemove = [];
 
     const reduce = (state: S, action: AnyAction) => {
         if (keysToRemove.length > 0) {
-            state = { ...state as any };
+            state = { ...(state as any) };
             for (let key of keysToRemove) {
                 delete state[key];
             }
@@ -75,7 +74,6 @@ export function getReducerManager<S extends {}>(
         getReducerMap: () => reducers,
         reduce,
         add: <ReducerState>(key: string, reducer: Reducer<ReducerState>) => {
-
             if (!key || reducers[key]) {
                 return;
             }
@@ -101,4 +99,3 @@ function getCombinedReducer(reducerMap: ReducersMapObject<any>) {
     }
     return combineReducers(reducerMap);
 }
-

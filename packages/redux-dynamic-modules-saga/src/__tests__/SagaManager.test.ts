@@ -1,11 +1,11 @@
-import { getSagaManager } from '../SagaManager';
+import { getSagaManager } from "../SagaManager";
 function getSagaMiddleware(callback) {
     return {
         run: () => {
             return {
-                cancel: callback
-            }
-        }
+                cancel: callback,
+            };
+        },
     };
 }
 
@@ -27,6 +27,4 @@ it("saga manager tests", () => {
     expect(index).toBe(1);
 });
 
-function* saga1() {
-
-}
+function* saga1() {}

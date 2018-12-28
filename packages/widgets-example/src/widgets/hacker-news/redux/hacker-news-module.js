@@ -7,11 +7,11 @@ export function getHackerNewsModule() {
         id: "hacker-news",
         // Maps the Store key to the reducer
         reducerMap: {
-            hackerNews: hackerNewsReducer
+            hackerNews: hackerNewsReducer,
         },
         // Optional: Any actions to dispatch when the module is loaded
         initialActions: [fetchStories()],
         // Optional: Any actions to dispatch when the module is unloaded
-        finalActions: []
+        finalActions: [],
     };
 }

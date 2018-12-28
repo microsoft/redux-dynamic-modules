@@ -1,4 +1,3 @@
-
 export interface IRefCounter<T> {
     /**
      * Gets refeerence count for given item
@@ -16,7 +15,9 @@ export interface IRefCounter<T> {
 }
 
 /** Ref counts given object */
-export function getObjectRefCounter<T>(equals: (a: T, b: T) => boolean): IRefCounter<T> {
+export function getObjectRefCounter<T>(
+    equals: (a: T, b: T) => boolean
+): IRefCounter<T> {
     if (!equals) {
         equals = (a, b) => a === b;
     }
@@ -72,8 +73,8 @@ export function getObjectRefCounter<T>(equals: (a: T, b: T) => boolean): IRefCou
 
             counts[index] = counts[index] - 1;
             return false;
-        }
-    }
+        },
+    };
 }
 
 /**
@@ -82,7 +83,6 @@ export function getObjectRefCounter<T>(equals: (a: T, b: T) => boolean): IRefCou
 export function getStringRefCounter(): IRefCounter<string> {
     const values: { [key: string]: number } = {};
     return {
-
         /**
          * Returns current ref count for the key
          */
@@ -126,6 +126,6 @@ export function getStringRefCounter(): IRefCounter<string> {
 
             values[key]--;
             return false;
-        }
-    }
+        },
+    };
 }

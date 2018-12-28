@@ -11,14 +11,14 @@ describe("Store with extensions", () => {
             onModuleAdded: jest.fn(),
             onModuleManagerCreated: jest.fn(),
             onModuleRemoved: jest.fn(),
-            dispose: jest.fn()
-        }
+            dispose: jest.fn(),
+        };
     });
 
     it("Registers additional middleware", () => {
         const middlewareFunction = jest.fn();
 
-        const middleware: Middleware = (api) => (next) => (action) => {
+        const middleware: Middleware = api => next => action => {
             middlewareFunction();
         };
         testExtension.middleware = [middleware];

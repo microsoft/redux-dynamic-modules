@@ -6,7 +6,8 @@ export function* weatherSaga() {
 }
 
 function* loadWeatherData() {
-    const url = "https://api.openweathermap.org/data/2.5/weather?q=Seattle&APPID=1362c34423375d167d694489b1c74080";
+    const url =
+        "https://api.openweathermap.org/data/2.5/weather?q=Seattle&APPID=1362c34423375d167d694489b1c74080";
 
     const response = yield call(fetch, url);
     const json = yield call([response, response.json]);

@@ -1,9 +1,9 @@
-import shoppingListReducer from "./reducers"
+import shoppingListReducer from "./reducers";
 export function getShoppingListModule() {
     return {
         id: "shopping-list",
         reducerMap: {
-            shoppingList: shoppingListReducer
-        }
-    }
+            shoppingList: shoppingListReducer,
+        },
+    };
 }

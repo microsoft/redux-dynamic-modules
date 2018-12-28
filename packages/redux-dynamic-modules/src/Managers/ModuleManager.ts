@@ -1,13 +1,26 @@
 import { IModule, IItemManager, IExtension } from "../Contracts";
-import { AnyAction, ReducersMapObject, Dispatch, Middleware, Reducer } from "redux";
-import { getReducerManager, IReducerManager, getRefCountedReducerManager } from "./ReducerManager";
+import {
+    AnyAction,
+    ReducersMapObject,
+    Dispatch,
+    Middleware,
+    Reducer,
+} from "redux";
+import {
+    getReducerManager,
+    IReducerManager,
+    getRefCountedReducerManager,
+} from "./ReducerManager";
 
 export interface IModuleManager<State> extends IItemManager<IModule<State>> {
     setDispatch: (dispatch: Dispatch<AnyAction>) => void;
     getReducer: (state: State, action: AnyAction) => State;
 }
 
-export function getModuleManager<State>(middlewareManager: IItemManager<Middleware>, extensions: IExtension[]): IModuleManager<State> {
+export function getModuleManager<State>(
+    middlewareManager: IItemManager<Middleware>,
+    extensions: IExtension[]
+): IModuleManager<State> {
     let _dispatch = null;
     let _reducerManager: IReducerManager<State>;
     let _modules: IModule<any>[] = [];
@@ -19,53 +32,61 @@ export function getModuleManager<State>(middlewareManager: IItemManager<Middlewa
         }
 
         if (!_dispatch) {
-            throw new Error("setDispatch should be called on ModuleManager before adding any modules.");
+            throw new Error(
+                "setDispatch should be called on ModuleManager before adding any modules."
+            );
         }
 
         actions.forEach(_dispatch);
-    }
+    };
 
     const _addMiddlewares = (middlewares: Middleware[]) => {
         if (!middlewares) {
             return;
         }
         middlewareManager.add(middlewares);
-    }
+    };
 
     const _removeMiddlewares = (middlewares: Middleware[]) => {
         if (!middlewares) {
             return;
         }
         middlewareManager.remove(middlewares);
-    }
+    };
 
-    const _addReducers = (reducerMap: ReducersMapObject<Reducer, AnyAction>) => {
+    const _addReducers = (
+        reducerMap: ReducersMapObject<Reducer, AnyAction>
+    ) => {
         if (!reducerMap) {
             return;
         }
         if (!_reducerManager) {
-            _reducerManager = getRefCountedReducerManager(getReducerManager(reducerMap)) as any;
+            _reducerManager = getRefCountedReducerManager(
+                getReducerManager(reducerMap)
+            ) as any;
         } else {
             for (const key in reducerMap) {
                 _reducerManager.add(key, reducerMap[key]);
             }
         }
-    }
+    };
 
-    const _removeReducers = (reducerMap: ReducersMapObject<Reducer, AnyAction>) => {
+    const _removeReducers = (
+        reducerMap: ReducersMapObject<Reducer, AnyAction>
+    ) => {
         if (!reducerMap || !_reducerManager) {
             return;
         }
         for (const key in reducerMap) {
             _reducerManager.remove(key);
         }
-    }
+    };
     // Create reduce function which redirects to _reducers.reduce
     const _reduce = (s: State, a: AnyAction) => {
         if (_reducerManager) {
             return _reducerManager.reduce(s, a);
         }
-        return (s || null);
+        return s || null;
     };
 
     const moduleManager = {
@@ -93,10 +114,8 @@ export function getModuleManager<State>(middlewareManager: IItemManager<Middlewa
                 }
             });
 
-
             // add the sagas and dispatch actions at the end so all the reducers are registered
             justAddedModules.forEach(module => {
-
                 // Let the extensions know we added a module
                 extensions.forEach(p => {
                     if (p.onModuleAdded) {
@@ -105,8 +124,15 @@ export function getModuleManager<State>(middlewareManager: IItemManager<Middlewa
                 });
 
                 // Dispatch the initial actions
-                const moduleAddedAction = { type: "@@Internal/ModuleManager/ModuleAdded", payload: module.id };
-                _dispatchActions(module.initialActions ? [moduleAddedAction, ...module.initialActions] : [moduleAddedAction]);
+                const moduleAddedAction = {
+                    type: "@@Internal/ModuleManager/ModuleAdded",
+                    payload: module.id,
+                };
+                _dispatchActions(
+                    module.initialActions
+                        ? [moduleAddedAction, ...module.initialActions]
+                        : [moduleAddedAction]
+                );
             });
         },
         remove: (modulesToRemove: IModule<any>[]) => {
@@ -115,7 +141,6 @@ export function getModuleManager<State>(middlewareManager: IItemManager<Middlewa
             }
             modulesToRemove = modulesToRemove.filter(module => module);
             modulesToRemove.forEach(module => {
-
                 if (_moduleIds.has(module.id)) {
                     _dispatchActions(module.finalActions);
 
@@ -132,13 +157,18 @@ export function getModuleManager<State>(middlewareManager: IItemManager<Middlewa
                     _moduleIds.delete(module.id);
                     _modules = _modules.filter(m => m.id !== module.id);
 
-                    _dispatchActions([{ type: "@@Internal/ModuleManager/ModuleRemoved", payload: module.id }]);
+                    _dispatchActions([
+                        {
+                            type: "@@Internal/ModuleManager/ModuleRemoved",
+                            payload: module.id,
+                        },
+                    ]);
                 }
             });
         },
         dispose: () => {
             moduleManager.remove(_modules);
-        }
+        },
     };
     return moduleManager;
 }

@@ -1,5 +1,5 @@
 import { connect } from "react-redux";
-import React from 'react';
+import React from "react";
 import "./weather-component.css";
 import "../../widgets.css";
 
@@ -17,19 +17,18 @@ const Weather = ({ loading, name, temperature, description }) => {
     );
 };
 
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
     if (!state.weatherState || !state.weatherState.weather) {
         return {
-            loading: true
+            loading: true,
         };
     }
 
     return {
         name: state.weatherState.weather.name,
         temperature: Math.round(state.weatherState.weather.main.temp - 273),
-        description: state.weatherState.weather.weather[0].description
-    }
+        description: state.weatherState.weather.weather[0].description,
+    };
 };
 
 export const ConnectedWeather = connect(mapStateToProps)(Weather);
-

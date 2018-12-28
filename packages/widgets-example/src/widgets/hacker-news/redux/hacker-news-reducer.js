@@ -13,4 +13,4 @@ export const hackerNewsReducer = (state, action) => {
             }
         }
     });
-}
+};

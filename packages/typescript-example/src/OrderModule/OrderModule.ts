@@ -8,8 +8,8 @@ export function getOrderModules() {
         {
             id: "order",
             reducerMap: {
-                orderState: orderReducer
-            }
-        }
-    ] as any
+                orderState: orderReducer,
+            },
+        },
+    ] as any;
 }

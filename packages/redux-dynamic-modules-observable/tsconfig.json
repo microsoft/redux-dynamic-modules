@@ -1,10 +1,6 @@
 {
     "compilerOptions": {
-        "lib": [
-            "dom",
-            "es2015",
-            "es2016"
-        ],
+        "lib": ["dom", "es2015", "es2016"],
         "declaration": true,
         "noUnusedLocals": true,
         "noImplicitAny": false,
@@ -14,6 +10,8 @@
         "outDir": "lib"
     },
     "include": [
-        "src/**/*.ts", "../widgets-example/src/widgets/hacker-news/index.js", "../widgets-example/src/widgets/hacker-news/component/index.jsx"
+        "src/**/*.ts",
+        "../widgets-example/src/widgets/hacker-news/index.js",
+        "../widgets-example/src/widgets/hacker-news/component/index.jsx"
     ]
 }
