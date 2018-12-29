@@ -125,21 +125,5 @@ class DynamicModuleLoaderImpl extends React.Component<IDynamicModuleLoaderImplPr
       this._addedModules = undefined;
     }
   }
-<<<<<<< HEAD
 }
-=======
 
-    /**
-     * Render a Redux provider
-     */
-    public render(): React.ReactNode {
-        if (this._providerInitializationNeeded) {
-            return (
-                <Provider store={this._store}>{this.props.children}</Provider>
-            );
-        } else {
-            return this.props.children;
-        }
-    }
->>>>>>> 31363af6f72e0d7729f7c04f2e2237a9f764cc39
-}
