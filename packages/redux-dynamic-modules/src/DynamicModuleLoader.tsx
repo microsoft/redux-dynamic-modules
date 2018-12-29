@@ -5,15 +5,15 @@ import { IModule, IModuleStore, IDynamicallyAddedModule } from "./Contracts";
 import { Provider, ReactReduxContext } from "react-redux";
 
 export interface IDynamicModuleLoaderProps<OriginalState, AdditionalState> {
-  /** Modules that need to be dynamically registerd */
-  modules: IModule<AdditionalState>[];
+    /** Modules that need to be dynamically registerd */
+    modules: IModule<AdditionalState>[];
 
-  /** Optional callback which returns a store instance. This would be called if no store could be loaded from the context. */
-  createStore?: () => IModuleStore<any>;
+    /** Optional callback which returns a store instance. This would be called if no store could be loaded from the context. */
+    createStore?: () => IModuleStore<any>;
 }
 
 export interface IDynamicModuleLoaderContext {
-  store: IModuleStore<any>;
+    store: IModuleStore<any>;
 }
 
 /**
@@ -22,108 +22,108 @@ export interface IDynamicModuleLoaderContext {
  * On unmount, they will be unregistered
  */
 export class DynamicModuleLoader<
-  OriginalState,
-  AdditionalState
-  > extends React.Component<
-  IDynamicModuleLoaderProps<OriginalState, AdditionalState>
-  > {
-  // @ts-ignore
-  private static contextTypes = {
-    store: PropTypes.object
-  };
+    OriginalState,
+    AdditionalState
+> extends React.Component<
+    IDynamicModuleLoaderProps<OriginalState, AdditionalState>
+> {
+    // @ts-ignore
+    private static contextTypes = {
+        store: PropTypes.object,
+    };
 
-  constructor(
-    props: IDynamicModuleLoaderProps<OriginalState, AdditionalState>,
-    context: IDynamicModuleLoaderContext
-  ) {
-    super(props, context);
-  }
-
-  /**
-   * Render a Redux provider
-   */
-  public render(): React.ReactNode {
-    if (ReactReduxContext) {
-      return (
-        <ReactReduxContext.Consumer>
-          {(context) => {
-            return (
-              <DynamicModuleLoaderImpl
-                createStore={this.props.createStore}
-                store={context ? context.store : undefined}
-                modules={this.props.modules}
-              >
-                {this.props.children}
-              </DynamicModuleLoaderImpl>
-            );
-          }}
-        </ReactReduxContext.Consumer>
-      );
-    } else {
-      return (
-        <DynamicModuleLoaderImpl
-          // @ts-ignore
-          store={this.context.store}
-          modules={this.props.modules}
-        >
-          {this.props.children}
-        </DynamicModuleLoaderImpl>
-      )
+    constructor(
+        props: IDynamicModuleLoaderProps<OriginalState, AdditionalState>,
+        context: IDynamicModuleLoaderContext
+    ) {
+        super(props, context);
     }
-  }
+
+    /**
+     * Render a Redux provider
+     */
+    public render(): React.ReactNode {
+        if (ReactReduxContext) {
+            return (
+                <ReactReduxContext.Consumer>
+                    {context => {
+                        return (
+                            <DynamicModuleLoaderImpl
+                                createStore={this.props.createStore}
+                                store={context ? context.store : undefined}
+                                modules={this.props.modules}>
+                                {this.props.children}
+                            </DynamicModuleLoaderImpl>
+                        );
+                    }}
+                </ReactReduxContext.Consumer>
+            );
+        } else {
+            return (
+                <DynamicModuleLoaderImpl
+                    // @ts-ignore
+                    store={this.context.store}
+                    modules={this.props.modules}>
+                    {this.props.children}
+                </DynamicModuleLoaderImpl>
+            );
+        }
+    }
 }
 
 interface IDynamicModuleLoaderImplProps {
-  /** Modules that need to be dynamically registerd */
-  modules: IModule<any>[];
+    /** Modules that need to be dynamically registerd */
+    modules: IModule<any>[];
 
-  store: IModuleStore<any>;
+    store: IModuleStore<any>;
 
-  createStore?: () => IModuleStore<any>;
+    createStore?: () => IModuleStore<any>;
 }
 
-class DynamicModuleLoaderImpl extends React.Component<IDynamicModuleLoaderImplProps> {
-  private _addedModules?: IDynamicallyAddedModule;
-  private _providerInitializationNeeded: boolean = false;
-  private _store: IModuleStore<any>;
+class DynamicModuleLoaderImpl extends React.Component<
+    IDynamicModuleLoaderImplProps
+> {
+    private _addedModules?: IDynamicallyAddedModule;
+    private _providerInitializationNeeded: boolean = false;
+    private _store: IModuleStore<any>;
 
-  constructor(props: IDynamicModuleLoaderImplProps) {
-    super(props);
-    const { createStore, modules, store } = props;
-    this._store = store;
-    if (!this._store) {
-      if (createStore) {
-        this._store = createStore();
-        this._providerInitializationNeeded = true;
-      } else {
-        throw new Error("Store could not be resolved from React context")
-      }
+    constructor(props: IDynamicModuleLoaderImplProps) {
+        super(props);
+        const { createStore, modules, store } = props;
+        this._store = store;
+        if (!this._store) {
+            if (createStore) {
+                this._store = createStore();
+                this._providerInitializationNeeded = true;
+            } else {
+                throw new Error(
+                    "Store could not be resolved from React context"
+                );
+            }
+        }
+
+        this._addedModules = store.addModules(modules);
     }
 
-    this._addedModules = store.addModules(modules);
-  }
-
-  public render(): React.ReactNode {
-    if (this._providerInitializationNeeded) {
-      return (
-        <Provider
-          store={this.props.store}>
-          {this.props.children}
-        </Provider>
-      );
-    } else {
-      return this.props.children;
+    public render(): React.ReactNode {
+        if (this._providerInitializationNeeded) {
+            return (
+                <Provider store={this.props.store}>
+                    {this.props.children}
+                </Provider>
+            );
+        } else {
+            return this.props.children;
+        }
     }
-  }
 
-  /**
-   * Unregister sagas and reducers
-   */
-  public componentWillUnmount(): void {
-    if (this._addedModules) {
-      this._addedModules.remove();
-      this._addedModules = undefined;
+    /**
+     * Unregister sagas and reducers
+     */
+    public componentWillUnmount(): void {
+        if (this._addedModules) {
+            this._addedModules.remove();
+            this._addedModules = undefined;
+        }
     }
-  }
 }
-

@@ -30,8 +30,8 @@ const HackerNews = ({ items }) => {
 
 const mapStateToProps = state => {
     return {
-        items: state.hackerNews ? state.hackerNews.items : []
-    }
+        items: state.hackerNews ? state.hackerNews.items : [],
+    };
 };
 
 export const ConnectedHackerNews = connect(mapStateToProps)(HackerNews);
