@@ -62,4 +62,4 @@ typings/
 
 # output folders
 dist/
-lib/package-lock.json
+lib/
