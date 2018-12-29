@@ -1,7 +1,8 @@
 import * as React from "react";
 import * as PropTypes from "prop-types";
 import { IModule, IModuleStore, IDynamicallyAddedModule } from "./Contracts";
-import { Provider } from "react-redux";
+//@ts-ignore
+import { Provider, ReactReduxContext } from "react-redux";
 
 export interface IDynamicModuleLoaderProps<OriginalState, AdditionalState> {
     /** Modules that need to be dynamically registerd */
@@ -26,10 +27,6 @@ export class DynamicModuleLoader<
 > extends React.Component<
     IDynamicModuleLoaderProps<OriginalState, AdditionalState>
 > {
-    private _addedModules?: IDynamicallyAddedModule;
-    private _store: IModuleStore<any>;
-    private _providerInitializationNeeded: boolean;
-
     // @ts-ignore
     private static contextTypes = {
         store: PropTypes.object,
@@ -40,20 +37,84 @@ export class DynamicModuleLoader<
         context: IDynamicModuleLoaderContext
     ) {
         super(props, context);
-        const { modules, createStore } = props;
-        this._store = context.store;
-        this._providerInitializationNeeded = false;
+    }
 
+    /**
+     * Render a Redux provider
+     */
+    public render(): React.ReactNode {
+        if (ReactReduxContext) {
+            return (
+                <ReactReduxContext.Consumer>
+                    {context => {
+                        return (
+                            <DynamicModuleLoaderImpl
+                                createStore={this.props.createStore}
+                                store={context ? context.store : undefined}
+                                modules={this.props.modules}>
+                                {this.props.children}
+                            </DynamicModuleLoaderImpl>
+                        );
+                    }}
+                </ReactReduxContext.Consumer>
+            );
+        } else {
+            return (
+                <DynamicModuleLoaderImpl
+                    // @ts-ignore
+                    store={this.context.store}
+                    modules={this.props.modules}>
+                    {this.props.children}
+                </DynamicModuleLoaderImpl>
+            );
+        }
+    }
+}
+
+interface IDynamicModuleLoaderImplProps {
+    /** Modules that need to be dynamically registerd */
+    modules: IModule<any>[];
+
+    store: IModuleStore<any>;
+
+    createStore?: () => IModuleStore<any>;
+}
+
+class DynamicModuleLoaderImpl extends React.Component<
+    IDynamicModuleLoaderImplProps
+> {
+    private _addedModules?: IDynamicallyAddedModule;
+    private _providerInitializationNeeded: boolean = false;
+    private _store: IModuleStore<any>;
+
+    constructor(props: IDynamicModuleLoaderImplProps) {
+        super(props);
+        const { createStore, modules, store } = props;
+        this._store = store;
         if (!this._store) {
             if (createStore) {
                 this._store = createStore();
                 this._providerInitializationNeeded = true;
             } else {
-                throw new Error("Could not load store from React context.");
+                throw new Error(
+                    "Store could not be resolved from React context"
+                );
             }
         }
 
-        this._addedModules = this._store.addModules(modules);
+        this._addedModules = store.addModules(modules);
+    }
+
+    public render(): React.ReactNode {
+        if (this._providerInitializationNeeded) {
+            return (
+                <Provider store={this.props.store}>
+                    {this.props.children}
+                </Provider>
+            );
+        } else {
+            return this.props.children;
+        }
     }
 
     /**
@@ -63,19 +124,6 @@ export class DynamicModuleLoader<
         if (this._addedModules) {
             this._addedModules.remove();
             this._addedModules = undefined;
-        }
-    }
-
-    /**
-     * Render a Redux provider
-     */
-    public render(): React.ReactNode {
-        if (this._providerInitializationNeeded) {
-            return (
-                <Provider store={this._store}>{this.props.children}</Provider>
-            );
-        } else {
-            return this.props.children;
         }
     }
 }

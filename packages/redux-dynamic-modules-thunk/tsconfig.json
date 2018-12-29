@@ -1,13 +1,20 @@
 {
     "compilerOptions": {
-        "lib": ["dom", "es2015", "es2016"],
+        "lib": [
+            "dom",
+            "es2015",
+            "es2016"
+        ],
         "declaration": true,
         "noUnusedLocals": true,
         "noImplicitAny": false,
         "module": "commonjs",
         "moduleResolution": "node",
+        "skipLibCheck": true,
         "jsx": "react",
         "outDir": "lib"
     },
-    "include": ["src/**/*.ts"]
+    "include": [
+        "src/**/*.ts"
+    ]
 }

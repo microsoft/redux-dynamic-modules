@@ -2,10 +2,9 @@
     "name": "root",
     "private": true,
     "scripts": {
-        "bootstrap": "lerna bootstrap",
+        "bootstrap": "lerna bootstrap --no-ci",
         "build:prod": "lerna run build:prod",
-        "test": "npm run build:prod && lerna run test",
-        "prettier": "prettier \"**/*.{ts,tsx,json,js,scss,yaml,yml,css,md}\" --write --config prettier.config.js"
+        "test": "npm run build:prod && lerna run test"
     },
     "devDependencies": {
         "lerna": "^3.4.0",

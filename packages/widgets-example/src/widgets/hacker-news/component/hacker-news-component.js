@@ -30,7 +30,7 @@ const HackerNews = ({ items }) => {
 
 const mapStateToProps = state => {
     return {
-        items: state.hackerNews.items,
+        items: state.hackerNews ? state.hackerNews.items : [],
     };
 };
 
