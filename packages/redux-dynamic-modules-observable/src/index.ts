@@ -21,6 +21,6 @@ export function getObservableExtension(): IExtension {
             if (module.epics) {
                 epicManager.remove(module.epics);
             }
-        }
+        },
     };
 }

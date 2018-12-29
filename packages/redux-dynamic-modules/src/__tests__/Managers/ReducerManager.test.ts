@@ -1,20 +1,25 @@
-import { getReducerManager, getRefCountedReducerManager } from "../../Managers/ReducerManager";
+import {
+    getReducerManager,
+    getRefCountedReducerManager,
+} from "../../Managers/ReducerManager";
 
 interface ITestState {
     name: string;
-    age: number
-};
-
+    age: number;
+}
 
 const reduce = (state: any, action: any) => state;
 
 it("reducer manager tests", () => {
     const reducerManager = getReducerManager<ITestState>({
         name: reduce,
-        age: reduce
+        age: reduce,
     });
 
-    expect(Object.keys(reducerManager.getReducerMap())).toEqual(["name", "age"]);
+    expect(Object.keys(reducerManager.getReducerMap())).toEqual([
+        "name",
+        "age",
+    ]);
 
     reducerManager.remove("age");
     expect(Object.keys(reducerManager.getReducerMap())).toEqual(["name"]);
@@ -26,24 +31,38 @@ it("reducer manager tests", () => {
     expect(Object.keys(reducerManager.getReducerMap())).toEqual(["name"]);
 
     reducerManager.add("city", reduce);
-    expect(Object.keys(reducerManager.getReducerMap())).toEqual(["name", "city"]);
+    expect(Object.keys(reducerManager.getReducerMap())).toEqual([
+        "name",
+        "city",
+    ]);
 });
 
 it("ref counting reducers", () => {
-    const reducerManager = getRefCountedReducerManager(getReducerManager<ITestState>({
-        name: reduce,
-        age: reduce
-    }));
+    const reducerManager = getRefCountedReducerManager(
+        getReducerManager<ITestState>({
+            name: reduce,
+            age: reduce,
+        })
+    );
 
-    expect(Object.keys(reducerManager.getReducerMap())).toEqual(["name", "age"]);
+    expect(Object.keys(reducerManager.getReducerMap())).toEqual([
+        "name",
+        "age",
+    ]);
 
     // Increment the ref count
     reducerManager.add("age", reduce);
-    expect(Object.keys(reducerManager.getReducerMap())).toEqual(["name", "age"]);
+    expect(Object.keys(reducerManager.getReducerMap())).toEqual([
+        "name",
+        "age",
+    ]);
 
     // Decrement the ref count
     reducerManager.remove("age");
-    expect(Object.keys(reducerManager.getReducerMap())).toEqual(["name", "age"]);
+    expect(Object.keys(reducerManager.getReducerMap())).toEqual([
+        "name",
+        "age",
+    ]);
 
     // This time it should be removed
     reducerManager.remove("age");
@@ -53,5 +72,8 @@ it("ref counting reducers", () => {
     expect(Object.keys(reducerManager.getReducerMap())).toEqual(["name"]);
 
     reducerManager.add("city", reduce);
-    expect(Object.keys(reducerManager.getReducerMap())).toEqual(["name", "city"]);
+    expect(Object.keys(reducerManager.getReducerMap())).toEqual([
+        "name",
+        "city",
+    ]);
 });

@@ -16,12 +16,11 @@ describe("Saga extension tests", () => {
 function getTestModule(): ISagaModule<{ a: string }> {
     return {
         id: "test-module",
-        sagas: [testSaga]
-    }
+        sagas: [testSaga],
+    };
 }
 
 let called = false;
 function* testSaga(): SagaIterator {
     called = true;
 }
-

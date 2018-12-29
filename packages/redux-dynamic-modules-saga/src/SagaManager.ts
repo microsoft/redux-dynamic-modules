@@ -1,12 +1,14 @@
 import { ISagaRegistration, ISagaWithArguments } from "./Contracts";
 import { SagaMiddleware, Task } from "redux-saga";
-import { sagaEquals as sagaEquals } from "./SagaComparer";
+import { sagaEquals } from "./SagaComparer";
 import { IItemManager, getMap } from "redux-dynamic-modules";
 
 /**
  * Creates saga items which can be used to start and stop sagas dynamically
  */
-export function getSagaManager(sagaMiddleware: SagaMiddleware<any>): IItemManager<ISagaRegistration<any>> {
+export function getSagaManager(
+    sagaMiddleware: SagaMiddleware<any>
+): IItemManager<ISagaRegistration<any>> {
     const tasks = getMap<ISagaRegistration<any>, Task>(sagaEquals);
 
     return {
@@ -35,11 +37,14 @@ export function getSagaManager(sagaMiddleware: SagaMiddleware<any>): IItemManage
         dispose: () => {
             // Cancel everything
             tasks.keys.forEach(k => tasks.get(k).cancel());
-        }
+        },
     };
 }
 
-function runSaga(sagaMiddleware: SagaMiddleware<any>, sagaRegistration: ISagaRegistration<any>): Task {
+function runSaga(
+    sagaMiddleware: SagaMiddleware<any>,
+    sagaRegistration: ISagaRegistration<any>
+): Task {
     if (typeof sagaRegistration === "function") {
         const saga = sagaRegistration as () => Iterator<any>;
         return sagaMiddleware.run(saga);
@@ -48,4 +53,3 @@ function runSaga(sagaMiddleware: SagaMiddleware<any>, sagaRegistration: ISagaReg
     const argument = (sagaRegistration as ISagaWithArguments<any>).argument;
     return sagaMiddleware.run(saga, argument);
 }
-

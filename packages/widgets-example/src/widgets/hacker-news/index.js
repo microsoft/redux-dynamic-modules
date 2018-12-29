@@ -3,7 +3,7 @@ import { getHackerNewsModule } from "./redux/hacker-news-module";
 import { DynamicModuleLoader } from "redux-dynamic-modules";
 import * as React from "react";
 
-export default function DynamicHackerNews(){
+export default function DynamicHackerNews() {
     return (
         // define the module dependency for the HackerNews component
         // DynamicModuleLoader is a HOC provided by redux-dynamic-modules
@@ -12,8 +12,8 @@ export default function DynamicHackerNews(){
             {/* 
                 This is the Hacker News component that is connected to the redux store,
                 the connected component need not know anything about modules. 
-            */} 
+            */}
             <ConnectedHackerNews />
         </DynamicModuleLoader>
-   );
+    );
 }

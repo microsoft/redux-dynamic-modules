@@ -6,5 +6,5 @@
 
 > A modular approach to Redux
 
-[GitHub](https://github.com/Microsoft/redux-dynamic-modules/)
+[GitHub](https://github.com/Microsoft/redux-dynamic-modules/)
 [Get Started](#what-is-it)

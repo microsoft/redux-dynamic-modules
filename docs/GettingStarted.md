@@ -1,58 +1,62 @@
 # Install
-Run 
+
+Run
+
 ```
 npm install redux-dynamic-modules
 ```
 
-or 
+or
+
 ```
 yarn add redux-dynamic-modules
 ```
 
 # Usage
-* Create a module with the following format
+
+-   Create a module with the following format
 
 ```typescript
 export function getUsersModule(): IModule<IUserState> {
-  return {
-    id: "users",
-    reducerMap: {
-      users: usersReducer
-    },
-    // Actions to fire when this module is added/removed
-    // initialActions: [],
-    // finalActions: []
-  }
+    return {
+        id: "users",
+        reducerMap: {
+            users: usersReducer,
+        },
+        // Actions to fire when this module is added/removed
+        // initialActions: [],
+        // finalActions: []
+    };
 }
-
 ```
 
-* Create a `ModuleStore`
+-   Create a `ModuleStore`
 
 ```typescript
-import {createStore, IModuleStore} from "redux-dynamic-modules";
-import {getUsersModule} from "./usersModule";
+import { createStore, IModuleStore } from "redux-dynamic-modules";
+import { getUsersModule } from "./usersModule";
 
 const store: IModuleStore<IState> = createStore(
-  /* initial state */
-  {},
+    /* initial state */
+    {},
 
-  /** enhancers **/
-  [],
+    /** enhancers **/
+    [],
 
-  /* Extensions to load */ 
-  [],
+    /* Extensions to load */
 
-  getUsersModule(), 
-  /* ...any additional modules */
+    [],
+
+    getUsersModule()
+    /* ...any additional modules */
 );
 ```
 
-*  Use like a standard Redux store
-* Use the `DynamicModuleLoader` React component to add/remove modules when components mount/unmount
+-   Use like a standard Redux store
+-   Use the `DynamicModuleLoader` React component to add/remove modules when components mount/unmount
 
 ```jsx
 <DynamicModuleLoader modules={modules}>
-   <div>Hello World!!</div>
+    <div>Hello World!!</div>
 </DynamicModuleLoader>
-``` 
+```
