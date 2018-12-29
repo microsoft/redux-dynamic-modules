@@ -47,21 +47,9 @@
         "transform": {
             "^.+\\.tsx?$": "ts-jest"
         },
-        "main": "./lib/index.js",
-        "types": "./lib/index.d.ts",
-        "scripts": {
-            "prepublish": "npm run build:prod && npm run test",
-            "build": "npm run clean && tsc && webpack --mode development --display-modules --progress --display-error-details",
-            "build:prod": "npm run clean && tsc && webpack --mode development --display-error-details && webpack --mode production --display-modules --progress --display-error-details",
-            "clean": "rimraf lib/ dist/",
-            "test": "jest"
-        },
-        "keywords": [
-            "react",
-            "redux",
-            "module",
-            "dynamic",
-            "load"
+        "verbose": false,
+        "testMatch": [
+            "**/src/__tests__/**/(*.)+(spec|test).ts?(x)"
         ],
         "moduleFileExtensions": [
             "ts",
