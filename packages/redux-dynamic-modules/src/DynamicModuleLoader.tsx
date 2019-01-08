@@ -83,7 +83,7 @@ interface IDynamicModuleLoaderImplProps {
 class DynamicModuleLoaderImpl extends React.Component<
     IDynamicModuleLoaderImplProps
 > {
-    private _addedModules?: IDynamicallyAddedModule;
+    private _addedModules?: {[key: string]: IDynamicallyAddedModule};
     private _providerInitializationNeeded: boolean = false;
     private _store: IModuleStore<any>;
 
@@ -102,7 +102,30 @@ class DynamicModuleLoaderImpl extends React.Component<
             }
         }
 
-        this._addedModules = store.addModules(modules);
+        for(const module of modules) {
+            this._addedModules[module.id] = store.addModule(module);
+        }
+    }
+
+    public getSnapshotBeforeUpdate() {
+        const newlyAddedModules = {};
+        for(const module of this.props.modules) {
+            if(!this._addedModules[module.id]) {
+                // Add new modules
+                newlyAddedModules[module.id] = this.props.store.addModule(module);
+            } else {
+                // Copy existing modules to the new dictionary and delete the key
+                newlyAddedModules[module.id] = this._addedModules[module.id];
+                delete this._addedModules[module.id];
+            }
+        }
+
+        // Remaining keys are modules that are not in the current set. Remove them
+        for(const moduleToRemove in this._addedModules) {
+            this._addedModules[moduleToRemove].remove();
+        }
+
+        this._addedModules = newlyAddedModules;
     }
 
     public render(): React.ReactNode {
@@ -122,7 +145,9 @@ class DynamicModuleLoaderImpl extends React.Component<
      */
     public componentWillUnmount(): void {
         if (this._addedModules) {
-            this._addedModules.remove();
+            for (const moduleToRemove in this._addedModules) {
+                this._addedModules[moduleToRemove].remove();
+            }
             this._addedModules = undefined;
         }
     }
