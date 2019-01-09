@@ -102,7 +102,8 @@ class DynamicModuleLoaderImpl extends React.Component<
             }
         }
 
-        this._addedModules = store.addModules(modules);
+        const flattenedModules = flattenModules(modules);
+        this._addedModules = store.addModules(flattenedModules);
     }
 
     public render(): React.ReactNode {
@@ -126,4 +127,20 @@ class DynamicModuleLoaderImpl extends React.Component<
             this._addedModules = undefined;
         }
     }
+}
+
+function flattenModules(arr) {
+    const res = arr.slice();
+    let i = 0;
+
+    while (i < res.length) {
+        if (Array.isArray(res[i])) {
+            res.splice(i, 1, ...res[i]);
+        }
+        else {
+            i++;
+        }
+    }
+
+    return res;
 }
