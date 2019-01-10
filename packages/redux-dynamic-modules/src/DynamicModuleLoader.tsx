@@ -1,12 +1,13 @@
-import * as React from "react";
 import * as PropTypes from "prop-types";
-import { IModule, IModuleStore, IDynamicallyAddedModule } from "./Contracts";
+import * as React from "react";
 //@ts-ignore
 import { Provider, ReactReduxContext } from "react-redux";
 
-export interface IDynamicModuleLoaderProps<OriginalState, AdditionalState> {
+import { IDynamicallyAddedModule, IModuleStore, IModuleTuple } from "./Contracts";
+
+export interface IDynamicModuleLoaderProps {
     /** Modules that need to be dynamically registerd */
-    modules: IModule<AdditionalState>[];
+    modules: IModuleTuple[];
 
     /** Optional callback which returns a store instance. This would be called if no store could be loaded from the context. */
     createStore?: () => IModuleStore<any>;
@@ -21,11 +22,8 @@ export interface IDynamicModuleLoaderContext {
  * When this component is initialized, the reducer and saga from the module passed as props will be registered with the system
  * On unmount, they will be unregistered
  */
-export class DynamicModuleLoader<
-    OriginalState,
-    AdditionalState
-> extends React.Component<
-    IDynamicModuleLoaderProps<OriginalState, AdditionalState>
+export class DynamicModuleLoader extends React.Component<
+    IDynamicModuleLoaderProps
 > {
     // @ts-ignore
     private static contextTypes = {
@@ -33,7 +31,7 @@ export class DynamicModuleLoader<
     };
 
     constructor(
-        props: IDynamicModuleLoaderProps<OriginalState, AdditionalState>,
+        props: IDynamicModuleLoaderProps,
         context: IDynamicModuleLoaderContext
     ) {
         super(props, context);
@@ -73,7 +71,7 @@ export class DynamicModuleLoader<
 
 interface IDynamicModuleLoaderImplProps {
     /** Modules that need to be dynamically registerd */
-    modules: IModule<any>[];
+    modules: IModuleTuple;
 
     store: IModuleStore<any>;
 
@@ -102,8 +100,7 @@ class DynamicModuleLoaderImpl extends React.Component<
             }
         }
 
-        const flattenedModules = flattenModules(modules);
-        this._addedModules = store.addModules(flattenedModules);
+        this._addedModules = store.addModules(modules);
     }
 
     public render(): React.ReactNode {
@@ -129,18 +126,4 @@ class DynamicModuleLoaderImpl extends React.Component<
     }
 }
 
-function flattenModules(arr) {
-    const res = arr.slice();
-    let i = 0;
 
-    while (i < res.length) {
-        if (Array.isArray(res[i])) {
-            res.splice(i, 1, ...res[i]);
-        }
-        else {
-            i++;
-        }
-    }
-
-    return res;
-}

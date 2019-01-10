@@ -6,9 +6,10 @@ import {
     StoreEnhancer,
 } from "redux";
 import { getMiddlewareManager } from ".";
-import { IExtension, IModule, IModuleStore } from "./Contracts";
+import { IExtension, IModule, IModuleStore, IModuleTuple } from "./Contracts";
 import { getModuleManager } from "./Managers/ModuleManager";
 import { getRefCountedManager } from "./Managers/RefCountedManager";
+import { flatten } from "./Utils/Flatten";
 
 /**
  * Configure the module store
@@ -144,11 +145,12 @@ export function createStore<State>(
 
     modules.setDispatch(store.dispatch);
 
-    const addModules = (modulesToBeAdded: IModule<any>[]) => {
-        modules.add(modulesToBeAdded);
+    const addModules = (modulesToBeAdded: IModuleTuple) => {
+        const flattenedModules = flatten(modulesToBeAdded);
+        modules.add(flattenedModules);
         return {
             remove: () => {
-                modules.remove(modulesToBeAdded);
+                modules.remove(flattenedModules);
             },
         };
     };
