@@ -71,7 +71,6 @@ export interface IItemManager<T> {
     dispose: () => void;
 }
 
+type IModuleTupleRecursive = IModule<any> | IModuleTuple;
 
-type IModuleTupleRecurisve = IModule<any> | IModuleTuple;
-
-export interface IModuleTuple extends Array<IModuleTupleRecurisve> { }
+export interface IModuleTuple extends Array<IModuleTupleRecursive> {}
