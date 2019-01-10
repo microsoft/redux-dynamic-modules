@@ -53,7 +53,7 @@ export interface IModuleManager {
     /**
      * Adds the given set of modules to the store
      */
-    addModules: (modules: IModule<any>[]) => IDynamicallyAddedModule;
+    addModules: (modules: IModuleTuple) => IDynamicallyAddedModule;
 }
 
 export type IModuleStore<State> = Store<State> &
@@ -70,3 +70,7 @@ export interface IItemManager<T> {
     remove: (item: T[]) => void;
     dispose: () => void;
 }
+
+type IModuleTupleRecursive = IModule<any> | IModuleTuple;
+
+export interface IModuleTuple extends Array<IModuleTupleRecursive> {}
