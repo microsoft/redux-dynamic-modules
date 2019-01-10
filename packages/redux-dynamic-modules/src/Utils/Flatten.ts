@@ -1,15 +1,17 @@
 export function flatten(arr: any[]) {
-    const res = arr.slice();
-    let i = 0;
+    if (arr) {
+        const res = arr.slice();
+        let i = 0;
 
-    while (i < res.length) {
-        if (Array.isArray(res[i])) {
-            res.splice(i, 1, ...res[i]);
+        while (i < res.length) {
+            if (Array.isArray(res[i])) {
+                res.splice(i, 1, ...res[i]);
+            } else {
+                i++;
+            }
         }
-        else {
-            i++;
-        }
+
+        return res;
     }
-
-    return res;
+    return arr;
 }
