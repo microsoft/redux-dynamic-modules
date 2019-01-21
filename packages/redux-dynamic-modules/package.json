@@ -66,6 +66,7 @@
         "redux": ">= 3.0.0"
     },
     "dependencies": {
+        "redux-devtools-extension": "^2.13.7",
         "redux-dynamic-middlewares": "^1.0.0"
     }
 }
