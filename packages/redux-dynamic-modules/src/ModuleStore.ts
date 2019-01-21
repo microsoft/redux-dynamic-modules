@@ -1,10 +1,10 @@
 import {
     applyMiddleware,
-    compose,
     createStore as createReduxStore,
     DeepPartial,
     StoreEnhancer,
 } from "redux";
+import { composeWithDevTools } from "redux-devtools-extension/developmentOnly";
 import { getMiddlewareManager } from ".";
 import { IExtension, IModule, IModuleStore, IModuleTuple } from "./Contracts";
 import { getModuleManager } from "./Managers/ModuleManager";
@@ -114,19 +114,11 @@ export function createStore<State>(
         return mw;
     }, []);
 
-    let composeEnhancers = compose;
-
-    //@ts-ignore
-    if (process.env.NODE_ENV === "development") {
-        composeEnhancers =
-            window["__REDUX_DEVTOOLS_EXTENSION_COMPOSE__"] || compose;
-    }
-
     const middlewareManager = getRefCountedManager(
         getMiddlewareManager(),
         (a, b) => a === b
     );
-    const enhancer = composeEnhancers(
+    const enhancer = composeWithDevTools(
         ...enhancers,
         applyMiddleware(...extensionMiddleware, middlewareManager.enhancer)
     );
