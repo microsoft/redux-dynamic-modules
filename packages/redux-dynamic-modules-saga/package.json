@@ -61,5 +61,6 @@
     "peerDependencies": {
         "redux-dynamic-modules": ">=0.0.7",
         "redux-saga": ">=0.0.16"
-    }
+    },
+    "gitHead": "56fcc21ecad212dae465defe7239c7b08a137e12"
 }

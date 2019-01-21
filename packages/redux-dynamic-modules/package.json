@@ -68,5 +68,6 @@
     "dependencies": {
         "redux-devtools-extension": "^2.13.7",
         "redux-dynamic-middlewares": "^1.0.0"
-    }
+    },
+    "gitHead": "56fcc21ecad212dae465defe7239c7b08a137e12"
 }
