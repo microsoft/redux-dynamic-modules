@@ -60,7 +60,65 @@ export const TodoModule: IModule<ITodoModuleOwnState> = {
 Now, our TodoModule expects two reducers with keys that match those in `ITodoModuleOwnState`. The module will fail to compile if the `reducerMap` property is missing keys that are defined in `ITodoModuleOwnState`, or if the reducer functions assigned to the keys accept state arguments that are different than those defined.
 
 ## Module Dependencies
+Sometimes, a module depends on other modules. This means that a module requires dependent modules be already loaded in the store before it is loaded. 
+
+Consider that we have `ModuleA` and `ModuleB`, where `ModuleB` requires that `ModuleA` be loaded first. We can express that dependency using an array as follows:
+
+```js
+export const ModuleB = [
+    ModuleA,
+    {
+        id: "module-b",
+        reducerMap: {...}
+    }
+]
+```
+
+Now when adding `ModuleB` to the store via `DynamicModuleLoader`, we are guaranteed that `ModuleA` will be loaded first, which satisfies `ModuleB's` requirements.
+
+We can also express nested dependencies. For example:
+
+```js
+export const ModuleC = [
+    ModuleB,
+    {
+        id: "module-c",
+        reducerMap: {...}
+    }
+]
+```
+`redux-dynamic-modules` will automatically flatten the array and load the dependencies in order.
+
+When defining modules in the above fashion, we lose some of the type-checking that Typescript gives us. This is because we defined the modules 'in-line', so the compiler has no idea what state to typecheck against. For this reason, we reccomend defining individual modules separately with a type annotation, and then including it in a dependency array. For example:
+
+```js
+const _moduleC: IModule<IModuleCOwnState> = {
+    id: "module-c",
+    reducerMap: {...}
+};
+
+export const ModuleC = [
+    ModuleB,
+    _moduleC
+];
+```
+With this approach, you get typechecking on the individual modules.
+
 
 ## Typing state in selector functions
+One core concept of Redux is the ['selector function'](https://redux.js.org/recipes/computing-derived-data). Selector functions take the Redux state and obtain specific information from it.
 
-## 'Aware' state definitions
+When writing your module, you may wish to write selector functions that are scoped to the state that the module knows about. For example, lets consider we want to write a selector function for the `ModuleC` we defined above. Because `ModuleC` takes a dependency on `ModuleB`, our selector function may also want to access data from the state contributed by `ModuleB`. 
+
+To express this, we define a new type, `IModuleCAwareState`.
+
+```js
+export interface IModuleCAwareState extends IModuleCOwnState, IModuleBAwareState {}
+
+// moduleCSelectors.js
+export function moduleCSelector(state: IModuleCAwareState) {
+    // access keys contributed by modules B and C
+}
+```
+
+The `IModuleCAwareState` type is a type that represents the subset of keys that should be present in the store if `ModuleC` is added to the store. Therefore, any selector that is written with `ModuleC` can access all of the keys defined in `IModuleCAwareState`. This pattern allows you to write selectors that are encapsulated to the module and can only access state present if the module is added.
