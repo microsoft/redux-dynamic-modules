@@ -11,3 +11,5 @@
     -   [Module Reference Counting](reference/ModuleCounting.md)
     -   [Extensions](reference/Extensions.md)
     -   [Lifecycle Actions](reference/LifecycleActions.md)
+    -   Recipes
+        - [Typescript](reference/recipes/Typescript.md)
