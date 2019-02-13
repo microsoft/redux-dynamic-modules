@@ -24,7 +24,7 @@ export interface IDynamicModuleLoaderContext {
  */
 export class DynamicModuleLoader extends React.Component<
     IDynamicModuleLoaderProps
-> {
+    > {
     // @ts-ignore
     private static contextTypes = {
         store: PropTypes.object,
@@ -80,7 +80,7 @@ interface IDynamicModuleLoaderImplProps {
 
 class DynamicModuleLoaderImpl extends React.Component<
     IDynamicModuleLoaderImplProps
-> {
+    > {
     private _addedModules?: IDynamicallyAddedModule;
     private _providerInitializationNeeded: boolean = false;
     private _store: IModuleStore<any>;
