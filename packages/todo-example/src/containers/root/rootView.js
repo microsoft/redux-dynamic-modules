@@ -1,5 +1,5 @@
 import React from "react";
-import { DynamicModuleLoader } from "redux-dynamic-modules";
+import { DynamicModuleLoader } from "redux-dynamic-modules-react";
 import { getRootModule } from "../../modules/root/rootModule";
 import Header from "../../components/root/Header";
 import Views from "./Views";

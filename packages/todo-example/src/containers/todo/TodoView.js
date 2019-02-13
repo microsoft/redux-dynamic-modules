@@ -1,6 +1,6 @@
 import AddTodo from "./AddTodo";
 import React from "react";
-import { DynamicModuleLoader } from "redux-dynamic-modules";
+import { DynamicModuleLoader } from "redux-dynamic-modules-react";
 import VisibleTodoList from "./VisibleTodoList";
 import Footer from "../../components/todo/Footer";
 import { getTodoModule } from "../../modules/todo/todoModule";
