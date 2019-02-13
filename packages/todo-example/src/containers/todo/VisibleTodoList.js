@@ -16,9 +16,20 @@ const getVisibleTodos = (todos, filter) => {
     }
 };
 
-const mapStateToProps = state => ({
-    todos: getVisibleTodos(state.todo.todos, state.todo.visibilityFilter),
-});
+const mapStateToProps = state => {
+    if (state.todo) {
+        return {
+            todos: getVisibleTodos(
+                state.todo.todos,
+                state.todo.visibilityFilter
+            ),
+        };
+    } else {
+        return {
+            todos: [],
+        };
+    }
+};
 
 const mapDispatchToProps = dispatch => ({
     toggleTodo: id => dispatch(toggleTodo(id)),

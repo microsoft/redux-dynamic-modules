@@ -5,8 +5,8 @@
     "dependencies": {
         "@redux-offline/redux-offline": "^2.5.0",
         "immer": "^1.7.2",
-        "react": "16.7.0",
-        "react-dom": "16.7.0",
+        "react": "16.8.0",
+        "react-dom": "16.8.0",
         "react-loadable": "5.5.0",
         "react-redux": "6.0.0",
         "react-scripts": "2.0.4",
