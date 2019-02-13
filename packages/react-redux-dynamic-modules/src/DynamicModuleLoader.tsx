@@ -3,7 +3,11 @@ import * as React from "react";
 //@ts-ignore
 import { Provider, ReactReduxContext } from "react-redux";
 
-import { IDynamicallyAddedModule, IModuleStore, IModuleTuple } from "./Contracts";
+import {
+    IDynamicallyAddedModule,
+    IModuleStore,
+    IModuleTuple,
+} from "redux-dynamic-modules";
 
 export interface IDynamicModuleLoaderProps {
     /** Modules that need to be dynamically registerd */
@@ -24,7 +28,7 @@ export interface IDynamicModuleLoaderContext {
  */
 export class DynamicModuleLoader extends React.Component<
     IDynamicModuleLoaderProps
-    > {
+> {
     // @ts-ignore
     private static contextTypes = {
         store: PropTypes.object,
@@ -80,7 +84,7 @@ interface IDynamicModuleLoaderImplProps {
 
 class DynamicModuleLoaderImpl extends React.Component<
     IDynamicModuleLoaderImplProps
-    > {
+> {
     private _addedModules?: IDynamicallyAddedModule;
     private _providerInitializationNeeded: boolean = false;
     private _store: IModuleStore<any>;
@@ -125,5 +129,3 @@ class DynamicModuleLoaderImpl extends React.Component<
         }
     }
 }
-
-

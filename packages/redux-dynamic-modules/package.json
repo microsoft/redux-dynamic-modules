@@ -30,8 +30,6 @@
         "@types/react-redux": "6.0.11",
         "@types/redux": "3.6.0",
         "jest": "^23.5.0",
-        "react": "16.7.0",
-        "react-redux": "6.0.0",
         "redux": "4.0.1",
         "rimraf": "^2.6.2",
         "ts-jest": "^23.1.4",
@@ -61,8 +59,6 @@
         ]
     },
     "peerDependencies": {
-        "react": ">= 15.0.0",
-        "react-redux": ">= 5.0.0",
         "redux": ">= 3.0.0"
     },
     "dependencies": {
