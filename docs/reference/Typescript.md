@@ -65,7 +65,7 @@ Now, our TodoModule expects two reducers with keys that match those in `ITodoMod
 
 ## Typing Module Dependencies
 
-In the previous section [Module Dependencies](reference/ModuleDependencies.md), we showed that you can express a dependency between two modules.
+In a previous section [Module Dependencies](reference/Dependencies.md), we showed that you can express a dependency between two modules.
 
 ```js
 export const ModuleB = [
