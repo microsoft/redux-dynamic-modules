@@ -43,23 +43,6 @@
         "webpack-bundle-analyzer": "^2.13.1",
         "webpack-cli": "^3.1.0"
     },
-    "jest": {
-        "transform": {
-            "^.+\\.tsx?$": "ts-jest"
-        },
-        "verbose": false,
-        "testMatch": [
-            "**/src/__tests__/**/(*.)+(spec|test).ts?(x)"
-        ],
-        "moduleFileExtensions": [
-            "ts",
-            "tsx",
-            "js",
-            "jsx",
-            "json",
-            "node"
-        ]
-    },
     "peerDependencies": {
         "react": ">= 15.0.0",
         "react-redux": ">= 5.0.0"
