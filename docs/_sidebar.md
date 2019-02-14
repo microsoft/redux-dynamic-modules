@@ -11,4 +11,5 @@
     -   [Module Reference Counting](reference/ModuleCounting.md)
     -   [Extensions](reference/Extensions.md)
     -   [Lifecycle Actions](reference/LifecycleActions.md)
+    -   [Module Dependencies](reference/ModuleDependencies.md)
     -   [Usage with Typescript](reference/Typescript.md)
