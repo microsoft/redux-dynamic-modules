@@ -3,5 +3,10 @@
         "packages/*"
     ],
     "hoist": true,
+    "command": {
+        "publish": {
+            "allowBranch": "master"
+        }
+    },
     "version": "3.3.1"
 }
