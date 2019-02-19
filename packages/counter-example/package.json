@@ -20,8 +20,7 @@
     "scripts": {
         "start": "react-scripts start",
         "build": "react-scripts build",
-        "eject": "react-scripts eject",
-        "test": "react-scripts test --env=node"
+        "eject": "react-scripts eject"
     },
     "browserslist": [
         ">0.2%",
