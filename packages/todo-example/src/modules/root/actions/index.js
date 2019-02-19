@@ -1,5 +1,4 @@
 export const setVisibilityFilter = text => {
-    debugger;
     return {
         type: "SHOW_VIEW",
         text,
