@@ -1,6 +1,6 @@
 {
     "name": "counter",
-    "version": "0.0.1",
+    "version": "3.4.0",
     "private": true,
     "devDependencies": {
         "enzyme": "^3.6.0",
@@ -9,13 +9,13 @@
     },
     "dependencies": {
         "babel-loader": "^8.0.5",
-        "prop-types": "15.7.2",
         "eslint": "5.12.0",
+        "prop-types": "15.7.2",
         "react": "16.8.2",
         "react-dom": "16.8.2",
         "react-redux": "6.0.0",
         "redux": "4.0.1",
-        "redux-dynamic-modules": "^3.3.1"
+        "redux-dynamic-modules": "^3.4.0"
     },
     "scripts": {
         "start": "react-scripts start",
