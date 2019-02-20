@@ -7,11 +7,11 @@ import {
     IDynamicallyAddedModule,
     IModuleStore,
     IModuleTuple,
-} from "redux-dynamic-modules";
+} from "redux-dynamic-modules-core";
 
 export interface IDynamicModuleLoaderProps {
     /** Modules that need to be dynamically registerd */
-    modules: IModuleTuple[];
+    modules: IModuleTuple;
 
     /** Optional callback which returns a store instance. This would be called if no store could be loaded from the context. */
     createStore?: () => IModuleStore<any>;
@@ -88,6 +88,7 @@ class DynamicModuleLoaderImpl extends React.Component<
     private _addedModules?: IDynamicallyAddedModule;
     private _providerInitializationNeeded: boolean = false;
     private _store: IModuleStore<any>;
+    private _getLatestState: boolean;
 
     constructor(props: IDynamicModuleLoaderImplProps) {
         super(props);
@@ -102,21 +103,47 @@ class DynamicModuleLoaderImpl extends React.Component<
                     "Store could not be resolved from React context"
                 );
             }
+        } else {
+            // We will add modules dynamically and due to github issue https://github.com/Microsoft/redux-dynamic-modules/issues/27#issuecomment-464905893
+            // The very first render will not get latest state, to fix that we will need to get latest state from store directly on first render
+            this._getLatestState = ReactReduxContext;
         }
 
         this._addedModules = store.addModules(modules);
     }
 
+    private _renderWithReactReduxContext = () => {
+        const { store } = this.props;
+        // store.getState is important here as we don't want to use storeState from the provided context
+        return (
+            <ReactReduxContext.Provider
+                value={{ store, storeState: store.getState() }}>
+                {this._renderChildren()}
+            </ReactReduxContext.Provider>
+        );
+    };
+
+    private _renderChildren = () => {
+        if (this.props.children && typeof this.props.children === "function") {
+            return this.props.children();
+        }
+
+        return this.props.children;
+    };
+
     public render(): React.ReactNode {
         if (this._providerInitializationNeeded) {
             return (
                 <Provider store={this.props.store}>
-                    {this.props.children}
+                    {this._renderChildren()}
                 </Provider>
             );
-        } else {
-            return this.props.children;
+        } else if (!this._getLatestState) {
+            return this._renderChildren();
         }
+
+        this._getLatestState = false;
+        return this._renderWithReactReduxContext();
     }
 
     /**
