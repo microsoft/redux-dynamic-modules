@@ -5,7 +5,7 @@
 ## Example {docsify-ignore}
 
 ```typescript
-import { DynamicModuleLoader } from "redux-dynamic-modules-react";
+import { DynamicModuleLoader } from "redux-dynamic-modules";
 import { getNewUserDialogModule } from "./newUserDialogModule";
 
 export class NewUserDialog extends React.Component {

@@ -16,8 +16,7 @@
         "outDir": "lib"
     },
     "include": [
-        "src/**/*.ts",
-        "src/**/*.tsx"
+        "src/**/*.ts"
     ],
     "exclude": [
         "src/__tests__/**/*.ts"

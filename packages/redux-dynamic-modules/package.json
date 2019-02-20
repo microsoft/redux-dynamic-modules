@@ -12,8 +12,7 @@
         "prepublish": "npm run build:prod && npm run test",
         "build": "npm run clean && tsc && webpack --mode development --display-modules --progress --display-error-details",
         "build:prod": "npm run clean && tsc && webpack --mode development --display-error-details && webpack --mode production --display-modules --progress --display-error-details",
-        "clean": "rimraf lib/ dist/",
-        "test": "jest"
+        "clean": "rimraf lib/ dist/"
     },
     "keywords": [
         "react",
@@ -30,6 +29,8 @@
         "@types/react-redux": "6.0.11",
         "@types/redux": "3.6.0",
         "jest": "^23.5.0",
+        "react": "16.8.0",
+        "react-redux": "6.0.0",
         "redux": "4.0.1",
         "rimraf": "^2.6.2",
         "ts-jest": "^23.1.4",
@@ -41,29 +42,12 @@
         "webpack-bundle-analyzer": "^2.13.1",
         "webpack-cli": "^3.1.0"
     },
-    "jest": {
-        "transform": {
-            "^.+\\.tsx?$": "ts-jest"
-        },
-        "verbose": false,
-        "testMatch": [
-            "**/src/__tests__/**/(*.)+(spec|test).ts?(x)"
-        ],
-        "moduleFileExtensions": [
-            "ts",
-            "tsx",
-            "js",
-            "jsx",
-            "json",
-            "node"
-        ]
-    },
     "peerDependencies": {
-        "redux": ">= 3.0.0"
+        "react": ">= 15.0.0",
+        "react-redux": ">= 5.0.0"
     },
     "dependencies": {
-        "redux-devtools-extension": "^2.13.7",
-        "redux-dynamic-middlewares": "^1.0.0"
+        "redux-dynamic-modules-core": "^3.3.1"
     },
     "gitHead": "56fcc21ecad212dae465defe7239c7b08a137e12"
 }

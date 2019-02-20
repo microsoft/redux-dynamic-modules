@@ -12,7 +12,6 @@
         "react-redux": "6.0.0",
         "redux": "4.0.1",
         "redux-dynamic-modules": "^3.3.1",
-        "redux-dynamic-modules-react": "^3.3.1",
         "redux-saga": "0.16.2"
     },
     "scripts": {

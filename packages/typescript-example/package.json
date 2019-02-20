@@ -15,7 +15,6 @@
         "react-scripts": "2.1.2",
         "redux": "^4.0.1",
         "redux-dynamic-modules": "^3.3.1",
-        "redux-dynamic-modules-react": "^3.3.1",
         "redux-dynamic-modules-saga": "^3.3.1",
         "redux-dynamic-modules-thunk": "^3.3.1",
         "redux-saga": "^0.16.2",

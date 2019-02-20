@@ -1,6 +1,6 @@
 import AddItem from "./AddItem";
 import React from "react";
-import { useModules } from "redux-dynamic-modules-react";
+import { useModules } from "redux-dynamic-modules";
 import VisibleItemsList from "./VisibleItemsList";
 import Footer from "../../components/shoppinglist/Footer";
 import { getShoppingListModule } from "../../modules/shoppinglist/shoppingListModule";
