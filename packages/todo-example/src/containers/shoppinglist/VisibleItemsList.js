@@ -16,19 +16,12 @@ const getVisibleItems = (items, filter) => {
     }
 };
 
-const mapStateToProps = state => {
-    if (state.shoppingList) {
-        return {
-            todos: getVisibleItems(
-                state.shoppingList.items,
-                state.shoppingList.visibilityFilter
-            ),
-        };
-    }
-    return {
-        todos: [],
-    };
-};
+const mapStateToProps = state => ({
+    todos: getVisibleItems(
+        state.shoppingList.items,
+        state.shoppingList.visibilityFilter
+    ),
+});
 
 const mapDispatchToProps = dispatch => ({
     toggleItem: id => dispatch(toggleItem(id)),
