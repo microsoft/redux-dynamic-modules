@@ -3,11 +3,15 @@ import * as React from "react";
 //@ts-ignore
 import { Provider, ReactReduxContext } from "react-redux";
 
-import { IDynamicallyAddedModule, IModuleStore, IModuleTuple } from "./Contracts";
+import {
+    IDynamicallyAddedModule,
+    IModuleStore,
+    IModuleTuple,
+} from "./Contracts";
 
 export interface IDynamicModuleLoaderProps {
     /** Modules that need to be dynamically registerd */
-    modules: IModuleTuple[];
+    modules: IModuleTuple;
 
     /** Optional callback which returns a store instance. This would be called if no store could be loaded from the context. */
     createStore?: () => IModuleStore<any>;
@@ -125,5 +129,3 @@ class DynamicModuleLoaderImpl extends React.Component<
         }
     }
 }
-
-
