@@ -1,19 +1,20 @@
 import AddItem from "./AddItem";
 import React from "react";
-import { useModules } from "redux-dynamic-modules";
+import { DynamicModuleLoader } from "redux-dynamic-modules";
 import VisibleItemsList from "./VisibleItemsList";
 import Footer from "../../components/shoppinglist/Footer";
 import { getShoppingListModule } from "../../modules/shoppinglist/shoppingListModule";
 
 const ShoppingListView = () => {
-    useModules([getShoppingListModule()]);
     return (
-        <div>
-            <div>Shopping list view</div>
-            <AddItem />
-            <VisibleItemsList />
-            <Footer />
-        </div>
+        <DynamicModuleLoader modules={[getShoppingListModule()]}>
+            <div>
+                <div>Shopping list view</div>
+                <AddItem />
+                <VisibleItemsList />
+                <Footer />
+            </div>
+        </DynamicModuleLoader>
     );
 };
 
