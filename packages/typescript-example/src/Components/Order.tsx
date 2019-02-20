@@ -1,7 +1,7 @@
 import * as React from "react";
 import { connect } from "react-redux";
 import { DynamicModuleLoader } from "redux-dynamic-modules";
-import { getOrderModules } from "../OrderModule/OrderModule";
+import { OrderModules } from "../OrderModule/OrderModule";
 import { IOrderAwareState } from "../OrderModule/OrderContracts";
 import { getUserPreferences } from "../SettingsModule/SettingsSelectors";
 import { StringMap } from "../ActionHelper";
@@ -69,7 +69,7 @@ const ConnectedOrder = connect(
 )(Order);
 
 export const DynamicOrder = () => (
-    <DynamicModuleLoader modules={getOrderModules()}>
+    <DynamicModuleLoader modules={[OrderModules]}>
         <ConnectedOrder />{" "}
     </DynamicModuleLoader>
 );
