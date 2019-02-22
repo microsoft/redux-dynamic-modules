@@ -64,6 +64,7 @@ export class DynamicModuleLoader extends React.Component<
             return (
                 <DynamicModuleLoaderImpl
                     // @ts-ignore
+                    createStore={this.props.createStore}
                     store={this.context.store}
                     modules={this.props.modules}>
                     {this.props.children}
@@ -117,7 +118,7 @@ class DynamicModuleLoaderImpl extends React.Component<
         // store.getState is important here as we don't want to use storeState from the provided context
         return (
             <ReactReduxContext.Provider
-                value={{ store, storeState: store.getState() }}> 
+                value={{ store, storeState: store.getState() }}>
                 {this._renderChildren()}
             </ReactReduxContext.Provider>
         );
