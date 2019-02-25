@@ -135,7 +135,7 @@ class DynamicModuleLoaderImpl extends React.Component<
     public render(): React.ReactNode {
         if (this._providerInitializationNeeded) {
             return (
-                <Provider store={this.props.store}>
+                <Provider store={this._store}>
                     {this._renderChildren()}
                 </Provider>
             );
