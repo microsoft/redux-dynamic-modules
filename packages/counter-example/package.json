@@ -1,6 +1,6 @@
 {
     "name": "counter",
-    "version": "3.4.3",
+    "version": "3.4.4",
     "private": true,
     "devDependencies": {
         "enzyme": "^3.6.0",
@@ -15,7 +15,7 @@
         "react-dom": "16.8.2",
         "react-redux": "6.0.0",
         "redux": "4.0.1",
-        "redux-dynamic-modules": "^3.4.3"
+        "redux-dynamic-modules": "^3.4.4"
     },
     "scripts": {
         "start": "react-scripts start",
