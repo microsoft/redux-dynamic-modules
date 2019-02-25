@@ -110,7 +110,7 @@ class DynamicModuleLoaderImpl extends React.Component<
             this._getLatestState = ReactReduxContext;
         }
 
-        this._addedModules = store.addModules(modules);
+        this._addedModules = this._store.addModules(modules);
     }
 
     private _renderWithReactReduxContext = () => {
@@ -135,7 +135,7 @@ class DynamicModuleLoaderImpl extends React.Component<
     public render(): React.ReactNode {
         if (this._providerInitializationNeeded) {
             return (
-                <Provider store={this.props.store}>
+                <Provider store={this._store}>
                     {this._renderChildren()}
                 </Provider>
             );
