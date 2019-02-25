@@ -57,5 +57,5 @@
         "redux-dynamic-modules": ">=0.0.7",
         "redux-thunk": ">= 2.0.0"
     },
-    "gitHead": "56fcc21ecad212dae465defe7239c7b08a137e12"
+    "gitHead": "8f1ed8a7be500e3e8d388703bab88dbb69eeb54e"
 }
