@@ -110,7 +110,7 @@ class DynamicModuleLoaderImpl extends React.Component<
             this._getLatestState = ReactReduxContext;
         }
 
-        this._addedModules = store.addModules(modules);
+        this._addedModules = this._store.addModules(modules);
     }
 
     private _renderWithReactReduxContext = () => {
