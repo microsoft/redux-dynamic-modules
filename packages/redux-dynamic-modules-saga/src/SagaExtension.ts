@@ -15,7 +15,8 @@ import { sagaEquals } from "./SagaComparer";
  */
 export function getSagaExtension<C>(
     sagaContext?: C,
-    onError?: (error: Error) => void
+    onError?: (error: Error) => void,
+    options?: any
 ): IExtension {
     let sagaMonitor = undefined;
 
@@ -33,7 +34,7 @@ export function getSagaExtension<C>(
 
     let _sagaManager: IItemManager<
         ISagaRegistration<any>
-    > = getRefCountedManager(getSagaManager(sagaMiddleware), sagaEquals);
+    > = getRefCountedManager(getSagaManager(sagaMiddleware,options), sagaEquals);
 
     return {
         middleware: [sagaMiddleware],

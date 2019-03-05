@@ -7,7 +7,8 @@ import { IItemManager, getMap } from "redux-dynamic-modules";
  * Creates saga items which can be used to start and stop sagas dynamically
  */
 export function getSagaManager(
-    sagaMiddleware: SagaMiddleware<any>
+    sagaMiddleware: SagaMiddleware<any>,
+    options?:any
 ): IItemManager<ISagaRegistration<any>> {
     const tasks = getMap<ISagaRegistration<any>, Task>(sagaEquals);
 
@@ -19,7 +20,7 @@ export function getSagaManager(
             }
             sagas.forEach(saga => {
                 if (saga && !tasks.get(saga)) {
-                    tasks.add(saga, runSaga(sagaMiddleware, saga));
+                    tasks.add(saga, runSaga(sagaMiddleware, saga, options));
                 }
             });
         },
@@ -43,13 +44,14 @@ export function getSagaManager(
 
 function runSaga(
     sagaMiddleware: SagaMiddleware<any>,
-    sagaRegistration: ISagaRegistration<any>
+    sagaRegistration: ISagaRegistration<any>,
+    options: any
 ): Task {
     if (typeof sagaRegistration === "function") {
         const saga = sagaRegistration as () => Iterator<any>;
-        return sagaMiddleware.run(saga);
+        return sagaMiddleware.run(saga, options);
     }
     const saga = (sagaRegistration as ISagaWithArguments<any>).saga;
     const argument = (sagaRegistration as ISagaWithArguments<any>).argument;
-    return sagaMiddleware.run(saga, argument);
+    return sagaMiddleware.run(saga, argument, options);
 }
