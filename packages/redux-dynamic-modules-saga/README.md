@@ -23,7 +23,7 @@ export function getUsersModule(): ISagaModule<IUserState> {
         reducerMap: {
             users: usersReducer,
         },
-        sagas: [userSagas],
+        sagas: [userSagas,{saga:mySagaWithArgument, argument: 'some-value'}],
         // Actions to fire when this module is added/removed
         // initialActions: [],
         // finalActions: [],
@@ -43,6 +43,28 @@ const store: IModuleStore<IState> = configureStore(
 
     /* extensions to include */
     [getSagaExtension(/* saga context object */)],
+
+    getUsersModule()
+    /* ...any additional modules */
+);
+```
+
+
+-   Create a `ModuleStore` and pass options to sagas
+
+```typescript
+import { configureStore, IModuleStore } from "redux-dynamic-modules";
+import { getUsersModule } from "./usersModule";
+import { services } from "./getServices";
+
+const store: IModuleStore<IState> = configureStore(
+    /* initial state */
+    {},
+
+    /* extensions to include */
+    [getSagaExtension(null /* saga context object */,
+                      null /* onError handler */,
+                      services /* value to pass to all sagas */)],
 
     getUsersModule()
     /* ...any additional modules */
