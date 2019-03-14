@@ -105,7 +105,7 @@ it("module manager tests", () => {
     ]);
 });
 
-it("Dispose disposes all modules", () => {
+it("Dispose disposes all modules in reverse order they are added", () => {
     const middlewareManager = getMiddlewareManager();
     const moduleManager = getModuleManager(middlewareManager, []);
     let actionsDispatched = [];
@@ -126,13 +126,28 @@ it("Dispose disposes all modules", () => {
         sagas: [saga1],
     };
 
-    // Add first module
+    const module2 = {
+        id: "module2",
+        initialActions: [{ type: "initial2" }, { type: "initial21" }],
+        reducerMap: { duplicateReducer: reducer, key2: reducer },
+        finalActions: [{ type: "final2" }, { type: "final21" }],
+        sagas: [saga1],
+    };
+
     moduleManager.add([module1]);
+    moduleManager.add([module2]);
     moduleManager.dispose();
+
     expect(actionsDispatched).toEqual([
         "@@Internal/ModuleManager/ModuleAdded",
         "initial1",
         "initial11",
+        "@@Internal/ModuleManager/ModuleAdded",
+        "initial2",
+        "initial21",
+        "final2",
+        "final21",
+        "@@Internal/ModuleManager/ModuleRemoved",
         "final1",
         "final11",
         "@@Internal/ModuleManager/ModuleRemoved",

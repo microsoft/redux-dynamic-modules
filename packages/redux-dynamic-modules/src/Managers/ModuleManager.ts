@@ -139,7 +139,9 @@ export function getModuleManager<State>(
             if (!modulesToRemove) {
                 return;
             }
-            modulesToRemove = modulesToRemove.filter(module => module);
+            modulesToRemove = modulesToRemove
+                .filter(module => module)
+                .reverse();
             modulesToRemove.forEach(module => {
                 if (_moduleIds.has(module.id)) {
                     _dispatchActions(module.finalActions);
