@@ -7,7 +7,7 @@ import {
     IDynamicallyAddedModule,
     IModuleStore,
     IModuleTuple,
-} from "./Contracts";
+} from "redux-dynamic-modules-core";
 
 export interface IDynamicModuleLoaderProps {
     /** Modules that need to be dynamically registerd */
