@@ -83,8 +83,13 @@ interface IDynamicModuleLoaderImplProps {
     createStore?: () => IModuleStore<any>;
 }
 
+interface IDynamicModuleLoaderImplState {
+    readyToRender: boolean;
+}
+
 class DynamicModuleLoaderImpl extends React.Component<
-    IDynamicModuleLoaderImplProps
+    IDynamicModuleLoaderImplProps,
+    IDynamicModuleLoaderImplState
 > {
     private _addedModules?: IDynamicallyAddedModule;
     private _providerInitializationNeeded: boolean = false;
@@ -93,24 +98,8 @@ class DynamicModuleLoaderImpl extends React.Component<
 
     constructor(props: IDynamicModuleLoaderImplProps) {
         super(props);
-        const { createStore, modules, store } = props;
-        this._store = store;
-        if (!this._store) {
-            if (createStore) {
-                this._store = createStore();
-                this._providerInitializationNeeded = true;
-            } else {
-                throw new Error(
-                    "Store could not be resolved from React context"
-                );
-            }
-        } else {
-            // We will add modules dynamically and due to github issue https://github.com/Microsoft/redux-dynamic-modules/issues/27#issuecomment-464905893
-            // The very first render will not get latest state, to fix that we will need to get latest state from store directly on first render
-            this._getLatestState = ReactReduxContext;
-        }
-
-        this._addedModules = this._store.addModules(modules);
+        this.state = { readyToRender: false };
+        this._store = this.props.store;
     }
 
     private _renderWithReactReduxContext = () => {
@@ -133,18 +122,43 @@ class DynamicModuleLoaderImpl extends React.Component<
     };
 
     public render(): React.ReactNode {
-        if (this._providerInitializationNeeded) {
-            return (
-                <Provider store={this._store}>
-                    {this._renderChildren()}
-                </Provider>
-            );
-        } else if (!this._getLatestState) {
-            return this._renderChildren();
+        if (this.state.readyToRender) {
+            if (this._providerInitializationNeeded) {
+                return (
+                    <Provider store={this._store}>
+                        {this._renderChildren()}
+                    </Provider>
+                );
+            } else if (!this._getLatestState) {
+                return this._renderChildren();
+            }
+
+            this._getLatestState = false;
+            return this._renderWithReactReduxContext();
+        }
+        return null;
+    }
+
+    public componentDidMount() {
+        const { createStore, modules } = this.props;
+        if (!this._store) {
+            if (createStore) {
+                this._store = createStore();
+                this._providerInitializationNeeded = true;
+            } else {
+                throw new Error(
+                    "Store could not be resolved from React context"
+                );
+            }
+        } else {
+            // We will add modules dynamically and due to github issue https://github.com/Microsoft/redux-dynamic-modules/issues/27#issuecomment-464905893
+            // The very first render will not get latest state, to fix that we will need to get latest state from store directly on first render
+            this._getLatestState = ReactReduxContext;
         }
 
-        this._getLatestState = false;
-        return this._renderWithReactReduxContext();
+        this._addedModules = this._store.addModules(modules);
+
+        this.setState({ readyToRender: true });
     }
 
     /**
