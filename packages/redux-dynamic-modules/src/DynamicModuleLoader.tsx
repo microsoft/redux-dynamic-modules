@@ -68,6 +68,7 @@ export class DynamicModuleLoader extends React.Component<
                     // @ts-ignore
                     createStore={this.props.createStore}
                     store={this.context.store}
+                    strictMode={this.props.strictMode}
                     modules={this.props.modules}>
                     {this.props.children}
                 </DynamicModuleLoaderImpl>
@@ -82,7 +83,7 @@ interface IDynamicModuleLoaderImplProps {
 
     store: IModuleStore<any>;
 
-    strictMode?: boolean;
+    strictMode: boolean;
 
     createStore?: () => IModuleStore<any>;
 }
