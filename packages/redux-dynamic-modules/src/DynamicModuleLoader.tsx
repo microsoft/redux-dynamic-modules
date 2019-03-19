@@ -55,6 +55,7 @@ export class DynamicModuleLoader extends React.Component<
                             <DynamicModuleLoaderImpl
                                 createStore={this.props.createStore}
                                 store={context ? context.store : undefined}
+                                strictMode={this.props.strictMode}
                                 modules={this.props.modules}>
                                 {this.props.children}
                             </DynamicModuleLoaderImpl>
