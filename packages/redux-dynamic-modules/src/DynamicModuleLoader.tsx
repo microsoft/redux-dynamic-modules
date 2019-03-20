@@ -169,7 +169,6 @@ class DynamicModuleLoaderImpl extends React.Component<
                 return this._renderChildren();
             }
 
-            this._getLatestState = false;
             return this._renderWithReactReduxContext();
         }
         return null;
