@@ -5,7 +5,7 @@ import {
     StoreEnhancer,
 } from "redux";
 import { composeWithDevTools } from "redux-devtools-extension/developmentOnly";
-import { getMiddlewareManager } from ".";
+import { getMiddlewareManager } from "./Managers/MiddlewareManager";
 import { IExtension, IModule, IModuleStore, IModuleTuple } from "./Contracts";
 import { getModuleManager } from "./Managers/ModuleManager";
 import { getRefCountedManager } from "./Managers/RefCountedManager";

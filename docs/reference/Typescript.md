@@ -1,4 +1,4 @@
-#Typescript
+# Typescript
 `redux-dynamic-modules` is written natively in Typescript and contains types to help you typecheck your module definitions. In this document, we outline some common strategies we use when typing/defining modules.
 
 ## Defining a module's state
