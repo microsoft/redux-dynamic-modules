@@ -13,6 +13,8 @@ export interface IDynamicModuleLoaderProps {
     /** Modules that need to be dynamically registerd */
     modules: IModuleTuple;
 
+    strictMode?: boolean;
+
     /** Optional callback which returns a store instance. This would be called if no store could be loaded from the context. */
     createStore?: () => IModuleStore<any>;
 }
@@ -53,6 +55,7 @@ export class DynamicModuleLoader extends React.Component<
                             <DynamicModuleLoaderImpl
                                 createStore={this.props.createStore}
                                 store={context ? context.store : undefined}
+                                strictMode={this.props.strictMode}
                                 modules={this.props.modules}>
                                 {this.props.children}
                             </DynamicModuleLoaderImpl>
@@ -66,6 +69,7 @@ export class DynamicModuleLoader extends React.Component<
                     // @ts-ignore
                     createStore={this.props.createStore}
                     store={this.context.store}
+                    strictMode={this.props.strictMode}
                     modules={this.props.modules}>
                     {this.props.children}
                 </DynamicModuleLoaderImpl>
@@ -80,11 +84,18 @@ interface IDynamicModuleLoaderImplProps {
 
     store: IModuleStore<any>;
 
+    strictMode: boolean;
+
     createStore?: () => IModuleStore<any>;
 }
 
+interface IDynamicModuleLoaderImplState {
+    readyToRender: boolean;
+}
+
 class DynamicModuleLoaderImpl extends React.Component<
-    IDynamicModuleLoaderImplProps
+    IDynamicModuleLoaderImplProps,
+    IDynamicModuleLoaderImplState
 > {
     private _addedModules?: IDynamicallyAddedModule;
     private _providerInitializationNeeded: boolean = false;
@@ -93,8 +104,22 @@ class DynamicModuleLoaderImpl extends React.Component<
 
     constructor(props: IDynamicModuleLoaderImplProps) {
         super(props);
-        const { createStore, modules, store } = props;
-        this._store = store;
+
+        this._store = this.props.store;
+
+        // We are not in strict mode, let's add the modules ASAP
+        if (!this.props.strictMode) {
+            this._addModules();
+            this.state = { readyToRender: true };
+        } else {
+            // We are in strict mode, so have to wait for CDM to add modules.
+            // Thus, we cannot render the children at this time
+            this.state = { readyToRender: false };
+        }
+    }
+
+    private _addModules(): void {
+        const { createStore, modules } = this.props;
         if (!this._store) {
             if (createStore) {
                 this._store = createStore();
@@ -133,18 +158,27 @@ class DynamicModuleLoaderImpl extends React.Component<
     };
 
     public render(): React.ReactNode {
-        if (this._providerInitializationNeeded) {
-            return (
-                <Provider store={this._store}>
-                    {this._renderChildren()}
-                </Provider>
-            );
-        } else if (!this._getLatestState) {
-            return this._renderChildren();
-        }
+        if (this.state.readyToRender) {
+            if (this._providerInitializationNeeded) {
+                return (
+                    <Provider store={this._store}>
+                        {this._renderChildren()}
+                    </Provider>
+                );
+            } else if (!this._getLatestState) {
+                return this._renderChildren();
+            }
 
-        this._getLatestState = false;
-        return this._renderWithReactReduxContext();
+            return this._renderWithReactReduxContext();
+        }
+        return null;
+    }
+
+    public componentDidMount() {
+        if (this.props.strictMode) {
+            this._addModules();
+            this.setState({ readyToRender: true });
+        }
     }
 
     /**
