@@ -5,8 +5,7 @@ import * as ReactTestUtils from "react-dom/test-utils";
 import { DynamicModuleLoader } from "../DynamicModuleLoader";
 
 function testMapStateToProps(state) {
-    expect(state.foo).toBeTruthy();
-    return { foo: state.foo };
+    return { foo: state.foo || "not found" };
 }
 
 const TestComponent = connect(testMapStateToProps)(props => (
@@ -49,21 +48,59 @@ describe("DynamicModuleLoader tests", () => {
     });
 
     it("Works in strict mode", () => {
+        class TestHarness extends React.Component<{}, { useDML: boolean }> {
+            constructor(props: {}) {
+                super(props);
+                this.state = { useDML: true };
+            }
+
+            render() {
+                return (
+                    <React.StrictMode>
+                        <Provider store={store}>
+                            {this.state.useDML ? (
+                                <DynamicModuleLoader
+                                    modules={[testModule]}
+                                    strictMode={true}>
+                                    <TestComponent />
+                                </DynamicModuleLoader>
+                            ) : (
+                                <TestComponent />
+                            )}
+                        </Provider>
+                        <button
+                            className="toggle"
+                            onClick={() =>
+                                this.setState({ useDML: !this.state.useDML })
+                            }
+                        />
+                    </React.StrictMode>
+                );
+            }
+        }
         const renderedComponent = ReactTestUtils.renderIntoDocument(
-            <Provider store={store}>
-                <DynamicModuleLoader modules={[testModule]} strictMode={true}>
-                    <TestComponent />
-                </DynamicModuleLoader>
-            </Provider>
+            <TestHarness />
         );
 
         expect(renderedComponent).toBeTruthy();
 
-        const output = ReactTestUtils.findRenderedDOMComponentWithClass(
+        let output = ReactTestUtils.findRenderedDOMComponentWithClass(
             renderedComponent as React.Component<any>,
             "testOutput"
         );
 
-        expect(output.innerHTML).toContain("testState");
+        const button = ReactTestUtils.findRenderedDOMComponentWithClass(
+            renderedComponent as React.Component<any>,
+            "toggle"
+        );
+
+        ReactTestUtils.Simulate.click(button);
+
+        output = ReactTestUtils.findRenderedDOMComponentWithClass(
+            renderedComponent as React.Component<any>,
+            "testOutput"
+        );
+
+        expect(output.innerHTML).toContain("not found");
     });
 });
