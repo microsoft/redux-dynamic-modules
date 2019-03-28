@@ -9,8 +9,7 @@
         "kisstkondoros.vscode-codemetrics",
         "orta.vscode-jest",
         "wayou.vscode-todo-highlight",
-        "eg2.tslint",
-        "rbbit.typescript-hero"
+        "eg2.tslint"
     ],
     // List of extensions recommended by VS Code that should not be recommended for users of this workspace.
     "unwantedRecommendations": []

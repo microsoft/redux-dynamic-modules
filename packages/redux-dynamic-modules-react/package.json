@@ -1,8 +1,7 @@
 {
-    "name": "redux-dynamic-modules-observable",
+    "name": "redux-dynamic-modules-react",
     "version": "3.5.0",
-    "description": "Observable Extension for redux-dynamic-modules",
-    "private": true,
+    "description": "Modularize the redux app by dynamically loading reducers, state and sagas",
     "repository": {
         "type": "github",
         "url": "https://github.com/Microsoft/redux-dynamic-modules"
@@ -10,7 +9,8 @@
     "main": "./lib/index.js",
     "types": "./lib/index.d.ts",
     "scripts": {
-        "build:dev": "npm run clean && tsc && webpack --mode development --display-modules --progress --display-error-details",
+        "prepublish": "npm run build:prod",
+        "build": "npm run clean && tsc && webpack --mode development --display-modules --progress --display-error-details",
         "build:prod": "npm run clean && tsc && webpack --mode development --display-error-details && webpack --mode production --display-modules --progress --display-error-details",
         "clean": "rimraf lib/ dist/"
     },
@@ -25,9 +25,13 @@
     "license": "MIT",
     "devDependencies": {
         "@types/jest": "^23.3.1",
+        "@types/react": "16.7.17",
+        "@types/react-redux": "6.0.11",
         "@types/redux": "3.6.0",
         "jest": "^23.5.0",
-        "redux-dynamic-modules": "^3.5.0",
+        "react": "16.7.0",
+        "react-redux": "6.0.0",
+        "redux": "4.0.1",
         "rimraf": "^2.6.2",
         "ts-jest": "^23.1.4",
         "tslib": "^1.9.3",
@@ -38,28 +42,15 @@
         "webpack-bundle-analyzer": "^2.13.1",
         "webpack-cli": "^3.1.0"
     },
-    "jest": {
-        "transform": {
-            "^.+\\.tsx?$": "ts-jest"
-        },
-        "verbose": false,
-        "testMatch": [
-            "**/__tests__/**/(*.)+(spec|test).js?(x)"
-        ],
-        "moduleFileExtensions": [
-            "ts",
-            "tsx",
-            "js",
-            "jsx",
-            "json",
-            "node"
-        ]
-    },
     "peerDependencies": {
-        "redux-dynamic-modules": ">=0.0.7"
+        "react": ">= 15.0.0",
+        "react-redux": ">= 5.0.0",
+        "redux": ">= 3.0.0"
     },
     "dependencies": {
-        "redux-observable": "^1.0.0",
-        "rxjs": "^6.3.3"
-    }
+        "redux-dynamic-modules-core": "^3.4.4",
+        "redux-devtools-extension": "^2.13.7",
+        "redux-dynamic-middlewares": "^1.0.0"
+    },
+    "gitHead": "8f1ed8a7be500e3e8d388703bab88dbb69eeb54e"
 }

@@ -20,7 +20,7 @@
         "dynamic",
         "load"
     ],
-    "author": "Navneet Gupta (Microsoft), Alex Bettadapur (Microsoft)",
+    "author": "Navneet Gupta (Microsoft), Alex Bettadapur (Facebook)",
     "license": "MIT",
     "devDependencies": {
         "@types/jest": "^23.3.1",

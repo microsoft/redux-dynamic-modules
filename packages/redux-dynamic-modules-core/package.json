@@ -16,18 +16,15 @@
         "test": "jest"
     },
     "keywords": [
-        "react",
         "redux",
         "module",
         "dynamic",
         "load"
     ],
-    "author": "Navneet Gupta (Microsoft), Alex Bettadapur (Microsoft)",
+    "author": "Navneet Gupta (Microsoft), Alex Bettadapur (Facebook)",
     "license": "MIT",
     "devDependencies": {
         "@types/jest": "^23.3.1",
-        "@types/react": "16.7.17",
-        "@types/react-redux": "6.0.11",
         "@types/redux": "3.6.0",
         "jest": "^23.5.0",
         "react": "16.7.0",
@@ -44,7 +41,7 @@
     },
     "jest": {
         "transform": {
-            "^.+\\.tsx?$": "ts-jest"
+            "^.+\\.ts?$": "ts-jest"
         },
         "verbose": false,
         "testMatch": [
@@ -52,15 +49,12 @@
         ],
         "moduleFileExtensions": [
             "ts",
-            "tsx",
             "js",
-            "jsx",
             "json",
             "node"
         ]
     },
     "peerDependencies": {
-        "react": ">= 15.0.0",
         "redux": ">= 3.0.0"
     },
     "dependencies": {

@@ -1,2 +1,2 @@
 export * from "redux-dynamic-modules-core";
-export * from "./DynamicModuleLoader";
+export * from "redux-dynamic-modules-react";
