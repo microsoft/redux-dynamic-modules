@@ -5,10 +5,9 @@
     "devDependencies": {
         "enzyme": "^3.6.0",
         "enzyme-adapter-react-16": "^1.5.0",
-        "react-scripts": "^2.0.2"
+        "react-scripts": "^2.1.2"
     },
     "dependencies": {
-        "babel-loader": "^8.0.5",
         "eslint": "5.12.0",
         "prop-types": "15.7.2",
         "react": "16.8.2",

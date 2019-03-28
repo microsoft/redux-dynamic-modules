@@ -1,22 +1,22 @@
 {
-  "name": "redux-dynamic-modules-todos-example",
-  "version": "3.5.0",
-  "private": true,
-  "devDependencies": {
-    "react-scripts": "^1.1.4"
-  },
-  "dependencies": {
-    "prop-types": "15.6.2",
-    "react": "16.7.0",
-    "react-dom": "16.7.0",
-    "react-redux": "6.0.0",
-    "redux": "4.0.1",
-    "redux-dynamic-modules": "^3.5.0",
-    "redux-saga": "0.16.2"
-  },
-  "scripts": {
-    "start": "react-scripts start",
-    "build:dev": "react-scripts build",
-    "eject": "react-scripts eject"
-  }
+    "name": "redux-dynamic-modules-todos-example",
+    "version": "3.5.0",
+    "private": true,
+    "devDependencies": {
+        "react-scripts": "^2.1.2"
+    },
+    "dependencies": {
+        "prop-types": "15.6.2",
+        "react": "16.7.0",
+        "react-dom": "16.7.0",
+        "react-redux": "6.0.0",
+        "redux": "4.0.1",
+        "redux-dynamic-modules": "^3.5.0",
+        "redux-saga": "0.16.2"
+    },
+    "scripts": {
+        "start": "react-scripts start",
+        "build:dev": "react-scripts build",
+        "eject": "react-scripts eject"
+    }
 }
