@@ -12,7 +12,7 @@
         "react": "^16.7.0",
         "react-dom": "^16.7.0",
         "react-redux": "^5.0.7",
-        "react-scripts": "2.1.2",
+        "react-scripts": "2.1.8",
         "redux": "^4.0.1",
         "redux-dynamic-modules": "^3.5.0",
         "redux-dynamic-modules-saga": "^3.5.0",
@@ -25,9 +25,6 @@
         "start": "react-scripts start",
         "build": "react-scripts build",
         "eject": "react-scripts eject"
-    },
-    "eslintConfig": {
-        "extends": "react-app"
     },
     "browserslist": [
         ">0.2%",
