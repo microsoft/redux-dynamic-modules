@@ -5,7 +5,7 @@ import React, { Component } from "react";
 import Loadable from "react-loadable";
 import { Provider } from "react-redux";
 // createStore allows us to load/unload modules dynamically.
-import { createStore } from "redux-dynamic-modules";
+import { createStore } from "redux-dynamic-modules-core";
 // Saga extension allows us to use Saga middleware in the module store.
 import { getSagaExtension } from "redux-dynamic-modules-saga";
 // Thunk extension allows us to use Thunk middleware in the module store.
