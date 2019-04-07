@@ -40,16 +40,15 @@ export class DynamicModuleLoader extends React.Component<
     }
 }
 
-export interface IDynamicModuleLoaderImplProps
-    extends IDynamicModuleLoaderProps {
+interface IDynamicModuleLoaderImplProps extends IDynamicModuleLoaderProps {
     reactReduxContext?: { store: IModuleStore<any> };
 }
 
-export interface IDynamicModuleLoaderImplState {
+interface IDynamicModuleLoaderImplState {
     readyToRender: boolean;
 }
 
-export class DynamicModuleLoaderImpl extends React.Component<
+class DynamicModuleLoaderImpl extends React.Component<
     IDynamicModuleLoaderImplProps,
     IDynamicModuleLoaderImplState
 > {
@@ -128,6 +127,7 @@ export class DynamicModuleLoaderImpl extends React.Component<
         const { createStore, modules } = this.props;
 
         if (!this._store) {
+            // If we need to create a store, do that here. We will skip adding the modules and render DML again
             if (createStore) {
                 this._store = createStore();
                 this._providerInitializationNeeded = true;
@@ -137,6 +137,7 @@ export class DynamicModuleLoaderImpl extends React.Component<
                 );
             }
         } else {
+            // Add the modules here
             this._addedModules = this._store.addModules(modules);
         }
     }
