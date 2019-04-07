@@ -101,6 +101,7 @@ class DynamicModuleLoaderImpl extends React.Component<
     private _providerInitializationNeeded: boolean = false;
     private _store: IModuleStore<any>;
     private _getLatestState: boolean;
+    private _memoizedRRContext: any;
 
     constructor(props: IDynamicModuleLoaderImplProps) {
         super(props);
@@ -142,10 +143,23 @@ class DynamicModuleLoaderImpl extends React.Component<
         const { store } = this.props;
         // store.getState is important here as we don't want to use storeState from the provided context
         return (
-            <ReactReduxContext.Provider
-                value={{ store, storeState: store.getState() }}>
-                {this._renderChildren()}
-            </ReactReduxContext.Provider>
+            <ReactReduxContext.Consumer>
+                {rrContext => {
+                    if (rrContext !== this._memoizedRRContext) {
+                        this._memoizedRRContext = {
+                            ...rrContext,
+                            storeState: store.getState(),
+                        };
+                    }
+
+                    return (
+                        <ReactReduxContext.Provider
+                            value={this._memoizedRRContext}>
+                            {this._renderChildren()}
+                        </ReactReduxContext.Provider>
+                    );
+                }}
+            </ReactReduxContext.Consumer>
         );
     };
 
