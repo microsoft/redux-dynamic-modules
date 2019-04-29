@@ -52,10 +52,14 @@ class DynamicModuleLoaderImpl extends React.Component<
     IDynamicModuleLoaderImplProps,
     IDynamicModuleLoaderImplState
 > {
+    /** The modules that were added from this loader */
     private _addedModules?: IDynamicallyAddedModule;
+    /** Flag that indicates we need to create a store/provider because a parent store was not provided */
     private _providerInitializationNeeded: boolean = false;
+    /** The module store, derived from context */
     private _store: IModuleStore<any>;
-    private _memoizedRRContext: any;
+    /** The react redux context, saved */
+    private _memoizedReactReduxContext: any;
 
     constructor(props: IDynamicModuleLoaderImplProps) {
         super(props);
@@ -106,15 +110,17 @@ class DynamicModuleLoaderImpl extends React.Component<
         }
 
         // Memoize the context if it has changed upstream
-        if (this.props.reactReduxContext !== this._memoizedRRContext) {
-            this._memoizedRRContext = {
+        // If the context has not changed, we want to use the same object reference so that
+        // downstream consumers do not update needlessly
+        if (this.props.reactReduxContext !== this._memoizedReactReduxContext) {
+            this._memoizedReactReduxContext = {
                 ...this.props.reactReduxContext,
                 storeState: this.props.reactReduxContext.store.getState(),
             };
         }
 
         return (
-            <ReactReduxContext.Provider value={this._memoizedRRContext}>
+            <ReactReduxContext.Provider value={this._memoizedReactReduxContext}>
                 {this.props.children &&
                 typeof this.props.children === "function"
                     ? this.props.children()
