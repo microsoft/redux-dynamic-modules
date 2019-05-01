@@ -74,6 +74,7 @@ export function getModuleManager<State>(
             }
         }
 
+        /* Fire an action so that the newly added reducers can seed their initial state */
         _seedReducers();
     };
 
