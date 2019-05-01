@@ -26,6 +26,10 @@ export function getModuleManager<State>(
     let _modules: IModule<any>[] = [];
     const _moduleIds = new Set();
 
+    const _seedReducers = () => {
+        _dispatch({ type: "@@Internal/ModuleManager/SeedReducers" });
+    };
+
     const _dispatchActions = (actions: AnyAction[]) => {
         if (!actions) {
             return;
@@ -68,6 +72,8 @@ export function getModuleManager<State>(
             for (const key in reducerMap) {
                 _reducerManager.add(key, reducerMap[key]);
             }
+
+            _seedReducers();
         }
     };
 
@@ -106,6 +112,7 @@ export function getModuleManager<State>(
                     _moduleIds.add(module.id);
                     _modules.push(module);
                     _addReducers(module.reducerMap);
+
                     const middlewares = module.middlewares;
                     if (middlewares) {
                         _addMiddlewares(middlewares);
