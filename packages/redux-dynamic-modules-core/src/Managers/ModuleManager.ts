@@ -72,9 +72,9 @@ export function getModuleManager<State>(
             for (const key in reducerMap) {
                 _reducerManager.add(key, reducerMap[key]);
             }
-
-            _seedReducers();
         }
+
+        _seedReducers();
     };
 
     const _removeReducers = (
