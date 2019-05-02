@@ -1,6 +1,6 @@
 {
     "name": "typescript-example",
-    "version": "3.5.1",
+    "version": "3.5.2",
     "private": true,
     "dependencies": {
         "@types/jest": "^23.3.10",
@@ -14,9 +14,9 @@
         "react-redux": "^5.0.7",
         "react-scripts": "2.1.8",
         "redux": "^4.0.1",
-        "redux-dynamic-modules": "^3.5.1",
-        "redux-dynamic-modules-saga": "^3.5.1",
-        "redux-dynamic-modules-thunk": "^3.5.1",
+        "redux-dynamic-modules": "^3.5.2",
+        "redux-dynamic-modules-saga": "^3.5.2",
+        "redux-dynamic-modules-thunk": "^3.5.2",
         "redux-saga": "^0.16.2",
         "redux-thunk": "^2.3.0",
         "typescript": "^3.2.2"
