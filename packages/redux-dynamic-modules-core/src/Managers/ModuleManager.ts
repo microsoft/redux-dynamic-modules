@@ -73,9 +73,6 @@ export function getModuleManager<State>(
                 _reducerManager.add(key, reducerMap[key]);
             }
         }
-
-        /* Fire an action so that the newly added reducers can seed their initial state */
-        _seedReducers();
     };
 
     const _removeReducers = (
@@ -121,6 +118,9 @@ export function getModuleManager<State>(
                     justAddedModules.push(module);
                 }
             });
+
+            /* Fire an action so that the newly added reducers can seed their initial state */
+            _seedReducers();
 
             // add the sagas and dispatch actions at the end so all the reducers are registered
             justAddedModules.forEach(module => {
