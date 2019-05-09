@@ -1,6 +1,5 @@
-import * as PropTypes from "prop-types";
 import * as React from "react";
-//@ts-ignore
+//@ts-ignore // ReactReduxContext is not officially exported
 import { Provider, ReactReduxContext } from "react-redux";
 
 import {
@@ -13,14 +12,16 @@ export interface IDynamicModuleLoaderProps {
     /** Modules that need to be dynamically registerd */
     modules: IModuleTuple;
 
+    /**
+     * Set this flag to indicate that this component is being rendered in 'Strict Mode'
+     * React 'StrictMode' does not allow constructor side-effects, so we defer adding modules to componentDidMount
+     * when this flag is set.
+     * This has the effect of adding a second render.
+     */
     strictMode?: boolean;
 
-    /** Optional callback which returns a store instance. This would be called if no store could be loaded from the context. */
+    /** Optional callback which returns a store instance. This would be called if no store could be loaded from th  e context. */
     createStore?: () => IModuleStore<any>;
-}
-
-export interface IDynamicModuleLoaderContext {
-    store: IModuleStore<any>;
 }
 
 /**
@@ -31,65 +32,30 @@ export interface IDynamicModuleLoaderContext {
 export class DynamicModuleLoader extends React.Component<
     IDynamicModuleLoaderProps
 > {
-    // @ts-ignore
-    private static contextTypes = {
-        store: PropTypes.object,
-    };
-
-    constructor(
-        props: IDynamicModuleLoaderProps,
-        context: IDynamicModuleLoaderContext
-    ) {
-        super(props, context);
-    }
-
-    /**
-     * Render a Redux provider
-     */
-    public render(): React.ReactNode {
-        if (ReactReduxContext) {
-            return (
-                <ReactReduxContext.Consumer>
-                    {context => {
-                        return (
-                            <DynamicModuleLoaderImpl
-                                createStore={this.props.createStore}
-                                store={context ? context.store : undefined}
-                                strictMode={this.props.strictMode}
-                                modules={this.props.modules}>
-                                {this.props.children}
-                            </DynamicModuleLoaderImpl>
-                        );
-                    }}
-                </ReactReduxContext.Consumer>
-            );
-        } else {
-            return (
-                <DynamicModuleLoaderImpl
-                    // @ts-ignore
-                    createStore={this.props.createStore}
-                    store={this.context.store}
-                    strictMode={this.props.strictMode}
-                    modules={this.props.modules}>
-                    {this.props.children}
-                </DynamicModuleLoaderImpl>
-            );
-        }
+    public render() {
+        return (
+            <ReactReduxContext.Consumer>
+                {reactReduxContext => (
+                    <DynamicModuleLoaderImpl
+                        {...this.props}
+                        reactReduxContext={reactReduxContext}
+                    />
+                )}
+            </ReactReduxContext.Consumer>
+        );
     }
 }
 
-interface IDynamicModuleLoaderImplProps {
-    /** Modules that need to be dynamically registerd */
-    modules: IModuleTuple;
-
-    store: IModuleStore<any>;
-
-    strictMode: boolean;
-
-    createStore?: () => IModuleStore<any>;
+interface IDynamicModuleLoaderImplProps extends IDynamicModuleLoaderProps {
+    /** The react-redux context passed from the <Provider> component */
+    reactReduxContext?: { store: IModuleStore<any> };
 }
 
 interface IDynamicModuleLoaderImplState {
+    /** Is the DML component ready to render.
+     * If strictMode is set to false, this will be set to true initially
+     * If strict mode is set to true, this will be set after the first render completes
+     */
     readyToRender: boolean;
 }
 
@@ -97,15 +63,21 @@ class DynamicModuleLoaderImpl extends React.Component<
     IDynamicModuleLoaderImplProps,
     IDynamicModuleLoaderImplState
 > {
+    /** The modules that were added from this loader */
     private _addedModules?: IDynamicallyAddedModule;
+    /** Flag that indicates we need to create a store/provider because a parent store was not provided */
     private _providerInitializationNeeded: boolean = false;
+    /** The module store, derived from context */
     private _store: IModuleStore<any>;
-    private _getLatestState: boolean;
+    /** The react redux context, saved */
+    private _memoizedReactReduxContext: any;
 
     constructor(props: IDynamicModuleLoaderImplProps) {
         super(props);
 
-        this._store = this.props.store;
+        this._store = props.reactReduxContext
+            ? props.reactReduxContext.store
+            : undefined;
 
         // We are not in strict mode, let's add the modules ASAP
         if (!this.props.strictMode) {
@@ -118,9 +90,61 @@ class DynamicModuleLoaderImpl extends React.Component<
         }
     }
 
+    public render(): React.ReactNode {
+        if (this.state.readyToRender) {
+            if (this._providerInitializationNeeded) {
+                return (
+                    <Provider store={this._store}>
+                        {/* We just rendered the provider, so now we need to render
+                        DML again. This one will add the modules */}
+                        <DynamicModuleLoader {...this.props} />
+                    </Provider>
+                );
+            }
+
+            return this._renderLoader();
+        }
+
+        return null;
+    }
+
+    /**
+     * Render a Redux provider
+     */
+    private _renderLoader(): React.ReactNode {
+        if (this.props.reactReduxContext == null) {
+            const message =
+                "Tried to render DynamicModuleLoader, but no ReactReduxContext was provided";
+            console.error(message);
+
+            throw new Error(message);
+        }
+
+        // Memoize the context if it has changed upstream
+        // If the context has not changed, we want to use the same object reference so that
+        // downstream consumers do not update needlessly
+        if (this.props.reactReduxContext !== this._memoizedReactReduxContext) {
+            this._memoizedReactReduxContext = {
+                ...this.props.reactReduxContext,
+                storeState: this.props.reactReduxContext.store.getState(),
+            };
+        }
+
+        return (
+            <ReactReduxContext.Provider value={this._memoizedReactReduxContext}>
+                {this.props.children &&
+                typeof this.props.children === "function"
+                    ? this.props.children()
+                    : this.props.children}
+            </ReactReduxContext.Provider>
+        );
+    }
+
     private _addModules(): void {
         const { createStore, modules } = this.props;
+
         if (!this._store) {
+            // If we need to create a store, do that here. We will skip adding the modules and render DML again
             if (createStore) {
                 this._store = createStore();
                 this._providerInitializationNeeded = true;
@@ -130,48 +154,9 @@ class DynamicModuleLoaderImpl extends React.Component<
                 );
             }
         } else {
-            // We will add modules dynamically and due to github issue https://github.com/Microsoft/redux-dynamic-modules/issues/27#issuecomment-464905893
-            // The very first render will not get latest state, to fix that we will need to get latest state from store directly on first render
-            this._getLatestState = ReactReduxContext;
+            // Add the modules here
+            this._addedModules = this._store.addModules(modules);
         }
-
-        this._addedModules = this._store.addModules(modules);
-    }
-
-    private _renderWithReactReduxContext = () => {
-        const { store } = this.props;
-        // store.getState is important here as we don't want to use storeState from the provided context
-        return (
-            <ReactReduxContext.Provider
-                value={{ store, storeState: store.getState() }}>
-                {this._renderChildren()}
-            </ReactReduxContext.Provider>
-        );
-    };
-
-    private _renderChildren = () => {
-        if (this.props.children && typeof this.props.children === "function") {
-            return this.props.children();
-        }
-
-        return this.props.children;
-    };
-
-    public render(): React.ReactNode {
-        if (this.state.readyToRender) {
-            if (this._providerInitializationNeeded) {
-                return (
-                    <Provider store={this._store}>
-                        {this._renderChildren()}
-                    </Provider>
-                );
-            } else if (!this._getLatestState) {
-                return this._renderChildren();
-            }
-
-            return this._renderWithReactReduxContext();
-        }
-        return null;
     }
 
     public componentDidMount() {
