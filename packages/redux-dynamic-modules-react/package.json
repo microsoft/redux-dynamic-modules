@@ -1,6 +1,6 @@
 {
     "name": "redux-dynamic-modules-react",
-    "version": "3.5.2",
+    "version": "4.0.0-alpha.0",
     "description": "Modularize the redux app by dynamically loading reducers, state and sagas",
     "repository": {
         "type": "github",
