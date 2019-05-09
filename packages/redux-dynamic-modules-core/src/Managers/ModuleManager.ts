@@ -26,6 +26,10 @@ export function getModuleManager<State>(
     let _modules: IModule<any>[] = [];
     const _moduleIds = new Set();
 
+    const _seedReducers = () => {
+        _dispatch({ type: "@@Internal/ModuleManager/SeedReducers" });
+    };
+
     const _dispatchActions = (actions: AnyAction[]) => {
         if (!actions) {
             return;
@@ -106,6 +110,7 @@ export function getModuleManager<State>(
                     _moduleIds.add(module.id);
                     _modules.push(module);
                     _addReducers(module.reducerMap);
+
                     const middlewares = module.middlewares;
                     if (middlewares) {
                         _addMiddlewares(middlewares);
@@ -113,6 +118,9 @@ export function getModuleManager<State>(
                     justAddedModules.push(module);
                 }
             });
+
+            /* Fire an action so that the newly added reducers can seed their initial state */
+            _seedReducers();
 
             // add the sagas and dispatch actions at the end so all the reducers are registered
             justAddedModules.forEach(module => {

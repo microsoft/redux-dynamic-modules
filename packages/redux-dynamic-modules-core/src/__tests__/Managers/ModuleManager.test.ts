@@ -35,6 +35,7 @@ it("module manager tests", () => {
 
     // Test initial actions are dispatched for module1
     expect(actionsDispatched).toEqual([
+        "@@Internal/ModuleManager/SeedReducers",
         "@@Internal/ModuleManager/ModuleAdded",
         "initial1",
         "initial11",
@@ -45,9 +46,11 @@ it("module manager tests", () => {
 
     // Test initial actions are dispatched for module2
     expect(actionsDispatched).toEqual([
+        "@@Internal/ModuleManager/SeedReducers",
         "@@Internal/ModuleManager/ModuleAdded",
         "initial1",
         "initial11",
+        "@@Internal/ModuleManager/SeedReducers",
         "@@Internal/ModuleManager/ModuleAdded",
         "initial2",
         "initial21",
@@ -58,9 +61,11 @@ it("module manager tests", () => {
 
     // Test final actions are dispatched for module1
     expect(actionsDispatched).toEqual([
+        "@@Internal/ModuleManager/SeedReducers",
         "@@Internal/ModuleManager/ModuleAdded",
         "initial1",
         "initial11",
+        "@@Internal/ModuleManager/SeedReducers",
         "@@Internal/ModuleManager/ModuleAdded",
         "initial2",
         "initial21",
@@ -74,9 +79,11 @@ it("module manager tests", () => {
 
     // Test no additional actions are dispatched
     expect(actionsDispatched).toEqual([
+        "@@Internal/ModuleManager/SeedReducers",
         "@@Internal/ModuleManager/ModuleAdded",
         "initial1",
         "initial11",
+        "@@Internal/ModuleManager/SeedReducers",
         "@@Internal/ModuleManager/ModuleAdded",
         "initial2",
         "initial21",
@@ -90,9 +97,11 @@ it("module manager tests", () => {
 
     // Test no additional actions are dispatched
     expect(actionsDispatched).toEqual([
+        "@@Internal/ModuleManager/SeedReducers",
         "@@Internal/ModuleManager/ModuleAdded",
         "initial1",
         "initial11",
+        "@@Internal/ModuleManager/SeedReducers",
         "@@Internal/ModuleManager/ModuleAdded",
         "initial2",
         "initial21",
@@ -103,6 +112,32 @@ it("module manager tests", () => {
         "final21",
         "@@Internal/ModuleManager/ModuleRemoved",
     ]);
+});
+
+it("When adding a module, the initial state should be seeded immediately", () => {
+    const middlewareManager = getMiddlewareManager();
+    const moduleManager = getModuleManager(middlewareManager, []);
+
+    let actionsDispatched = [];
+
+    moduleManager.setDispatch(action => {
+        // Push the action type to array so we can track it
+        actionsDispatched.push(action.type);
+        return action.payload || null;
+    });
+
+    const reducer = jest.fn(() => state => state || null);
+
+    const module1 = {
+        id: "module1",
+        reducerMap: { duplicateReducer: reducer, key11: reducer },
+    };
+
+    middlewareManager.add = jest.fn(() => {
+        expect(reducer).toBeCalled();
+    });
+
+    moduleManager.add([module1]);
 });
 
 it("Dispose disposes all modules in reverse order they are added", () => {
@@ -139,9 +174,11 @@ it("Dispose disposes all modules in reverse order they are added", () => {
     moduleManager.dispose();
 
     expect(actionsDispatched).toEqual([
+        "@@Internal/ModuleManager/SeedReducers",
         "@@Internal/ModuleManager/ModuleAdded",
         "initial1",
         "initial11",
+        "@@Internal/ModuleManager/SeedReducers",
         "@@Internal/ModuleManager/ModuleAdded",
         "initial2",
         "initial21",
