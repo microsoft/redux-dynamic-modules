@@ -12,6 +12,9 @@ export interface IDynamicModuleLoaderProps {
     /** Modules that need to be dynamically registerd */
     modules: IModuleTuple;
 
+    // boolean flag to determine if dynamically loaded modules should be automatically unloaded when component is dismounted
+    keepModulesOnUnmount: boolean | undefined;
+
     /**
      * Set this flag to indicate that this component is being rendered in 'Strict Mode'
      * React 'StrictMode' does not allow constructor side-effects, so we defer adding modules to componentDidMount
@@ -71,6 +74,9 @@ class DynamicModuleLoaderImpl extends React.Component<
     private _store: IModuleStore<any>;
     /** The react redux context, saved */
     private _memoizedReactReduxContext: any;
+    /** A boolean switch to change the default unload on unmount behavior */
+    private _keepModulesOnUnmount: boolean;
+    
 
     constructor(props: IDynamicModuleLoaderImplProps) {
         super(props);
@@ -78,6 +84,8 @@ class DynamicModuleLoaderImpl extends React.Component<
         this._store = props.reactReduxContext
             ? props.reactReduxContext.store
             : undefined;
+
+        this._keepModulesOnUnmount = props.keepModulesOnUnmount || false;
 
         // We are not in strict mode, let's add the modules ASAP
         if (!this.props.strictMode) {
@@ -170,7 +178,7 @@ class DynamicModuleLoaderImpl extends React.Component<
      * Unregister sagas and reducers
      */
     public componentWillUnmount(): void {
-        if (this._addedModules) {
+        if (!this._keepModulesOnUnmount && this._addedModules) {
             this._addedModules.remove();
             this._addedModules = undefined;
         }
