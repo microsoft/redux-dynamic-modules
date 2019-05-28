@@ -48,6 +48,26 @@ it("tests object ref counter", () => {
     expect(refCounter.getCount(a)).toBe(0);
 });
 
-function foobar() {}
+it("tests object ref counter when objects are retained", () => {
+    const refCounter = getObjectRefCounter<Function>((a, b) => a === b, () => true);
+    expect(refCounter.getCount(foobar)).toBe(0);
+
+    refCounter.add(a);
+    expect(refCounter.getCount(a)).toBe(Infinity);
+
+    refCounter.add(a);
+    expect(refCounter.getCount(a)).toBe(Infinity);
+
+    expect(refCounter.remove(a)).toBe(false);
+    expect(refCounter.getCount(a)).toBe(Infinity);
+
+    expect(refCounter.remove(a)).toBe(false);
+    expect(refCounter.getCount(a)).toBe(Infinity);
+
+    expect(refCounter.remove(a)).toBe(false);
+    expect(refCounter.getCount(a)).toBe(Infinity);
+});
+
+function foobar() { }
 
 function a() {}

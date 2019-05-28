@@ -17,7 +17,7 @@ export interface IRefCounter<T> {
 /** Ref counts given object */
 export function getObjectRefCounter<T>(
     equals: (a: T, b: T) => boolean,
-    retained: (a: T) => boolean
+    retained?: (a: T) => boolean
 ): IRefCounter<T> {
     if (!equals) {
         equals = (a, b) => a === b;
