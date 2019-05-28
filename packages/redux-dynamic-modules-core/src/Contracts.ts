@@ -28,6 +28,11 @@ export interface IModule<State> {
      * These actions are dispatched immediatly before removing the module from the store
      */
     finalActions?: AnyAction[];
+
+    /**
+     * Specifies if the module is retained forever in the store
+     */
+    retained?: boolean;
 }
 
 export interface IExtension {
