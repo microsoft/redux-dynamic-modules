@@ -46,9 +46,12 @@ export function getRefCountedReducerManager<S>(
  * @returns An object with three functions: the reducer, an addReducer function, and a removeReducer function
  */
 export function getReducerManager<S extends {}>(
-    initialReducers: ReducersMapObject<S>
+    initialReducers: ReducersMapObject<S>,
+    reducerCombiner: (
+        reducers: ReducersMapObject<S, any>
+    ) => Reducer<S> = combineReducers
 ): IReducerManager<S> {
-    let combinedReducer = combineReducers(initialReducers);
+    let combinedReducer = reducerCombiner(initialReducers);
     const reducers: ReducersMapObject<S> = {
         ...(initialReducers as object),
     } as ReducersMapObject<S>;
@@ -93,9 +96,14 @@ export function getReducerManager<S extends {}>(
     };
 }
 
-function getCombinedReducer(reducerMap: ReducersMapObject<any>) {
+function getCombinedReducer<S extends {}>(
+    reducerMap: ReducersMapObject<any>,
+    reducerCombiner: (
+        reducers: ReducersMapObject<S, any>
+    ) => Reducer<S> = combineReducers
+) {
     if (!reducerMap || Object.keys(reducerMap).length === 0) {
         return (state, action) => state || null;
     }
-    return combineReducers(reducerMap);
+    return reducerCombiner(reducerMap);
 }

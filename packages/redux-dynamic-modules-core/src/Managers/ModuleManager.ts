@@ -19,7 +19,10 @@ export interface IModuleManager<State> extends IItemManager<IModule<State>> {
 
 export function getModuleManager<State>(
     middlewareManager: IItemManager<Middleware>,
-    extensions: IExtension[]
+    extensions: IExtension[],
+    reducerCombiner?: (
+        reducers: ReducersMapObject<State, any>
+    ) => Reducer<State>
 ): IModuleManager<State> {
     let _dispatch = null;
     let _reducerManager: IReducerManager<State>;
