@@ -6,9 +6,10 @@ import { IItemManager } from "../Contracts";
  */
 export function getRefCountedManager<IType extends IItemManager<T>, T>(
     manager: IType,
-    equals: (a: T, b: T) => boolean
+	equals: (a: T, b: T) => boolean,
+	retained?: (a: T) => boolean // Decides if the item is retained even when the ref count reaches 0 
 ): IType {
-    let refCounter = getObjectRefCounter<T>(equals);
+	let refCounter = getObjectRefCounter<T>(equals, retained);
     const items = manager.getItems();
     // Set initial ref counting
     items.forEach(item => refCounter.add(item));
