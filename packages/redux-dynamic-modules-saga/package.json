@@ -29,7 +29,7 @@
         "@types/redux": "3.6.0",
         "@types/redux-saga": "0.10.5",
         "jest": "^23.5.0",
-        "redux-dynamic-modules": "^4.0.1",
+        "redux-dynamic-modules-core": "^4.0.1",
         "redux-saga": "0.16.2",
         "rimraf": "^2.6.2",
         "ts-jest": "^23.1.4",
