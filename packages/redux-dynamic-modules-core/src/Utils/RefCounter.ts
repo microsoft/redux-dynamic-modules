@@ -16,10 +16,15 @@ export interface IRefCounter<T> {
 
 /** Ref counts given object */
 export function getObjectRefCounter<T>(
-    equals: (a: T, b: T) => boolean
+    equals: (a: T, b: T) => boolean,
+    retained?: (a: T) => boolean
 ): IRefCounter<T> {
     if (!equals) {
         equals = (a, b) => a === b;
+    }
+
+    if(!retained) {
+        retained = () => false;
     }
     const objects: T[] = [];
     const counts: number[] = [];
@@ -54,12 +59,22 @@ export function getObjectRefCounter<T>(
             } else {
                 count = counts[index] + 1;
             }
+
+            // If item is retained then keep it for inifinty
+            if (retained(obj)) {
+                count = Infinity;
+            }
+            
             counts[index] = count;
         },
         /**
          * Decreases ref count for given T, if refcount reaches to zero removes the T and returns true
          */
         remove: (obj: T): boolean => {
+            if (retained(obj)) {
+                return false;
+            }
+            
             let index = objects.findIndex(o => o && equals(o, obj));
             if (index === -1) {
                 return false;

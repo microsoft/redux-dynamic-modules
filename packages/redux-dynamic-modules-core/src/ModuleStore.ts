@@ -180,26 +180,31 @@ export function createStore<State>(
         applyMiddleware(...extensionMiddleware, middlewareManager.enhancer)
     );
 
-    const modules = getRefCountedManager(
-        getModuleManager<State>(middlewareManager, extensions, advancedCombineReducers),
-        (a: IModule<any>, b: IModule<any>) => a.id === b.id
+    const moduleManager = getRefCountedManager(
+        getModuleManager<State>(
+            middlewareManager,
+            extensions,
+            advancedCombineReducers
+        ),
+        (a: IModule<any>, b: IModule<any>) => a.id === b.id,
+        a => a.retained
     );
 
     // Create store
     const store: IModuleStore<State> = createReduxStore<State, any, {}, {}>(
-        modules.getReducer,
+        moduleManager.getReducer,
         initialState,
         enhancer as any
     ) as IModuleStore<State>;
 
-    modules.setDispatch(store.dispatch);
+    moduleManager.setDispatch(store.dispatch);
 
     const addModules = (modulesToBeAdded: IModuleTuple) => {
         const flattenedModules = flatten(modulesToBeAdded);
-        modules.add(flattenedModules);
+        moduleManager.add(flattenedModules);
         return {
             remove: () => {
-                modules.remove(flattenedModules);
+                moduleManager.remove(flattenedModules);
             },
         };
     };
@@ -222,7 +227,7 @@ export function createStore<State>(
 
     store.dispose = () => {
         // get all added modules and remove them
-        modules.dispose();
+        moduleManager.dispose();
         middlewareManager.dispose();
         extensions.forEach(p => {
             if (p.dispose) {
