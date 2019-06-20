@@ -1,7 +1,7 @@
 import { ISagaRegistration, ISagaWithArguments } from "./Contracts";
 import { SagaMiddleware, Task } from "redux-saga";
 import { sagaEquals } from "./SagaComparer";
-import { IItemManager, getMap } from "redux-dynamic-modules";
+import { IItemManager, getMap } from "redux-dynamic-modules-core";
 
 /**
  * Creates saga items which can be used to start and stop sagas dynamically

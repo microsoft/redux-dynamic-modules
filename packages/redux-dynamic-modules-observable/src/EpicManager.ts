@@ -1,4 +1,4 @@
-import { getStringRefCounter, IItemManager } from "redux-dynamic-modules";
+import { getStringRefCounter, IItemManager } from "redux-dynamic-modules-core";
 import { Epic } from "redux-observable";
 import { merge } from "rxjs";
 

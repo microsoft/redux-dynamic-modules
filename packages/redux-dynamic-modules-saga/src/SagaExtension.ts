@@ -4,7 +4,7 @@ import {
     IItemManager,
     getRefCountedManager,
     IModuleManager,
-} from "redux-dynamic-modules";
+} from "redux-dynamic-modules-core";
 import { ISagaRegistration, ISagaModule } from "./Contracts";
 import { getSagaManager } from "./SagaManager";
 import { sagaEquals } from "./SagaComparer";
