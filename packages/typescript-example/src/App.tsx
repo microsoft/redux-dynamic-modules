@@ -9,7 +9,7 @@ class App extends Component {
     private store: IModuleStore<any>;
     constructor(props: any, context: any) {
         super(props, context);
-        this.store = createStore({}, [], [getSagaExtension()]);
+        this.store = createStore({ extensions: [getSagaExtension()] });
     }
     render() {
         return (
