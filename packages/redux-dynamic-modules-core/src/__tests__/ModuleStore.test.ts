@@ -19,7 +19,7 @@ describe("Module Store tests", () => {
     };
 
     it("Flattens modules", () => {
-        const store = createStore({}, [], [], testModule);
+        const store = createStore({}, [], [], undefined, testModule);
 
         const nestedModules: IModuleTuple = [
             { id: "1" },

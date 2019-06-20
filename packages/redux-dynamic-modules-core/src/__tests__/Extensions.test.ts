@@ -22,25 +22,25 @@ describe("Store with extensions", () => {
             middlewareFunction();
         };
         testExtension.middleware = [middleware];
-        testStore = createStore({}, [], [testExtension]);
+        testStore = createStore({}, [], [testExtension], undefined);
 
         testStore.dispatch({ type: "ANY" });
         expect(middlewareFunction).toHaveBeenCalled();
     });
 
     it("Manager created called", () => {
-        testStore = createStore({}, [], [testExtension]);
+        testStore = createStore({}, [], [testExtension], undefined);
         expect(testExtension.onModuleManagerCreated).toHaveBeenCalled();
     });
 
     it("OnModule Added called", () => {
-        testStore = createStore({}, [], [testExtension]);
+        testStore = createStore({}, [], [testExtension], undefined);
         testStore.addModule({ id: "new_module" });
         expect(testExtension.onModuleAdded).toHaveBeenCalled();
     });
 
     it("OnModule Removed called", () => {
-        testStore = createStore({}, [], [testExtension]);
+        testStore = createStore({}, [], [testExtension], undefined);
         const module = testStore.addModule({ id: "new_module" });
         module.remove();
 

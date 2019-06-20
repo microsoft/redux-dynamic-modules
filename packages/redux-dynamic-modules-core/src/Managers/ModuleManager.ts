@@ -17,7 +17,7 @@ export interface IModuleManager<State> extends IItemManager<IModule<State>> {
     getReducer: (state: State, action: AnyAction) => State;
 }
 
-export function getModuleManager<State>(
+export function getModuleManager<State = {}>(
     middlewareManager: IItemManager<Middleware>,
     extensions: IExtension[],
     advancedCombineReducers?: (
@@ -69,6 +69,7 @@ export function getModuleManager<State>(
         }
         if (!_reducerManager) {
             _reducerManager = getRefCountedReducerManager(
+                // @ts-ignore
                 getReducerManager(reducerMap, advancedCombineReducers)
             ) as any;
         } else {

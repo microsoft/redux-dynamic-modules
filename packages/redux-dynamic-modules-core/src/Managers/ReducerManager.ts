@@ -82,7 +82,7 @@ export function getReducerManager<S extends {}>(
             }
 
             reducers[key] = reducer;
-            combinedReducer = getCombinedReducer(reducers);
+            combinedReducer = getCombinedReducer(reducers, reducerCombiner);
         },
         remove: (key: string) => {
             if (!key || !reducers[key]) {
@@ -91,7 +91,7 @@ export function getReducerManager<S extends {}>(
 
             delete reducers[key];
             keysToRemove.push(key);
-            combinedReducer = getCombinedReducer(reducers);
+            combinedReducer = getCombinedReducer(reducers, reducerCombiner);
         },
     };
 }
