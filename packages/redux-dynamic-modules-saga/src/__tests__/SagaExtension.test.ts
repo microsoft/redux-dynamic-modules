@@ -6,7 +6,10 @@ describe("Saga extension tests", () => {
     it("Saga extension registers module and starts saga", () => {
         const testContext = {};
         called = false;
-        createStore({}, [], [getSagaExtension(testContext)], getTestModule());
+        createStore(
+            { extensions: [getSagaExtension(testContext)] },
+            getTestModule()
+        );
         expect(called);
 
         expect(testContext["moduleManager"]).toBeTruthy();

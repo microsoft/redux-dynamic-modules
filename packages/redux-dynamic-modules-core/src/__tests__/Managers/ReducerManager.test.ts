@@ -77,3 +77,27 @@ it("ref counting reducers", () => {
         "city",
     ]);
 });
+
+it("With a custom combiner", () => {
+    let combinedKeys = [];
+    function customCombined(reducerMap) {
+        console.dir(reducerMap);
+        combinedKeys = Object.keys(reducerMap);
+    }
+
+    const reducerManager = getReducerManager<ITestState>(
+        {
+            name: reduce,
+            age: reduce,
+        },
+        customCombined as any
+    );
+
+    expect(combinedKeys).toEqual(["name", "age"]);
+
+    reducerManager.remove("age");
+    expect(combinedKeys).toEqual(["name"]);
+
+    reducerManager.add("city", reduce);
+    expect(combinedKeys).toEqual(["name", "city"]);
+});

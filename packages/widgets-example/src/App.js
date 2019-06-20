@@ -27,11 +27,10 @@ class App extends Component {
          * The extensions are optional and you can choose extension based on the middleware you use
          * You can also build your own extensions for any other middleware e.g. redux-observable
          */
-        this.store = createStore(
-            {},
-            [offline(offlineConfig)],
-            [getThunkExtension(), getSagaExtension()]
-        );
+        this.store = createStore({
+            enhancements: [offline(offlineConfig)],
+            extensions: [getThunkExtension(), getSagaExtension()],
+        });
     }
 
     render() {

@@ -3,6 +3,8 @@ import {
     createStore as createReduxStore,
     DeepPartial,
     StoreEnhancer,
+    ReducersMapObject,
+    Reducer,
 } from "redux";
 import { composeWithDevTools } from "redux-devtools-extension/developmentOnly";
 import { getMiddlewareManager } from "./Managers/MiddlewareManager";
@@ -11,43 +13,42 @@ import { getModuleManager } from "./Managers/ModuleManager";
 import { getRefCountedManager } from "./Managers/RefCountedManager";
 import { flatten } from "./Utils/Flatten";
 
+type ModuleStoreSettings<S> = {
+    initialState?: DeepPartial<S>;
+    enhancers?: StoreEnhancer[];
+    extensions?: IExtension[];
+    advancedCombineReducers?: ((
+        reducers: ReducersMapObject<S, any>
+    ) => Reducer<S>);
+};
+
 /**
  * Configure the module store
  */
 export function createStore<S1>(
-    initialState: DeepPartial<S1>,
-    enhancers: StoreEnhancer[],
-    extensions: IExtension[],
+    moduleStoreSettings: ModuleStoreSettings<S1>,
     reduxModule: IModule<S1>
 ): IModuleStore<S1>;
 export function createStore<S1, S2>(
-    initialState: DeepPartial<S1 & S2>,
-    enhancers: StoreEnhancer[],
-    extensions: IExtension[],
+    moduleStoreSettings: ModuleStoreSettings<S1 & S2>,
     m1: IModule<S1>,
     m2: IModule<S2>
 ): IModuleStore<S1 & S2>;
 export function createStore<S1, S2, S3>(
-    initialState: DeepPartial<S1 & S2 & S3>,
-    enhancers: StoreEnhancer[],
-    extensions: IExtension[],
+    moduleStoreSettings: ModuleStoreSettings<S1 & S2 & S3>,
     m1: IModule<S1>,
     m2: IModule<S2>,
     m3: IModule<S3>
 ): IModuleStore<S1 & S2 & S3>;
 export function createStore<S1, S2, S3, S4>(
-    initialState: DeepPartial<S1 & S2 & S3 & S4>,
-    enhancers: StoreEnhancer[],
-    extensions: IExtension[],
+    moduleStoreSettings: ModuleStoreSettings<S1 & S2 & S3 & S4>,
     m1: IModule<S1>,
     m2: IModule<S2>,
     m3: IModule<S3>,
     m4: IModule<S4>
 ): IModuleStore<S1 & S2 & S3 & S4>;
 export function createStore<S1, S2, S3, S4, S5>(
-    initialState: DeepPartial<S1 & S2 & S3 & S4 & S5>,
-    enhancers: StoreEnhancer[],
-    extensions: IExtension[],
+    moduleStoreSettings: ModuleStoreSettings<S1 & S2 & S3 & S4 & S5>,
     m1: IModule<S1>,
     m2: IModule<S2>,
     m3: IModule<S3>,
@@ -55,9 +56,7 @@ export function createStore<S1, S2, S3, S4, S5>(
     m5: IModule<S5>
 ): IModuleStore<S1 & S2 & S3 & S4 & S5>;
 export function createStore<S1, S2, S3, S4, S5, S6>(
-    initialState: DeepPartial<S1 & S2 & S3 & S4 & S5 & S6>,
-    enhancers: StoreEnhancer[],
-    extensions: IExtension[],
+    moduleStoreSettings: ModuleStoreSettings<S1 & S2 & S3 & S4 & S5 & S6>,
     m1: IModule<S1>,
     m2: IModule<S2>,
     m3: IModule<S3>,
@@ -66,9 +65,7 @@ export function createStore<S1, S2, S3, S4, S5, S6>(
     m6: IModule<S6>
 ): IModuleStore<S1 & S2 & S3 & S4 & S5 & S6>;
 export function createStore<S1, S2, S3, S4, S5, S6, S7>(
-    initialState: DeepPartial<S1 & S2 & S3 & S4 & S5 & S6 & S7>,
-    enhancers: StoreEnhancer[],
-    extensions: IExtension[],
+    moduleStoreSettings: ModuleStoreSettings<S1 & S2 & S3 & S4 & S5 & S6 & S7>,
     m1: IModule<S1>,
     m2: IModule<S2>,
     m3: IModule<S3>,
@@ -78,9 +75,9 @@ export function createStore<S1, S2, S3, S4, S5, S6, S7>(
     m7: IModule<S7>
 ): IModuleStore<S1 & S2 & S3 & S4 & S5 & S6 & S7>;
 export function createStore<S1, S2, S3, S4, S5, S6, S7, S8>(
-    initialState: DeepPartial<S1 & S2 & S3 & S4 & S5 & S6 & S7 & S8>,
-    enhancers: StoreEnhancer[],
-    extensions: IExtension[],
+    moduleStoreSettings: ModuleStoreSettings<
+        S1 & S2 & S3 & S4 & S5 & S6 & S7 & S8
+    >,
     m1: IModule<S1>,
     m2: IModule<S2>,
     m3: IModule<S3>,
@@ -91,20 +88,19 @@ export function createStore<S1, S2, S3, S4, S5, S6, S7, S8>(
     m8: IModule<S8>
 ): IModuleStore<S1 & S2 & S3 & S4 & S5 & S6 & S7 & S8>;
 export function createStore<State>(
-    initialState: DeepPartial<State>,
-    enhancers: StoreEnhancer[],
-    extensions: IExtension[],
+    moduleStoreSettings: ModuleStoreSettings<State>,
     ...initialModules: IModule<any>[]
 ): IModuleStore<State>;
 export function createStore<State>(
-    initialState: DeepPartial<State>,
-    enhancers: StoreEnhancer[],
-    extensions: IExtension[],
+    moduleStoreSettings: ModuleStoreSettings<State>,
     ...initialModules: IModule<any>[]
 ): IModuleStore<State> {
-    if (!extensions) {
-        extensions = [];
-    }
+    const {
+        initialState = {},
+        extensions = [],
+        enhancers = [],
+        advancedCombineReducers,
+    } = moduleStoreSettings;
 
     const extensionMiddleware = extensions.reduce((mw, p) => {
         if (p.middleware) {
@@ -124,9 +120,13 @@ export function createStore<State>(
     );
 
     const moduleManager = getRefCountedManager(
-        getModuleManager<State>(middlewareManager, extensions),
+        getModuleManager<State>(
+            middlewareManager,
+            extensions,
+            advancedCombineReducers
+        ),
         (a: IModule<any>, b: IModule<any>) => a.id === b.id,
-        (a) => a.retained
+        a => a.retained
     );
 
     // Create store
