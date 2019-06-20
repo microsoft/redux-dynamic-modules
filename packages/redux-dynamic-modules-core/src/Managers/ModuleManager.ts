@@ -20,7 +20,7 @@ export interface IModuleManager<State> extends IItemManager<IModule<State>> {
 export function getModuleManager<State>(
     middlewareManager: IItemManager<Middleware>,
     extensions: IExtension[],
-    reducerCombiner?: (
+    advancedCombineReducers?: (
         reducers: ReducersMapObject<State, any>
     ) => Reducer<State>
 ): IModuleManager<State> {
@@ -69,7 +69,7 @@ export function getModuleManager<State>(
         }
         if (!_reducerManager) {
             _reducerManager = getRefCountedReducerManager(
-                getReducerManager(reducerMap)
+                getReducerManager(reducerMap, advancedCombineReducers)
             ) as any;
         } else {
             for (const key in reducerMap) {

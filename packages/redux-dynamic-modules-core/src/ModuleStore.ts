@@ -20,7 +20,7 @@ export function createStore<S1>(
     initialState: DeepPartial<S1>,
     enhancers: StoreEnhancer[],
     extensions: IExtension[],
-    reducerCombiner:
+    advancedCombineReducers:
         | ((reducers: ReducersMapObject<S1, any>) => Reducer<S1>)
         | null
         | undefined,
@@ -30,7 +30,7 @@ export function createStore<S1, S2>(
     initialState: DeepPartial<S1 & S2>,
     enhancers: StoreEnhancer[],
     extensions: IExtension[],
-    reducerCombiner:
+    advancedCombineReducers:
         | ((reducers: ReducersMapObject<S1 & S2, any>) => Reducer<S1 & S2>)
         | null
         | undefined,
@@ -41,7 +41,7 @@ export function createStore<S1, S2, S3>(
     initialState: DeepPartial<S1 & S2 & S3>,
     enhancers: StoreEnhancer[],
     extensions: IExtension[],
-    reducerCombiner:
+    advancedCombineReducers:
         | ((
               reducers: ReducersMapObject<S1 & S2 & S3, any>
           ) => Reducer<S1 & S2 & S3>)
@@ -55,7 +55,7 @@ export function createStore<S1, S2, S3, S4>(
     initialState: DeepPartial<S1 & S2 & S3 & S4>,
     enhancers: StoreEnhancer[],
     extensions: IExtension[],
-    reducerCombiner:
+    advancedCombineReducers:
         | ((
               reducers: ReducersMapObject<S1 & S2 & S3 & S4, any>
           ) => Reducer<S1 & S2 & S3 & S4>)
@@ -70,7 +70,7 @@ export function createStore<S1, S2, S3, S4, S5>(
     initialState: DeepPartial<S1 & S2 & S3 & S4 & S5>,
     enhancers: StoreEnhancer[],
     extensions: IExtension[],
-    reducerCombiner:
+    advancedCombineReducers:
         | ((
               reducers: ReducersMapObject<S1 & S2 & S3 & S4 & S5, any>
           ) => Reducer<S1 & S2 & S3 & S4 & S5>)
@@ -86,7 +86,7 @@ export function createStore<S1, S2, S3, S4, S5, S6>(
     initialState: DeepPartial<S1 & S2 & S3 & S4 & S5 & S6>,
     enhancers: StoreEnhancer[],
     extensions: IExtension[],
-    reducerCombiner:
+    advancedCombineReducers:
         | ((
               reducers: ReducersMapObject<S1 & S2 & S3 & S4 & S5 & S6, any>
           ) => Reducer<S1 & S2 & S3 & S4 & S5 & S6>)
@@ -103,7 +103,7 @@ export function createStore<S1, S2, S3, S4, S5, S6, S7>(
     initialState: DeepPartial<S1 & S2 & S3 & S4 & S5 & S6 & S7>,
     enhancers: StoreEnhancer[],
     extensions: IExtension[],
-    reducerCombiner:
+    advancedCombineReducers:
         | ((
               reducers: ReducersMapObject<S1 & S2 & S3 & S4 & S5 & S6 & S7, any>
           ) => Reducer<S1 & S2 & S3 & S4 & S5 & S6 & S7>)
@@ -121,7 +121,7 @@ export function createStore<S1, S2, S3, S4, S5, S6, S7, S8>(
     initialState: DeepPartial<S1 & S2 & S3 & S4 & S5 & S6 & S7 & S8>,
     enhancers: StoreEnhancer[],
     extensions: IExtension[],
-    reducerCombiner:
+    advancedCombineReducers:
         | ((
               reducers: ReducersMapObject<
                   S1 & S2 & S3 & S4 & S5 & S6 & S7 & S8,
@@ -143,7 +143,7 @@ export function createStore<State>(
     initialState: DeepPartial<State>,
     enhancers: StoreEnhancer[],
     extensions: IExtension[],
-    reducerCombiner:
+    advancedCombineReducers:
         | ((reducers: ReducersMapObject<State, any>) => Reducer<State>)
         | null
         | undefined,
@@ -153,7 +153,7 @@ export function createStore<State>(
     initialState: DeepPartial<State>,
     enhancers: StoreEnhancer[],
     extensions: IExtension[],
-    reducerCombiner:
+    advancedCombineReducers:
         | ((reducers: ReducersMapObject<State, any>) => Reducer<State>)
         | null
         | undefined,
@@ -181,7 +181,7 @@ export function createStore<State>(
     );
 
     const modules = getRefCountedManager(
-        getModuleManager<State>(middlewareManager, extensions, reducerCombiner),
+        getModuleManager<State>(middlewareManager, extensions, advancedCombineReducers),
         (a: IModule<any>, b: IModule<any>) => a.id === b.id
     );
 
