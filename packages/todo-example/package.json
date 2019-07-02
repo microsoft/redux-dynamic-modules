@@ -7,9 +7,9 @@
   },
   "dependencies": {
     "prop-types": "15.6.2",
-    "react": "16.7.0",
-    "react-dom": "16.7.0",
-    "react-redux": "6.0.0",
+    "react": "^16.8.0",
+    "react-dom": "^16.8.0",
+    "react-redux": "7.1.0",
     "redux": "4.0.1",
     "redux-dynamic-modules": "^5.0.0-alpha.0",
     "redux-saga": "0.16.2"
