@@ -3,7 +3,7 @@
     "private": true,
     "scripts": {
         "bootstrap": "lerna bootstrap --no-ci",
-        "publish": "lerna publish"
+        "publish": "lerna publish",
         "build:prod": "lerna run build:prod",
         "test": "npm run build:prod && lerna run test"
     },
