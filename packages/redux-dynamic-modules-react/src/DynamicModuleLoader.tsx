@@ -69,11 +69,17 @@ class DynamicModuleLoaderImpl extends React.Component<
     private _providerInitializationNeeded: boolean = false;
     /** The module store, derived from context */
     private _store: IModuleStore<any>;
-    /** The react redux context, saved */
-    private _memoizedReactReduxContext: any;
 
     constructor(props: IDynamicModuleLoaderImplProps) {
         super(props);
+
+        if (props.reactReduxContext == null) {
+            const message =
+                "Tried to render DynamicModuleLoader, but no ReactReduxContext was provided";
+            console.error(message);
+
+            throw new Error(message);
+        }
 
         this._store = props.reactReduxContext
             ? props.reactReduxContext.store
@@ -112,32 +118,11 @@ class DynamicModuleLoaderImpl extends React.Component<
      * Render a Redux provider
      */
     private _renderLoader(): React.ReactNode {
-        if (this.props.reactReduxContext == null) {
-            const message =
-                "Tried to render DynamicModuleLoader, but no ReactReduxContext was provided";
-            console.error(message);
-
-            throw new Error(message);
-        }
-
-        // Memoize the context if it has changed upstream
-        // If the context has not changed, we want to use the same object reference so that
-        // downstream consumers do not update needlessly
-        if (this.props.reactReduxContext !== this._memoizedReactReduxContext) {
-            this._memoizedReactReduxContext = {
-                ...this.props.reactReduxContext,
-                storeState: this.props.reactReduxContext.store.getState(),
-            };
-        }
-
-        return (
-            <ReactReduxContext.Provider value={this._memoizedReactReduxContext}>
-                {this.props.children &&
-                typeof this.props.children === "function"
-                    ? this.props.children()
-                    : this.props.children}
-            </ReactReduxContext.Provider>
-        );
+        return this.props.children
+            ? typeof this.props.children === "function"
+                ? this.props.children()
+                : this.props.children
+            : null;
     }
 
     private _addModules(): void {
