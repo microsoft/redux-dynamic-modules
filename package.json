@@ -4,6 +4,7 @@
     "scripts": {
         "bootstrap": "lerna bootstrap --no-ci",
         "publish": "lerna publish",
+        "publish:force": "lerna publish --force",
         "build:prod": "lerna run build:prod",
         "test": "npm run build:prod && lerna run test"
     },
