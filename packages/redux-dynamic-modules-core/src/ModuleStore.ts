@@ -5,6 +5,7 @@ import {
     StoreEnhancer,
     ReducersMapObject,
     Reducer,
+    compose,
 } from "redux";
 import { composeWithDevTools } from "redux-devtools-extension/developmentOnly";
 import { getMiddlewareManager } from "./Managers/MiddlewareManager";
@@ -17,6 +18,7 @@ type ModuleStoreSettings<S> = {
     initialState?: DeepPartial<S>;
     enhancers?: StoreEnhancer[];
     extensions?: IExtension[];
+    compose?: typeof compose;
     advancedCombineReducers?: ((
         reducers: ReducersMapObject<S, any>
     ) => Reducer<S>);
@@ -99,6 +101,7 @@ export function createStore<State>(
         initialState = {},
         extensions = [],
         enhancers = [],
+        compose = composeWithDevTools({}),
         advancedCombineReducers,
     } = moduleStoreSettings;
 
@@ -114,7 +117,8 @@ export function createStore<State>(
         getMiddlewareManager(),
         (a, b) => a === b
     );
-    const enhancer = composeWithDevTools(
+
+    const enhancer = compose(
         ...enhancers,
         applyMiddleware(...extensionMiddleware, middlewareManager.enhancer)
     );
