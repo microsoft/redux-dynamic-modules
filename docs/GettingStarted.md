@@ -17,37 +17,31 @@ yarn add redux-dynamic-modules
 -   Create a module with the following format
 
 ```typescript
-export function getUsersModule(): IModule<IUserState> {
-    return {
-        id: "users",
-        reducerMap: {
-            users: usersReducer,
-        },
-        // Actions to fire when this module is added/removed
-        // initialActions: [],
-        // finalActions: []
-    };
-}
+export const UsersModule: IModule<IUserState> = {
+    id: "users",
+    reducerMap: {
+        users: usersReducer,
+    },
+    // Actions to fire when this module is added/removed
+    // initialActions: [],
+    // finalActions: []
+};
 ```
 
 -   Create a `ModuleStore`
 
 ```typescript
 import { createStore, IModuleStore } from "redux-dynamic-modules";
-import { getUsersModule } from "./usersModule";
+import { UsersModule } from "./usersModule";
 
 const store: IModuleStore<IState> = createStore(
-    /* initial state */
-    {},
-
-    /** enhancers **/
-    [],
-
-    /* Extensions to load */
-
-    [],
-
-    getUsersModule()
+    {
+        initialState: {},
+        //extensions: [],
+        //enhancers: [],
+        //advancedCombineReducers: null
+    },
+    UsersModule
     /* ...any additional modules */
 );
 ```
