@@ -12,19 +12,16 @@ To create a `ModuleStore`, use the `createStore` function from our package
 
 ```typescript
 import { createStore, IModuleStore } from "redux-dynamic-modules";
-import { getUsersModule } from "./usersModule";
+import { UsersModule } from "./usersModule";
 
 const store: IModuleStore<IState> = createStore(
-    /* initial state */
-    {},
-
-    /** enhancers **/
-    [],
-
-    /* Extensions to load */
-    [],
-
-    getUsersModule()
+    {
+        initialState: {},
+        //extensions: [],
+        //enhancers: [],
+        //advancedCombineReducers: null
+    },
+    UsersModule
     /* ...any additional modules */
 );
 ```
