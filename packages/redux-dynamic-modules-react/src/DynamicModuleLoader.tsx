@@ -73,6 +73,7 @@ class DynamicModuleLoaderImpl extends React.Component<
     constructor(props: IDynamicModuleLoaderImplProps) {
         super(props);
 
+        this._cleanup = this._cleanup.bind(this);
         if (props.reactReduxContext == null) {
             const message =
                 "Tried to render DynamicModuleLoader, but no ReactReduxContext was provided";
@@ -108,7 +109,12 @@ class DynamicModuleLoaderImpl extends React.Component<
                 );
             }
 
-            return this._renderLoader();
+            return (
+                <>
+                    {this._renderLoader()}
+                    <AddedModulesCleanup cleanup={this._cleanup} />
+                </>
+            );
         }
 
         return null;
@@ -154,10 +160,31 @@ class DynamicModuleLoaderImpl extends React.Component<
     /**
      * Unregister sagas and reducers
      */
-    public componentWillUnmount(): void {
+    private _cleanup(): void {
         if (this._addedModules) {
             this._addedModules.remove();
             this._addedModules = undefined;
         }
+    }
+}
+
+interface IAddedModulesCleanupProps {
+    cleanup: () => any;
+}
+
+/**
+ * This component is rendered as the last child of DynamicModuleLoaderImpl
+ * so react runs willUnmount on connected(react-redux) children before this
+ * cleanup and allows them to unsubscribe from store before dynamic reducers
+ * removing (and avoid errors in selectors)
+ */
+class AddedModulesCleanup extends React.Component<IAddedModulesCleanupProps> {
+
+    public render() {
+        return null;
+    }
+
+    public componentWillUnmount() {
+        this.props.cleanup();
     }
 }
