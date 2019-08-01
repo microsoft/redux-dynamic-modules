@@ -73,7 +73,6 @@ class DynamicModuleLoaderImpl extends React.Component<
     constructor(props: IDynamicModuleLoaderImplProps) {
         super(props);
 
-        this._cleanup = this._cleanup.bind(this);
         if (props.reactReduxContext == null) {
             const message =
                 "Tried to render DynamicModuleLoader, but no ReactReduxContext was provided";
@@ -160,7 +159,7 @@ class DynamicModuleLoaderImpl extends React.Component<
     /**
      * Unregister sagas and reducers
      */
-    private _cleanup(): void {
+    private _cleanup = () => {
         if (this._addedModules) {
             this._addedModules.remove();
             this._addedModules = undefined;
