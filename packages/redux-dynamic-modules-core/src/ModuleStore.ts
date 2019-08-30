@@ -18,7 +18,7 @@ type ModuleStoreSettings<S> = {
     initialState?: DeepPartial<S>;
     enhancers?: StoreEnhancer[];
     extensions?: IExtension[];
-    compose?: typeof compose;
+    advancedComposeEnhancers?: typeof compose;
     advancedCombineReducers?: ((
         reducers: ReducersMapObject<S, any>
     ) => Reducer<S>);
@@ -101,7 +101,7 @@ export function createStore<State>(
         initialState = {},
         extensions = [],
         enhancers = [],
-        compose = composeWithDevTools({}),
+        advancedComposeEnhancers = composeWithDevTools({}),
         advancedCombineReducers,
     } = moduleStoreSettings;
 
@@ -118,7 +118,7 @@ export function createStore<State>(
         (a, b) => a === b
     );
 
-    const enhancer = compose(
+    const enhancer = advancedComposeEnhancers(
         ...enhancers,
         applyMiddleware(...extensionMiddleware, middlewareManager.enhancer)
     );
