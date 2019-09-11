@@ -20,7 +20,7 @@ export function getSagaExtension<C>(
     let sagaMonitor = undefined;
 
     //@ts-ignore
-    if (process.env.NODE_ENV === "development") {
+    if (process.env.NODE_ENV === "development" && typeof window !== "undefined") {
         sagaMonitor = window["__SAGA_MONITOR_EXTENSION__"] || undefined;
     }
 
