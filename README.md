@@ -73,16 +73,11 @@ export function getUsersModule(): IModule<IUserState> {
 import { createStore, IModuleStore } from "redux-dynamic-modules";
 import { getUsersModule } from "./usersModule";
 
-const store: IModuleStore<IState> = createStore(
-    /* initial state */
-    {},
-
-    /** enhancers **/
-    [],
-
-    /* extensions to include */
-    [],
-
+const store: IModuleStore<IState> = createStore({
+      initialState: { /** initial state */ },
+      enhancers: { /** enhancers to include */ }, 
+      extensions: [/** extensions to include i.e. getSagaExtension(), getThunkExtension() */],
+},
     getUsersModule()
     /* ...any additional modules */
 );
