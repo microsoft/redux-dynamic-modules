@@ -75,7 +75,7 @@ import { getUsersModule } from "./usersModule";
 
 const store: IModuleStore<IState> = createStore({
       initialState: { /** initial state */ },
-      enhancers: { /** enhancers to include */ }, 
+      enhancers: [ /** enhancers to include */ ], 
       extensions: [/** extensions to include i.e. getSagaExtension(), getThunkExtension() */],
 },
     getUsersModule()
