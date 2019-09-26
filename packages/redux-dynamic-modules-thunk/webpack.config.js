@@ -27,7 +27,7 @@ module.exports = (env, argv) => {
             redux: "redux",
             "react-redux": "react-redux",
             "redux-thunk": "redux-thunk",
-            "redux-dynamic-modules": "redux-dynamic-modules",
+            "redux-dynamic-modules-core": "redux-dynamic-modules-core",
         },
         plugins: [
             new BundleAnalyzerPlugin({

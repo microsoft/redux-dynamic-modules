@@ -12,7 +12,7 @@ module.exports = (env, argv) => {
         },
 
         output: {
-            library: "redux-dynamic-modules",
+            library: "redux-dynamic-modules-react",
             libraryTarget: "umd",
             filename:
                 mode_env === "production"

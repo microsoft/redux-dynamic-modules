@@ -1,4 +1,4 @@
-import { createStore } from "redux-dynamic-modules";
+import { createStore } from "redux-dynamic-modules-core";
 import { getSagaExtension } from "../SagaExtension";
 import { ISagaModule } from "../Contracts";
 import { SagaIterator } from "redux-saga";
