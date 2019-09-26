@@ -1,6 +1,6 @@
 {
     "name": "redux-dynamic-modules",
-    "version": "5.0.0-alpha.0",
+    "version": "5.0.2",
     "description": "Modularize the redux app by dynamically loading reducers, state and sagas",
     "repository": {
         "type": "github",
@@ -29,8 +29,8 @@
         "@types/react-redux": "6.0.11",
         "@types/redux": "3.6.0",
         "jest": "^23.5.0",
-        "react": "16.7.0",
-        "react-redux": "6.0.0",
+        "react": "^16.8.0",
+        "react-redux": "7.1.0",
         "redux": "4.0.1",
         "rimraf": "^2.6.2",
         "ts-jest": "^23.1.4",
@@ -39,7 +39,7 @@
         "typescript": "^3.0.3",
         "uglifyjs-webpack-plugin": "^1.3.0",
         "webpack": "4.19.1",
-        "webpack-bundle-analyzer": "^2.13.1",
+        "webpack-bundle-analyzer": "^3.3.2",
         "webpack-cli": "^3.1.0"
     },
     "peerDependencies": {
@@ -48,8 +48,8 @@
         "redux": ">= 3.0.0"
     },
     "dependencies": {
-        "redux-dynamic-modules-core": "^5.0.0-alpha.0",
-        "redux-dynamic-modules-react": "^5.0.0-alpha.0"
+        "redux-dynamic-modules-core": "^5.0.2",
+        "redux-dynamic-modules-react": "^5.0.2"
     },
     "gitHead": "8f1ed8a7be500e3e8d388703bab88dbb69eeb54e"
 }
