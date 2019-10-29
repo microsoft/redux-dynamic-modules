@@ -5,13 +5,12 @@ import { IEpicModule } from "./Contracts";
 
 export function getObservableExtension(): IExtension {
     const epicMiddleware = createEpicMiddleware();
-    const epicManager = getEpicManager();
+    const epicManager = getEpicManager(epicMiddleware);
 
     return {
         middleware: [epicMiddleware],
-        onModuleManagerCreated: () => {
-            epicMiddleware.run(epicManager.rootEpic);
-        },
+        // onModuleManagerCreated: () => {
+        // },
         onModuleAdded: (module: IEpicModule<any>) => {
             if (module.epics) {
                 epicManager.add(module.epics);
@@ -21,6 +20,9 @@ export function getObservableExtension(): IExtension {
             if (module.epics) {
                 epicManager.remove(module.epics);
             }
+        },
+        dispose: () => {
+            epicManager.dispose();
         },
     };
 }

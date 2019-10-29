@@ -64,3 +64,5 @@ typings/
 dist/
 lib/
 
+# webstorm project configuration data
+.idea

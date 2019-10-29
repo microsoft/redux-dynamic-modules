@@ -1,81 +1,127 @@
-import { getStringRefCounter, IItemManager } from "redux-dynamic-modules-core";
-import { Epic } from "redux-observable";
-import { merge } from "rxjs";
+import { getObjectRefCounter, IItemManager } from "redux-dynamic-modules-core";
+import { Epic, ofType, EpicMiddleware } from "redux-observable";
+import { Observable, Subject } from "rxjs";
+import { mapTo, switchMap } from "rxjs/operators";
 
 export interface IEpicManager extends IItemManager<Epic> {
-    rootEpic: Epic;
+    // some extra properties
+}
+
+interface IEpicWrapper {
+    (...args: any[]): Observable<unknown>;
+    _epic?: Epic;
+    epicRef(): Epic;
+    replaceWith(epic: Epic): void;
 }
 
 /**
  * Creates an epic manager which manages epics being run in the system
  */
-export function getEpicManager(): IEpicManager {
-    let runningEpics: Epic[] = [];
-    const epicRefCounter = getStringRefCounter();
-
-    const rootEpic: Epic = createRootEpic(runningEpics);
+export function getEpicManager(
+    epicMiddleware: EpicMiddleware<any>
+): IEpicManager {
+    let runningEpics: { [epicKey: string]: IEpicWrapper } = {};
+    // @ts-ignore
+    let epicRefCounter = getObjectRefCounter();
 
     return {
-        getItems: (): Epic[] => runningEpics,
-        rootEpic,
-        add: (epics: Epic[]) => {
-            if (!epics) {
-                return;
-            }
-
-            epics.forEach(e => {
-                epicRefCounter.add(e.name);
-                runningEpics.push(e);
+        /**
+         * Dynamically add epics.
+         *
+         * We should consider these potential problem:
+         * * Epic could add repeatedly
+         * * Epic could as a dependency of two or more modules
+         * * Module hot load. React-hot-loader will rerender your react root
+         * component which means it will invoke all of your logic again. So this is
+         * minor worry.
+         */
+        add(epics: Epic[] = []) {
+            epics.forEach(epic => {
+                const epicKey = epic.toString();
+                // Check if epic already exists
+                if (!runningEpics.hasOwnProperty(epicKey)) {
+                    const replaceableWrapper = createReplaceableWrapper();
+                    // we put replaceable Observable wrapper into epicMiddleware
+                    epicMiddleware.run(replaceableWrapper);
+                    // let's roll epic. Here we make epic run truly
+                    replaceableWrapper.replaceWith(epic);
+                    /**
+                     * We store the reference of replaceableWrapper, so we can check if it exists next time
+                     *
+                     * Is there a limit on length of the key (string) in JS object?
+                     * See https://stackoverflow.com/questions/13367391/is-there-a-limit-on-length-of-the-key-string-in-js-object
+                     */
+                    runningEpics[epicKey] = replaceableWrapper;
+                }
+                /**
+                 * We follow practice on official document https://redux-dynamic-modules.js.org/#/reference/ModuleCounting
+                 * So we use RefCounter to determine when we should remove epic
+                 */
+                epicRefCounter.add(epic);
             });
         },
-        remove: (epics: Epic[]) => {
-            if (!epics) {
-                return;
-            }
+        /**
+         * Remove epics
+         * Actually it will replace the real epic with a empty epic
+         *
+         * __Note:__
+         * Under some circumstances here https://redux-observable.js.org/docs/recipes/AddingNewEpicsAsynchronously.html
+         * We can't do a actual replacement.
+         * But we can try to replace real epic with empty epic, it works as we expected. This benefit is given by rxjs switchMap
+         */
+        remove(epics: Epic[] = []) {
+            epics.forEach(epic => {
+                epicRefCounter.remove(epic);
 
-            const epicNameMap = epics.reduce((p, e) => {
-                p[e.name] = e;
-                return p;
-            }, {});
-
-            epics.forEach(e => {
-                epicRefCounter.remove(e.name);
-            });
-
-            runningEpics = runningEpics.filter(e => {
-                !!epicNameMap[e.name] && epicRefCounter.getCount(e.name) !== 0;
+                const epicKey = epic.toString();
+                const replaceableWrapper = runningEpics[epicKey];
+                // Check if no module reference epic, we will remove epic
+                if (replaceableWrapper && !epicRefCounter.getCount(epic)) {
+                    // Replace the epic with empty epic, so no more unnecessary logic can cause any side effects.
+                    replaceableWrapper.replaceWith(emptyEpic);
+                    // Delete unnecessary replaceableWrapper reference
+                    delete runningEpics[epicKey];
+                }
             });
         },
-        dispose: () => {
+        dispose() {
             runningEpics = null;
+            epicRefCounter = undefined;
         },
-    };
+    } as IEpicManager;
 }
 
-function createRootEpic(runningEpics: Epic[]): Epic {
-    const merger = (...args) =>
-        merge(
-            runningEpics.map(epic => {
-                //@ts-ignore
-                const output$ = epic(...args);
-                if (!output$) {
-                    throw new TypeError(
-                        `combineEpics: one of the provided Epics "${epic.name ||
-                            "<anonymous>"}" does not return a stream. Double check you\'re not missing a return statement!`
-                    );
-                }
-                return output$;
-            })
+/**
+ * create a wrapper which can be replace by a real epic.
+ * And we can also use this wrapper along with {@link emptyEpic} to remove real epic logic
+ */
+function createReplaceableWrapper() {
+    const epic$ = new Subject();
+
+    // Wrap epic$ as a replaceable Observable
+    const replaceableWrapper: IEpicWrapper = (...args) =>
+        epic$.pipe(
+            // @ts-ignore
+            switchMap(epic => epic(...args))
         );
 
-    // Technically the `name` property on Function's are supposed to be read-only.
-    // While some JS runtimes allow it anyway (so this is useful in debugging)
-    // some actually throw an exception when you attempt to do so.
-    try {
-        Object.defineProperty(merger, "name", {
-            value: "____MODULES_ROOT_EPIC",
-        });
-    } catch (e) {}
+    // Expose a method. The wrapper can be replaced by real epic, and make it run
+    replaceableWrapper.replaceWith = epic => {
+        epic$.next(epic);
+        replaceableWrapper._epic = epic;
+    };
+    replaceableWrapper.epicRef = () => replaceableWrapper._epic;
 
-    return merger;
+    return replaceableWrapper;
+}
+
+/**
+ * Empty epic
+ * This epic do nothing and we need it to be used for real epic replacement
+ */
+function emptyEpic(action$) {
+    return action$.pipe(
+        ofType("noop"),
+        mapTo({ type: "noop" })
+    );
 }
