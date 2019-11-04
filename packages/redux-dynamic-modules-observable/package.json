@@ -56,10 +56,12 @@
         ]
     },
     "peerDependencies": {
-        "redux-dynamic-modules-core": ">=0.0.7"
+        "redux-dynamic-modules-core": ">=0.0.7",
+        "redux-observable": ">=1.x",
+        "rxjs": ">=6.x"
     },
     "dependencies": {
-        "redux-observable": "^1.0.0",
-        "rxjs": "^6.3.3"
+        "redux-observable": "^1.2.0",
+        "rxjs": "^6.5.3"
     }
 }
