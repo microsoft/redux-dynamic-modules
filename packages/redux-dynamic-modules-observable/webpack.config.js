@@ -26,7 +26,7 @@ module.exports = (env, argv) => {
             react: "react",
             redux: "redux",
             "react-redux": "react-redux",
-            "redux-saga": "redux-saga",
+            "redux-observable": "redux-observable",
             "redux-dynamic-modules-core": "redux-dynamic-modules-core",
             rxjs: "rxjs",
             "rxjs/operators": "rxjs/operators",
