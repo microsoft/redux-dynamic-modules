@@ -38,13 +38,12 @@ export function getEpicManager(
         add(epics: Epic[] = []) {
             epics.forEach(epic => {
                 const epicKey = epic.toString();
+                let replaceableWrapper;
                 // Check if epic already exists
                 if (!runningEpics.hasOwnProperty(epicKey)) {
-                    const replaceableWrapper = createReplaceableWrapper();
+                    replaceableWrapper = createReplaceableWrapper();
                     // we put replaceable Observable wrapper into epicMiddleware
                     epicMiddleware.run(replaceableWrapper);
-                    // let's roll epic. Here we make epic run truly
-                    replaceableWrapper.replaceWith(epic);
                     /**
                      * We store the reference of replaceableWrapper, so we can check if it exists next time
                      *
@@ -52,7 +51,14 @@ export function getEpicManager(
                      * See https://stackoverflow.com/questions/13367391/is-there-a-limit-on-length-of-the-key-string-in-js-object
                      */
                     runningEpics[epicKey] = replaceableWrapper;
+                } else {
+                    // if it exists, reuse it
+                    replaceableWrapper = runningEpics[epicKey];
                 }
+
+                // let's roll epic. Here we make epic run truly
+                replaceableWrapper.replaceWith(epic);
+
                 /**
                  * We follow practice on official document https://redux-dynamic-modules.js.org/#/reference/ModuleCounting
                  * So we use RefCounter to determine when we should remove epic
@@ -79,8 +85,7 @@ export function getEpicManager(
                 if (replaceableWrapper && !epicRefCounter.getCount(epic)) {
                     // Replace the epic with empty epic, so no more unnecessary logic can cause any side effects.
                     replaceableWrapper.replaceWith(emptyEpic);
-                    // Delete unnecessary replaceableWrapper reference
-                    delete runningEpics[epicKey];
+                    // We keep replaceableWrapper reference for next time to prevent creating again.
                 }
             });
         },
@@ -121,7 +126,8 @@ function createReplaceableWrapper() {
  */
 function emptyEpic(action$) {
     return action$.pipe(
-        ofType("noop"),
-        mapTo({ type: "noop" })
+        // action type shouldn't be the same otherwise it could be infinite loop.
+        ofType("__noop$__"),
+        mapTo({ type: "__noop__" })
     );
 }
