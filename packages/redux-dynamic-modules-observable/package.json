@@ -1,8 +1,7 @@
 {
     "name": "redux-dynamic-modules-observable",
-    "version": "5.1.0",
+    "version": "5.2.0",
     "description": "Observable Extension for redux-dynamic-modules",
-    "private": true,
     "repository": {
         "type": "github",
         "url": "https://github.com/Microsoft/redux-dynamic-modules"
@@ -10,6 +9,7 @@
     "main": "./lib/index.js",
     "types": "./lib/index.d.ts",
     "scripts": {
+        "prepublish": "npm run build:prod",
         "build:dev": "npm run clean && tsc && webpack --mode development --display-modules --progress --display-error-details",
         "build:prod": "npm run clean && tsc && webpack --mode development --display-error-details && webpack --mode production --display-modules --progress --display-error-details",
         "clean": "rimraf lib/ dist/"
@@ -27,8 +27,10 @@
         "@types/jest": "^23.3.1",
         "@types/redux": "3.6.0",
         "jest": "^23.5.0",
-        "redux-dynamic-modules-core": "^5.1.0",
+        "redux-dynamic-modules-core": "^5.2.0",
+        "redux-observable": "^1.2.0",
         "rimraf": "^2.6.2",
+        "rxjs": "^6.5.3",
         "ts-jest": "^23.1.4",
         "tslib": "^1.9.3",
         "tslint": "^5.11.0",
@@ -56,12 +58,8 @@
         ]
     },
     "peerDependencies": {
-        "redux-dynamic-modules-core": ">=0.0.7",
+        "redux-dynamic-modules-core": ">=5.0.0",
         "redux-observable": ">=1.x",
         "rxjs": ">=6.x"
-    },
-    "dependencies": {
-        "redux-observable": "^1.2.0",
-        "rxjs": "^6.5.3"
     }
 }
