@@ -31,7 +31,7 @@ export interface IDynamicModuleLoaderProps {
  */
 export class DynamicModuleLoader extends React.Component<
     IDynamicModuleLoaderProps
-> {
+    > {
     public render() {
         return (
             <ReactReduxContext.Consumer>
@@ -47,6 +47,8 @@ export class DynamicModuleLoader extends React.Component<
 }
 
 interface IDynamicModuleLoaderImplProps extends IDynamicModuleLoaderProps {
+    /** Callback function on action componentWillUnmount */
+    onUnmount?: (cleanup: () => any) => any;
     /** The react-redux context passed from the <Provider> component */
     reactReduxContext?: { store: IModuleStore<any> };
 }
@@ -62,7 +64,7 @@ interface IDynamicModuleLoaderImplState {
 class DynamicModuleLoaderImpl extends React.Component<
     IDynamicModuleLoaderImplProps,
     IDynamicModuleLoaderImplState
-> {
+    > {
     /** The modules that were added from this loader */
     private _addedModules?: IDynamicallyAddedModule;
     /** Flag that indicates we need to create a store/provider because a parent store was not provided */
@@ -111,7 +113,10 @@ class DynamicModuleLoaderImpl extends React.Component<
             return (
                 <>
                     {this._renderLoader()}
-                    <AddedModulesCleanup cleanup={this._cleanup} />
+                    <AddedModulesCleanup
+                        cleanup={this._cleanup}
+                        onUnmount={this.props.onUnmount}
+                    />
                 </>
             );
         }
@@ -168,6 +173,7 @@ class DynamicModuleLoaderImpl extends React.Component<
 }
 
 interface IAddedModulesCleanupProps {
+    onUnmount?: (cleanup: () => any) => any;
     cleanup: () => any;
 }
 
@@ -184,6 +190,12 @@ class AddedModulesCleanup extends React.Component<IAddedModulesCleanupProps> {
     }
 
     public componentWillUnmount() {
-        this.props.cleanup();
+        const { cleanup, onUnmount } = this.props;
+
+        if (onUnmount) {
+            onUnmount(cleanup);
+        } else {
+            cleanup();
+        }
     }
 }
