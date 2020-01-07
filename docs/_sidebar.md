@@ -13,3 +13,4 @@
     -   [Extensions](reference/Extensions.md)
     -   [Lifecycle Actions](reference/LifecycleActions.md)
     -   [Usage with Typescript](reference/Typescript.md)
+    -   [Redux Devtools Extension](reference/Devtools.md)
