@@ -1,7 +1,7 @@
 import { getObjectRefCounter, IItemManager } from "redux-dynamic-modules-core";
 import { Epic, ofType, EpicMiddleware } from "redux-observable";
 import { Observable, Subject } from "rxjs";
-import { mapTo, switchMap } from "rxjs/operators";
+import { ignoreElements, switchMap } from "rxjs/operators";
 
 export interface IEpicManager extends IItemManager<Epic> {
     // some extra properties
@@ -121,7 +121,6 @@ function createReplaceableWrapper() {
  */
 function emptyEpic(action$) {
     return action$.pipe(
-        ofType("noop"),
-        mapTo({ type: "noop" })
+        ignoreElements()
     );
 }
