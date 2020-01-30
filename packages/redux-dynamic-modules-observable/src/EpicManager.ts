@@ -1,5 +1,5 @@
 import { getObjectRefCounter, IItemManager } from "redux-dynamic-modules-core";
-import { Epic, ofType, EpicMiddleware } from "redux-observable";
+import { Epic, EpicMiddleware } from "redux-observable";
 import { Observable, Subject } from "rxjs";
 import { ignoreElements, switchMap } from "rxjs/operators";
 
