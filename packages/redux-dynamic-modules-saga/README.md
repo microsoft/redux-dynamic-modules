@@ -39,13 +39,12 @@ import { getSagaExtension } from "redux-dynamic-modules-saga";
 import { getUsersModule } from "./usersModule";
 
 const store: IModuleStore<IState> = createStore(
-    /* initial state */
-    {},
-
-    /* extensions to include */
-    [getSagaExtension(/* saga context object */)],
-
-    getUsersModule()
-    /* ...any additional modules */
+  {
+    initialState: {},
+    enhancers: [],
+    extensions: [getSagaExtension({} /* saga context */)],
+  },
+  getUsersModule()
+  /* ...any additional modules */
 );
 ```
