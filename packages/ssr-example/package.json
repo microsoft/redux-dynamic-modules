@@ -1,0 +1,21 @@
+{
+    "name": "ssr-example",
+    "version": "5.2.0",
+    "private": true,
+    "type": "module",
+    "scripts": {
+      "build": "tsc",
+      "start": "tsc && node lib/index.js"
+    },
+    "dependencies": {
+        "react": "^16.8.0",
+        "react-dom": "^16.8.0",
+        "react-redux": "7.1.0",
+        "redux": "4.0.1",
+        "redux-dynamic-modules-core": "^5.2.0",
+        "redux-dynamic-modules-react": "^5.2.0",
+        "redux-dynamic-modules-saga": "^5.2.0",
+        "redux-saga": "0.16.2",
+        "typescript": "^3.2.2"
+    }
+}
