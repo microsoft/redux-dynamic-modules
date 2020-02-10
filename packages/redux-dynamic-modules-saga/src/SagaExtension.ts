@@ -1,11 +1,9 @@
 import { default as createSagaMiddleware, SagaMiddleware } from "redux-saga";
 import {
-    IExtension,
-    IItemManager,
     getRefCountedManager,
     IModuleManager,
 } from "redux-dynamic-modules-core";
-import { ISagaRegistration, ISagaModule } from "./Contracts";
+import { ISagaExtension, ISagaManager, ISagaModule } from "./Contracts";
 import { getSagaManager } from "./SagaManager";
 import { sagaEquals } from "./SagaComparer";
 
@@ -16,11 +14,14 @@ import { sagaEquals } from "./SagaComparer";
 export function getSagaExtension<C>(
     sagaContext?: C,
     onError?: (error: Error) => void
-): IExtension {
+): ISagaExtension {
     let sagaMonitor = undefined;
 
     //@ts-ignore
-    if (process.env.NODE_ENV === "development" && typeof window !== "undefined") {
+    if (
+        process.env.NODE_ENV === "development" &&
+        typeof window !== "undefined"
+    ) {
         sagaMonitor = window["__SAGA_MONITOR_EXTENSION__"] || undefined;
     }
 
@@ -31,9 +32,10 @@ export function getSagaExtension<C>(
         onError,
     });
 
-    let _sagaManager: IItemManager<
-        ISagaRegistration<any>
-    > = getRefCountedManager(getSagaManager(sagaMiddleware), sagaEquals);
+    let _sagaManager: ISagaManager = getRefCountedManager(
+        getSagaManager(sagaMiddleware),
+        sagaEquals
+    );
 
     return {
         middleware: [sagaMiddleware],
@@ -59,5 +61,7 @@ export function getSagaExtension<C>(
         dispose: () => {
             _sagaManager.dispose();
         },
+
+        done: () => _sagaManager.done(),
     };
 }
