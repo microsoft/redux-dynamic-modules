@@ -7,13 +7,17 @@ import { SagaMiddleware, Task } from "redux-saga";
 import { sagaEquals } from "./SagaComparer";
 import { getMap } from "redux-dynamic-modules-core";
 
+interface TaskV1 extends Omit<Task, 'done'> {
+  toPromise: () => Promise<any>;
+}
+
 /**
  * Creates saga items which can be used to start and stop sagas dynamically
  */
 export function getSagaManager(
     sagaMiddleware: SagaMiddleware<any>
 ): ISagaManager {
-    const tasks = getMap<ISagaRegistration<any>, Task>(sagaEquals);
+    const tasks = getMap<ISagaRegistration<any>, Task | TaskV1>(sagaEquals);
 
     return {
         getItems: (): ISagaRegistration<any>[] => [...tasks.keys],
@@ -46,7 +50,14 @@ export function getSagaManager(
             // Wait for everything to complete
             // Don't use Promise.all as it rejects on the first rejection
             return tasks.keys
-                .map(k => tasks.get(k).done)
+                .map(k => {
+                  const task = tasks.get(k);
+                  if ('done' in task) {
+                    return task.done;
+                  } else {
+                    return task.toPromise();
+                  }
+                })
                 .reduce(
                     async (all, next) => all.then(() => next, () => next),
                     Promise.resolve()
