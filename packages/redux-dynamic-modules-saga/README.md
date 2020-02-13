@@ -34,17 +34,17 @@ export function getUsersModule(): ISagaModule<IUserState> {
 -   Create a `ModuleStore`
 
 ```typescript
-import { configureStore, IModuleStore } from "redux-dynamic-modules";
+import { createStore, IModuleStore } from "redux-dynamic-modules";
+import { getSagaExtension } from "redux-dynamic-modules-saga";
 import { getUsersModule } from "./usersModule";
 
-const store: IModuleStore<IState> = configureStore(
-    /* initial state */
-    {},
-
-    /* extensions to include */
-    [getSagaExtension(/* saga context object */)],
-
-    getUsersModule()
-    /* ...any additional modules */
+const store: IModuleStore<IState> = createStore(
+  {
+    initialState: {},
+    enhancers: [],
+    extensions: [getSagaExtension({} /* saga context */)],
+  },
+  getUsersModule()
+  /* ...any additional modules */
 );
 ```
