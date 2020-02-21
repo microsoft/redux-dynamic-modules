@@ -33,3 +33,4 @@ You can pass additional properties to `createStore` to further customize its usa
 -   `extensions: IExtension[]`: Any extensions you want to run along with the store. See [Extensions](Extensions.md) for more info.
 -   `enhancers: Enhancer[]`: Any Redux enhancers you want to add. These will automatically be composed together.
 -   `advancedCombineReducers`: Provide a custom implementation of `combineReducers`, which can be helpful for working with libraries like ImmutableJS. [See Here](https://github.com/gajus/redux-immutable)
+-   `advancedComposeEnhancers`: Override enhancer composition. Check out [Redux Devtools Extension](Devtools.md) for a sample usage.
