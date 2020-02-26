@@ -90,8 +90,8 @@ const store: IModuleStore<IState> = createStore({
 <DynamicModuleLoader modules={[getHelloWorldModule()]}>
     <div>Hello World!!</div>
 </DynamicModuleLoader>
-
-
+```
+```typescript
 export interface IDynamicModuleLoaderProps {
     /** Modules that need to be dynamically registerd */
     modules: IModuleTuple;
