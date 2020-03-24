@@ -1,6 +1,6 @@
 {
     "name": "redux-dynamic-modules-observable",
-    "version": "5.2.0",
+    "version": "5.2.1",
     "description": "Observable Extension for redux-dynamic-modules",
     "repository": {
         "type": "github",
