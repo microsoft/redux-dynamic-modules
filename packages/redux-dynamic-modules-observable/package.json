@@ -1,6 +1,6 @@
 {
     "name": "redux-dynamic-modules-observable",
-    "version": "5.2.2",
+    "version": "5.2.3",
     "description": "Observable Extension for redux-dynamic-modules",
     "repository": {
         "type": "github",
@@ -27,7 +27,7 @@
         "@types/jest": "^23.3.1",
         "@types/redux": "3.6.0",
         "jest": "^23.5.0",
-        "redux-dynamic-modules-core": "^5.2.2",
+        "redux-dynamic-modules-core": "^5.2.3",
         "redux-observable": "^1.2.0",
         "rimraf": "^2.6.2",
         "rxjs": "^6.5.3",
@@ -61,5 +61,6 @@
         "redux-dynamic-modules-core": ">=5.0.0",
         "redux-observable": ">=1.x",
         "rxjs": ">=6.x"
-    }
+    },
+    "gitHead": "8ea732047c2a08b1421ed68e76643e0bb6aa9362"
 }
