@@ -1,6 +1,6 @@
 import { IExtension } from "redux-dynamic-modules-core";
-import { getEpicManager } from "./EpicManager";
 import { EpicMiddleware } from "redux-observable";
+import { getEpicManager } from "./EpicManager";
 import { IEpicModule } from "./Contracts";
 
 export * from './Contracts'
