@@ -1,4 +1,5 @@
 import { AnyAction, ReducersMapObject, Store, Middleware } from "redux";
+import { ActionWithPayload } from "./ActionHelper"
 
 /**
  * Represents a module which is set of reducers, sagas, initial actions and final actions
@@ -12,7 +13,7 @@ export interface IModule<State> {
     /**
      * Reducers for the module
      */
-    reducerMap?: ReducersMapObject<State, AnyAction>;
+    reducerMap?: ReducersMapObject<State, ActionWithPayload<any, any>>;
 
     /**
      * Middlewares to add to the store

@@ -1,6 +1,6 @@
 import { effects } from "redux-saga";
 import { SettingActions, SettingsActionTypes } from "./SettingsActions";
-import { ISettingsAwareState, ISettingsState } from "./SettingsContracts";
+import { ISettingsModuleState, ISettingsState } from "./SettingsContracts";
 
 export function* settingsRootSaga() {
     if (typeof Storage === "undefined") {
@@ -32,7 +32,7 @@ function* loadPreferences() {
 
 function* storePreferencs() {
     const settingsState: ISettingsState = yield effects.select(
-        (state: ISettingsAwareState) => state.settingsState
+        (state: ISettingsModuleState) => state.settingsState
     );
     yield effects.call(
         [localStorage, localStorage.setItem],

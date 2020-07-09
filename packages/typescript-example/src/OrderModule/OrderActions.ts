@@ -1,5 +1,5 @@
-import { ActionsUnion, createAction } from "../ActionHelper";
 import { IOrder } from "./OrderContracts";
+import { createAction, ActionsUnion } from "redux-dynamic-modules"
 
 export enum OrderActionTypes {
     AddOrder = "Order/AddOrder",

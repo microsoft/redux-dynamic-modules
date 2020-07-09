@@ -1,4 +1,4 @@
-import { ISettingsAwareState } from "./SettingsContracts";
+import { ISettingsModuleState } from "./SettingsContracts";
 
-export const getUserPreferences = (state: ISettingsAwareState) =>
+export const getUserPreferences = (state: ISettingsModuleState) =>
     state.settingsState.userPreferences;
