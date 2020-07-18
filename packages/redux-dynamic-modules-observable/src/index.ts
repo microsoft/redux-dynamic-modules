@@ -1,12 +1,12 @@
-import { createEpicMiddleware } from "redux-observable";
 import { IExtension } from "redux-dynamic-modules-core";
+import { EpicMiddleware } from "redux-observable";
 import { getEpicManager } from "./EpicManager";
 import { IEpicModule } from "./Contracts";
 
 export * from './Contracts'
 
-export function getObservableExtension(): IExtension {
-    const epicMiddleware = createEpicMiddleware();
+export function getObservableExtension(_epicMiddleware: EpicMiddleware<any>): IExtension {
+    const epicMiddleware = _epicMiddleware;
     const epicManager = getEpicManager(epicMiddleware);
 
     return {

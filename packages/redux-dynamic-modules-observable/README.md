@@ -10,14 +10,17 @@ To use
 
 ```typescript
 import { createStore, IModuleStore } from "redux-dynamic-modules";
+import { createEpicMiddleware } from 'redux-observable';
 import { getObservableExtension } from "redux-dynamic-modules-observable";
 import { getUsersModule } from "./usersModule";
+
+const epicMiddleware = createEpicMiddleware({/** configurations */});
 
 const store: IModuleStore<IState> = createStore(
     {
         initialState: { /** initial state */ },
         enhancers: [ /** enhancers to include */ ], 
-        extensions: [getObservableExtension()],
+        extensions: [getObservableExtension(epicMiddleware)],
     },
     getUsersModule()
     /* ...any additional modules */
