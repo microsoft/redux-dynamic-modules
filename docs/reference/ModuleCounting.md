@@ -1,6 +1,6 @@
 # Module Reference Counting
 
-**redux-dynamic-modules** will automatically peform "reference counting" of your modules and their contents.
+**redux-dynamic-modules** will automatically perform "reference counting" of your modules and their contents.
 
 ## For Modules
 
