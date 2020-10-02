@@ -1,6 +1,6 @@
 import { ISettingsAwareState } from "./SettingsContracts";
 import { ISagaModule } from "redux-dynamic-modules-saga";
-import { settingsReducer } from "./SettingsReduder";
+import { settingsReducer } from "./SettingsReducer";
 import { settingsRootSaga } from "./SettingsSaga";
 import { SettingActions } from "./SettingsActions";
 
