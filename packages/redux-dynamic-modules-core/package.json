@@ -1,6 +1,6 @@
 {
     "name": "redux-dynamic-modules-core",
-    "version": "5.2.0",
+    "version": "5.2.3",
     "description": "Modularize the redux app by dynamically loading reducers, state and sagas",
     "repository": {
         "type": "github",
@@ -61,5 +61,5 @@
         "redux-devtools-extension": "^2.13.7",
         "redux-dynamic-middlewares": "^1.0.0"
     },
-    "gitHead": "8f1ed8a7be500e3e8d388703bab88dbb69eeb54e"
+    "gitHead": "8ea732047c2a08b1421ed68e76643e0bb6aa9362"
 }
