@@ -6,9 +6,11 @@
         "publish": "lerna publish",
         "publish:force": "lerna publish --force-publish",
         "build:prod": "lerna run build:prod",
-        "test": "npm run build:prod && lerna run test"
+        "test": "npm run build:prod && lerna run test",
+        "docs:serve": "docsify serve ./docs"
     },
     "devDependencies": {
+        "docsify-cli": "^4.4.1",
         "lerna": "^3.14.1",
         "prettier": "1.15.3"
     }
