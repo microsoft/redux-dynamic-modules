@@ -4,7 +4,7 @@
     "description": "Thunk Extension for redux-dynamic-modules",
     "repository": {
         "type": "github",
-        "url": "https://github.com/Microsoft/redux-dynamic-modules"
+        "url": "https://github.com/optimaxdev/redux-dynamic-modules"
     },
     "main": "./lib/index.js",
     "types": "./lib/index.d.ts",

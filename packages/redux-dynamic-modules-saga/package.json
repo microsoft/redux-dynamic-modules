@@ -4,7 +4,7 @@
     "description": "Saga Extension for redux-dynamic-modules",
     "repository": {
         "type": "github",
-        "url": "https://github.com/Microsoft/redux-dynamic-modules"
+        "url": "https://github.com/optimaxdev/redux-dynamic-modules"
     },
     "main": "./lib/index.js",
     "types": "./lib/index.d.ts",
@@ -26,6 +26,7 @@
     "license": "MIT",
     "devDependencies": {
         "@types/jest": "^23.3.1",
+        "@types/node": "^14.14.41",
         "@types/redux": "3.6.0",
         "@types/redux-saga": "0.10.5",
         "jest": "^23.5.0",

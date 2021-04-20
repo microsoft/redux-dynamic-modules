@@ -7,7 +7,13 @@ describe("Saga extension tests", () => {
         const testContext = {};
         called = false;
         createStore(
-            { extensions: [getSagaExtension(testContext)] },
+            {
+                extensions: [
+                    getSagaExtension({
+                        sagaContext: testContext,
+                    }),
+                ],
+            },
             getTestModule()
         );
         expect(called);

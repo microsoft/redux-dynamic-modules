@@ -75,7 +75,7 @@ import { getUsersModule } from "./usersModule";
 
 const store: IModuleStore<IState> = createStore({
       initialState: { /** initial state */ },
-      enhancers: [ /** enhancers to include */ ], 
+      enhancers: [ /** enhancers to include */ ],
       extensions: [/** extensions to include i.e. getSagaExtension(), getThunkExtension() */],
 },
     getUsersModule()
@@ -99,7 +99,7 @@ const store: IModuleStore<IState> = createStore({
 
 ## Examples
 
-See the [Widgets](https://github.com/Microsoft/redux-dynamic-modules/tree/master/packages/widgets-example) for a quick of example of the library in practice.
+See the [Widgets](https://github.com/optimaxdev/redux-dynamic-modules/tree/master/packages/widgets-example) for a quick of example of the library in practice.
 
 Step by step walthrough of start consuming `redux-dynamic-modules` in the widget app. [Youtube](https://www.youtube.com/watch?v=SktRbSZ-4Tk)
 
