@@ -9,6 +9,8 @@ import {
 } from "redux-dynamic-modules-core";
 
 export interface IDynamicModuleLoaderProps {
+    /** Explicitly name children as a prop to work with @types/react@18 */
+    children: React.ReactNode;
     /** Modules that need to be dynamically registerd */
     modules: IModuleTuple;
 
