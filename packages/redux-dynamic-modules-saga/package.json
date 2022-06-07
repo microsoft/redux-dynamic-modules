@@ -1,6 +1,6 @@
 {
     "name": "redux-dynamic-modules-saga",
-    "version": "5.2.3",
+    "version": "5.2.4",
     "description": "Saga Extension for redux-dynamic-modules",
     "repository": {
         "type": "github",
@@ -29,7 +29,7 @@
         "@types/redux": "3.6.0",
         "@types/redux-saga": "0.10.5",
         "jest": "^23.5.0",
-        "redux-dynamic-modules-core": "^5.2.3",
+        "redux-dynamic-modules-core": "^5.2.4",
         "redux-saga": "0.16.2",
         "rimraf": "^2.6.2",
         "ts-jest": "^23.1.4",
