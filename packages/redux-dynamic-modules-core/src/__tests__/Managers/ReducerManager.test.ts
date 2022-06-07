@@ -101,3 +101,28 @@ it("With a custom combiner", () => {
     reducerManager.add("city", reduce);
     expect(combinedKeys).toEqual(["name", "city"]);
 });
+
+it("With nested reducers", () => {
+    const reducerManager = getReducerManager({});
+
+    reducerManager.add("foo.bar", reduce);
+    expect(reducerManager.getReducerMap()).toEqual({
+        foo: {
+            bar: reduce,
+        },
+    });
+    reducerManager.add("foo.baz", reduce);
+    expect(reducerManager.getReducerMap()).toEqual({
+        foo: {
+            bar: reduce,
+            baz: reduce,
+        },
+    });
+
+    reducerManager.remove("foo.baz");
+    expect(reducerManager.getReducerMap()).toEqual({
+        foo: {
+            bar: reduce,
+        },
+    });
+});
