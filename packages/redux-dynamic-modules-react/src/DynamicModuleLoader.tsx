@@ -9,25 +9,25 @@ import {
 } from "redux-dynamic-modules-core";
 
 export interface IDynamicModuleLoaderProps {
-    /** Modules that need to be dynamically registerd */
+    /** Modules that need to be dynamically registered */
     modules: IModuleTuple;
 
     /**
-     * Set this flag to indicate that this component is being rendered in 'Strict Mode'
+     * Set this flag to indicate that this component is being rendered in 'Strict Mode'.
      * React 'StrictMode' does not allow constructor side-effects, so we defer adding modules to componentDidMount
      * when this flag is set.
      * This has the effect of adding a second render.
      */
     strictMode?: boolean;
 
-    /** Optional callback which returns a store instance. This would be called if no store could be loaded from th  e context. */
+    /** Optional callback which returns a store instance. This would be called if no store could be loaded from the context. */
     createStore?: () => IModuleStore<any>;
 }
 
 /**
- * The DynamicModuleLoader adds a way to register a module on mount
- * When this component is initialized, the reducer and saga from the module passed as props will be registered with the system
- * On unmount, they will be unregistered
+ * The DynamicModuleLoader adds a way to register a module on mount.
+ * When this component is initialized, the reducer and saga from the module passed as props will be registered with the system.
+ * On unmount, they will be unregistered.
  */
 export class DynamicModuleLoader extends React.Component<
     IDynamicModuleLoaderProps
