@@ -1,19 +1,23 @@
 import * as React from "react";
 import { connect } from "react-redux";
-import { DynamicModuleLoader } from "redux-dynamic-modules";
+import { DynamicModuleLoader, StringMap } from "redux-dynamic-modules";
 import { OrderModules } from "../OrderModule/OrderModule";
-import { IOrderAwareState } from "../OrderModule/OrderContracts";
+import { IOrder, IOrderModuleState } from "../OrderModule/OrderContracts";
 import { getUserPreferences } from "../SettingsModule/SettingsSelectors";
-import { StringMap } from "../ActionHelper";
 import { SettingActions } from "../SettingsModule/SettingsActions";
+import { OrderActions } from "../OrderModule/OrderActions"
+import { ItemType } from "../OrderModule/OrderEnums"
 
 interface IOrderProps {
+    addOrder: (order: IOrder) => void;
     userPreferences: StringMap<string | boolean>;
     setPreferences: (preferences: StringMap<string | boolean>) => void;
 }
 
 const Order = (props: IOrderProps) => {
     const toppings = ["Cheese", "Onion", "Pineapple"];
+
+    const activeToppings = toppings.filter(topping => !!props.userPreferences[topping])
     return (
         <>
             <div>Order</div>
@@ -26,6 +30,7 @@ const Order = (props: IOrderProps) => {
                     />
                 ))}
             </ul>
+          <button onClick={() => props.addOrder({itemType: ItemType.Pasta, toppings: activeToppings})}>Place Order</button>
         </>
     );
 };
@@ -57,7 +62,7 @@ const ToppingCheckbox = (props: IToppingCheckboxProps) => {
     );
 };
 
-const mapStateToProps = (state: IOrderAwareState) => {
+const mapStateToProps = (state: IOrderModuleState) => {
     return {
         userPreferences: getUserPreferences(state),
     };
@@ -65,7 +70,10 @@ const mapStateToProps = (state: IOrderAwareState) => {
 
 const ConnectedOrder = connect(
     mapStateToProps,
-    SettingActions
+    {
+      ...OrderActions,
+      ...SettingActions
+    }
 )(Order);
 
 export const DynamicOrder = () => (

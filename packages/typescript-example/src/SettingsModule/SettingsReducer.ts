@@ -2,10 +2,10 @@ import { ISettingsState } from "./SettingsContracts";
 import produce from "immer";
 import { SettingsActionTypes, SettingActionsUnion } from "./SettingsActions";
 
-export function settingsReducer(
-    state: ISettingsState,
+export const settingsReducer = (
+    state: ISettingsState | undefined,
     action: SettingActionsUnion
-): ISettingsState {
+): ISettingsState => {
     return produce(
         state || { userPreferences: {} },
         (draft: ISettingsState) => {
@@ -18,6 +18,10 @@ export function settingsReducer(
                         }
                     }
                     break;
+                }
+
+                default: {
+                    return state
                 }
             }
         }

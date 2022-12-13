@@ -1,4 +1,4 @@
-import { ActionsUnion, createAction, StringMap } from "../ActionHelper";
+import { ActionsUnion, createAction, StringMap } from "redux-dynamic-modules";
 
 export enum SettingsActionTypes {
     SET_PREFERENCES = "SETTINGS/SET_PREFRENCES",

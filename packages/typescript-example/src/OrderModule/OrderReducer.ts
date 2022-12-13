@@ -1,15 +1,15 @@
-import { IOrderState, IOrder } from "./OrderContracts";
+import { IOrderState } from "./OrderContracts";
 import produce from "immer";
 import { OrderActionTypes, OrderActionsUnion } from "./OrderActions";
 
-export function orderReducer(
-    state: IOrderState,
+export const orderReducer = (
+    state: IOrderState | undefined,
     action: OrderActionsUnion
-): IOrderState {
+): IOrderState => {
     return produce(state || {}, draft => {
         switch (action.type) {
             case OrderActionTypes.AddOrder: {
-                state.order = action.payload.order;
+                draft.order = action.payload.order;
                 break;
             }
         }
