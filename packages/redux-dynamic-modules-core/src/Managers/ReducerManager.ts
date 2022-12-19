@@ -1,5 +1,9 @@
 import { combineReducers, Reducer, ReducersMapObject, AnyAction } from "redux";
 import { getStringRefCounter } from "../Utils/RefCounter";
+import * as has from "lodash/has";
+import * as set from "lodash/set";
+import * as unset from "lodash/unset";
+import * as mapValues from "lodash/mapValues";
 
 export interface IReducerManager<S> {
     reduce: (state: S, action: AnyAction) => S;
@@ -61,7 +65,7 @@ export function getReducerManager<S extends {}>(
         if (keysToRemove.length > 0) {
             state = { ...(state as any) };
             for (let key of keysToRemove) {
-                delete state[key];
+                unset(state, key);
             }
             keysToRemove = [];
         }
@@ -77,19 +81,19 @@ export function getReducerManager<S extends {}>(
         getReducerMap: () => reducers,
         reduce,
         add: <ReducerState>(key: string, reducer: Reducer<ReducerState>) => {
-            if (!key || reducers[key]) {
+            if (!key || has(reducers, key)) {
                 return;
             }
 
-            reducers[key] = reducer;
+            set(reducers, key, reducer);
             combinedReducer = getCombinedReducer(reducers, reducerCombiner);
         },
         remove: (key: string) => {
-            if (!key || !reducers[key]) {
+            if (!key || !has(reducers, key)) {
                 return;
             }
 
-            delete reducers[key];
+            unset(reducers, key);
             keysToRemove.push(key);
             combinedReducer = getCombinedReducer(reducers, reducerCombiner);
         },
@@ -100,10 +104,21 @@ function getCombinedReducer<S extends {}>(
     reducerMap: ReducersMapObject<any>,
     reducerCombiner: (
         reducers: ReducersMapObject<S, any>
-    ) => Reducer<S> = combineReducers
+    ) => Reducer<S> = recursiveCombineReducers
 ) {
     if (!reducerMap || Object.keys(reducerMap).length === 0) {
         return (state, action) => state || null;
     }
     return reducerCombiner(reducerMap);
+}
+
+function recursiveCombineReducers(reducersObj: ReducersMapObject): Reducer {
+    const normalReducerMap = mapValues(reducer => {
+        if (typeof reducer === "function") {
+            return reducer;
+        } else {
+            return recursiveCombineReducers(reducer);
+        }
+    })(reducersObj);
+    return combineReducers(normalReducerMap);
 }

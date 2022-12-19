@@ -1,6 +1,6 @@
 {
     "name": "redux-dynamic-modules-thunk",
-    "version": "5.2.3",
+    "version": "5.2.4",
     "description": "Thunk Extension for redux-dynamic-modules",
     "repository": {
         "type": "github",
@@ -26,7 +26,7 @@
         "@types/jest": "^23.3.1",
         "@types/redux": "3.6.0",
         "jest": "^23.5.0",
-        "redux-dynamic-modules-core": "^5.2.3",
+        "redux-dynamic-modules-core": "^5.2.4",
         "redux-thunk": "^2.3.0",
         "rimraf": "^2.6.2",
         "ts-jest": "^23.1.4",
