@@ -9,7 +9,7 @@
         "test": "npm run build:prod && lerna run test"
     },
     "devDependencies": {
-        "lerna": "^3.14.1",
+        "lerna": "^7.1.1",
         "prettier": "1.15.3"
     }
 }
